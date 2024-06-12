@@ -1,224 +1,106 @@
-/* .background-image {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: url('uploads/sch.jpg');
-    background-size: cover;
-    z-index: -1;
-    /* -webkit-filter: blur(0px);
-  } */
-  .cardBody {
-    margin-left: 30px;
-  }
-  /* .background-image {
-    background-image: url('../assets/uploads/sch.jpg');
-
-  } */
-  /* .background-image {
-    background-image: url('/assets/uploads/sch.jpg');
-  } */
-
-
-  /* style={{ backgroundImage: url(${sch}), backgroundSize: 'cover', height: '100vh' }} */
-
-
-
-
-  .container {
-    display: flex;
-
-  }
-
-  .left-section,
-  .right-section {
-    flex: 1;
-  }
-
-  .left-section {
-    /* background-color: #f0f0f0; */
-    /* padding: 10px; */
-    /* background: transparent; */
-    margin-top:11%;
-    width:500px;
-    height: 50px;
-    margin-right:28%;
-    margin-left:2%;
-    margin-bottom: 120px;
-  }
-
-  .right-section {
-    background-color: #eaeaea;
-    padding: 10px;
-    margin-left: 20%;
-    margin-top: 4%;
-  }
-  .sdfs{
-    /* background-image: #D9D9D9;
-    height: 510px;
-    width: 280px;
-    overflow-y: auto;
-    margin-left: 400px; */
-
-    background-color: #D9D9D9;
-      height: 499px;
-      overflow-y: auto;
-  }
-  .abc{
-    display: fix;
-  }
-
-
-  /* stylel.css */
-
-.background-image {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-image: url("../../assets/uploads/sch.jpg");
-  background-size: cover;
-  z-index: -1;
-  -webkit-filter: blur(0px);
-}
-
-.header {
+/* Navbar CSS */
+.navbar {
   background-color: #b24448;
-  margin:25px 30px 20px 30px;
 }
 
-.form-control::-moz-placeholder {
-  color: black!important;
-  font-weight: bold;
+.navbar-brand,
+.navbar-nav .nav-link,
+.navbar-nav .nav-dropdown .nav-link {
+  font-family: "Roboto", sans-serif;
+  font-size: 12px; /* Smaller font size */
 }
-
-.form-control {
-  border-color: black!important;
-}
-
-/* .btn {
-  background-color: #b24448;
-} */
-
-.footer-bg{
-  background-color:#E1E3E9;
-  /* background-color: transparent; */
-}
-
-
-
-.input-group {
-  position: relative;
-}
-
-.input-container {
-  position: relative;
-}
-
-.input-group-addon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10px; /* Adjust this value to position the icon properly */
-}
-
-.input-group-addon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.icon-input {
-  padding-left: 10px; /* Adjust this value to position the text properly */
-  width: 100%; /* Ensure input takes up full width */
-}
-/* .no-hover:hover:not(:focus) {
-} */
-
-
-/* /////////////////navbar css/////////////////////////// */
-
-/* style.css */
-
-/* Custom search input width */
-.custom-search {
-    width: calc(100% - 100px); /* Adjust the width as needed */
-  }
-
-  /* Navbar dropdown link styles */
-  .navbar-dropdown .nav-link {
-    font-size: 15px;
-    font-weight: bold;
-    color: black;
-  }
-
-  /* Navbar custom styles */
-  /* .navbar-custom {
-    background-color: #e7e6e6;
-    color: black;
-  } */
-
-  /* Navbar dropdown link color */
-  /* .navbar-custom .navbar-dropdown .nav-link {
-    color: black;
-  } */
-
-  /* Add custom font family */
-  .navbar-custom .navbar-brand,
-  .navbar-custom .navbar-nav .nav-link,
-  .navbar-custom .navbar-nav .nav-dropdown .nav-link {
-    font-family: 'Roboto', sans-serif; /* Use your desired font family */
-  }
-
-  /* Add space between navbar brand and navbar dropdown */
-  .navbar-brand {
-    margin-right: 10px; /* Adjust the value as per your requirement */
-  }
-
-  /* Add space between navbar dropdown titles */
-  .navbar-dropdown {
-    margin-left: 6px; /* Adjust the value as per your requirement */
-  }
-
-/* ////// */
-
-.navbar-dropdown .nav-link:hover {
-    background-color: #f8f9fa; /* Change this to the desired hover background color */
-    color: black; /* Change this to the desired hover text color */
-}
-
-/* .dropdown-menu {
-    background-color: #f8f9fa; /* Change this to the desired background color */
-/* }  */
-
-/* .navbar-brand:hover {
-    background-color: #f8f9fa; /* Change this to the desired hover background color */
-    /* color: black; Change this to the desired hover text color */
-/* } */
 
 .navbar-brand {
-    color: black; /* Set the initial color to white */
+  margin-right: 10px;
+}
+
+.navbar-dropdown {
+  margin-left: 6px;
+}
+
+.navbar-dropdown .nav-link:hover {
+  background-color: #f8f9fa;
+  color: black;
 }
 
 .navbar-brand:hover {
-    background-color: #f8f9fa; /* Change this to the desired hover background color */
-    color: black; /* Change this to the desired hover text color */
+  background-color: #f8f9fa;
+  color: black;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+  font-size: 14px;
+}
+
+.navbar-collapse {
+  flex-grow: 0;
+}
+
+@media (max-width: 768px) {
+  .navbar-brand,
+  .navbar-nav .nav-link,
+  .navbar-nav .nav-dropdown .nav-link {
+    font-size: 10px;
+  }
+
+  .navbar-collapse {
+    flex-grow: 1;
+  }
+
+  .navbar-brand {
+    font-size: 12px;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 12px;
+  }
+
+  .custom-toggler {
+    font-size: 0.75rem; /* Adjust the size of the hamburger menu */
+  }
+
+  .absolute {
+    display: none; /* Hide the date on mobile screens */
+  }
+
+  .navbar-dropdown {
+    margin-left: 0;
+  }
+
+  .navbar-brand,
+  .navbar-nav .nav-link,
+  .navbar-nav .nav-dropdown .nav-link {
+    font-size: 10px;
+  }
+
+  .navbar-collapse {
+    flex-grow: 1;
+  }
+}
+
+.navbar-brand {
+  color: black;
+}
+
+.navbar-brand:hover {
+  background-color: #f8f9fa;
+  color: black;
 }
 
 .navbar-dropdown-title {
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-/* .navbar-dropdown .nested-dropdown {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 0;
-  }
+.navbar-dropdown .nested-dropdown {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+}
 
-  .navbar-dropdown .navbar-dropdown:hover .nested-dropdown {
-    display: block;
-  } */
+.navbar-dropdown .navbar-dropdown:hover .nested-dropdown {
+  display: block;
+}

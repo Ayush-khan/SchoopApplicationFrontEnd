@@ -20,9 +20,11 @@ function Index() {
             <Route path='/student/:id/edit' element={<StudentEdit />} />
             <Route path='/student-demo-table' element={<DemoTable />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/Dashboard' element={<NavBar />} />
+            {/* temoprary i have changed it */}
+            {/* <Route path='/Dashboard' element={<NavBar />} /> */}
+            <Route path='/' element={<NavBar />} />   
             <Route path='/myprofile' element={<UserProfile />} />
-            <Route path='/' element={<LandingPage />} />
+            {/* <Route path='/' element={<LandingPage />} /> */}
             {/* <Route path='/logout' element={<Login />} /> */}
         </Routes>
 

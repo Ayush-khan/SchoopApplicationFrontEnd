@@ -47,7 +47,8 @@ function NavBar() {
             <div className="container" style={{ backgroundColor: '#9999ff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ height: '80px' }}>
                     <h1 style={{ textAlign: 'center', color: 'black' }}>
-                        {instituteName} ( {academicYear} )
+                        {/* {instituteName} ( {academicYear} ) */}
+                        St. Arnolds Central School (2023 - 2024)
                     </h1>
                 </div>
             </div>

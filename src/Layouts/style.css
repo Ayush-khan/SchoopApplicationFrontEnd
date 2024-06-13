@@ -1,5 +1,4 @@
-/* Navbar CSS */
-.navbar {
+/* Navbar CSS .navbar {
   background-color: #b24448;
 }
 
@@ -8,7 +7,6 @@
 .navbar-nav .nav-dropdown .nav-link {
   font-family: "Roboto", sans-serif;
   font-size: 12px; /* Smaller font size */
-}
 
 .navbar-brand {
   margin-right: 10px;

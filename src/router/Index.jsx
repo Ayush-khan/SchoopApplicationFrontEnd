@@ -9,6 +9,8 @@ import NavBar from "../Layouts/NavBar";
 import UserProfile from "../componants/UserProfile";
 import LandingPage from "../componants/LandingPage";
 import authManage from "../utils/auth";
+import AdminDashboard from "../componants/Dashbord/AdminDashboard";
+import EventCard from "../componants/Dashbord/EventCard";
 
 function Index() {
   return (
@@ -18,8 +20,11 @@ function Index() {
       <Route path="/student/:id/edit" element={<StudentEdit />} />
       <Route path="/student-demo-table" element={<DemoTable />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/eventcard" element={<EventCard />} />
+      <Route path="/login" element={<Login />} />
+
       {/* temoprary i have changed it */}
-      {/* <Route path='/Dashboard' element={<NavBar />} /> */}
+      <Route path="/dashboard" element={<AdminDashboard />} />
       <Route path="/" element={<NavBar />} />
       <Route path="/myprofile" element={<UserProfile />} />
       {/* <Route path='/' element={<LandingPage />} /> */}

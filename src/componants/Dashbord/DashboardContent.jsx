@@ -130,7 +130,7 @@ const DashboardContent = () => {
         </div>
         <div
           //   className="w-2/5 border-2 border-solid border-red-500 h-5/6"
-          className="w-1/3 border-2 border-solid  h-64 mt-6 bg-slate-100 overflow-y-hidden"
+          className="w-1/3 border-2 border-solid  h-64 mt-6 bg-slate-100 overflow-y-hidden rounded-lg"
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;",
@@ -140,16 +140,16 @@ const DashboardContent = () => {
         </div>
       </div>
 
-      <div className="flex items-start justify-between w-full  pr-6 gap-10 h-1/2 px-6">
+      <div className="flex items-start justify-between w-full  pr-6 gap-10 h-1/2 px-6 ">
         <div
-          className=" w-2/3 grid grid-cols-3 gap-x-8 gap-y-3  p-4 h-full bg-white"
+          className=" w-2/3 grid grid-cols-3 gap-x-8 gap-y-3  p-4 h-full bg-white rounded-lg"
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;",
           }}
         ></div>
         <div
-          className=" w-1/3 border-2 border-solid  h-full  bg-slate-50"
+          className=" w-1/3 border-2 border-solid  h-full  bg-slate-50 rounded-lg"
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;",

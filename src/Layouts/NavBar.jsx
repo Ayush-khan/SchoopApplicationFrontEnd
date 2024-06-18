@@ -82,7 +82,7 @@ function NavBar() {
             <LuSchool className=" text-white " style={{ fontSize: "2em" }} />
           </div>
           <div className="flex-grow">
-            <p className="text-center  text-sm lg:text-2xl text-white mt-3">
+            <p className="text-center  text-sm lg:text-2xl text-white mt-1">
               St. Arnolds Central School (2023 - 2024)
             </p>
           </div>
@@ -159,9 +159,15 @@ function NavBar() {
                 aria-controls="basic-navbar-nav"
                 className="custom-toggler"
               />
-              <Navbar.Collapse id="basic-navbar-nav" className="flex-grow-1">
+              <Navbar.Collapse
+                id="basic-navbar-nav"
+                className="flex-grow-1 text-black "
+              >
                 <Nav className="mr-auto text-xs lg:text-sm">
-                  <NavDropdown title="Students">
+                  <NavDropdown
+                    title="Students"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item as={Link} to="/student-create">
                       Add Student
                     </NavDropdown.Item>
@@ -180,12 +186,18 @@ function NavBar() {
                       User Profile
                     </NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Manage Staff">
+                  <NavDropdown
+                    title="Manage Staff"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">Add Staff</NavDropdown.Item>
                     <NavDropdown.Item href="#">Edit Staff</NavDropdown.Item>
                     <NavDropdown.Item href="#">Delete Staff</NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Curriculum">
+                  <NavDropdown
+                    title="Curriculum"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">
                       View Curriculum
                     </NavDropdown.Item>
@@ -193,12 +205,18 @@ function NavBar() {
                       Edit Curriculum
                     </NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Library">
+                  <NavDropdown
+                    title="Library"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">Add Book</NavDropdown.Item>
                     <NavDropdown.Item href="#">Edit Book</NavDropdown.Item>
                     <NavDropdown.Item href="#">Delete Book</NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="View">
+                  <NavDropdown
+                    title="View"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">View Students</NavDropdown.Item>
                     <NavDropdown.Item href="#">View Staff</NavDropdown.Item>
                     <NavDropdown.Item href="#">
@@ -206,13 +224,19 @@ function NavBar() {
                     </NavDropdown.Item>
                     <NavDropdown.Item href="#">View Library</NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Finance">
+                  <NavDropdown
+                    title="Finance"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">
                       Financial Reports
                     </NavDropdown.Item>
                     <NavDropdown.Item href="#">Expenses</NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Periodicals">
+                  <NavDropdown
+                    title="Periodicals"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">Add Periodical</NavDropdown.Item>
                     <NavDropdown.Item href="#">
                       Edit Periodical
@@ -221,7 +245,10 @@ function NavBar() {
                       Delete Periodical
                     </NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Masters">
+                  <NavDropdown
+                    title="Masters"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">Masters</NavDropdown.Item>
                     <NavDropdown.Item href="#">
                       Edit Master Record
@@ -230,15 +257,24 @@ function NavBar() {
                       Delete Master Record
                     </NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="Reports">
+                  <NavDropdown
+                    title="Reports"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">
                       Generate Report
                     </NavDropdown.Item>
                     <NavDropdown.Item href="#">View Report</NavDropdown.Item>
                   </NavDropdown>
-                  <NavDropdown title="System">
+                  <NavDropdown
+                    title="System"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     <NavDropdown.Item href="#">
-                      <NavDropdown title="Settings">
+                      <NavDropdown
+                        title="Settings"
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
                         <NavDropdown.Item href="#">Add Staff</NavDropdown.Item>
                         <NavDropdown.Item href="#">Edit Staff</NavDropdown.Item>
                         <NavDropdown.Item href="#">
@@ -288,6 +324,7 @@ function NavBar() {
                 position: "relative",
                 right: "10px",
                 textAlign: "center",
+                // fontWeight: "500",
               }}
               onSelect={handleSelect}
             >

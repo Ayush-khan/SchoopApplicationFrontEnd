@@ -9,6 +9,7 @@
   font-size: 12px; /* Smaller font size */
 
 .navbar-brand {
+  font-weight: 900;
   margin-right: 10px;
 }
 
@@ -22,6 +23,7 @@
 }
 
 .navbar-brand:hover {
+  /* font-weight: 900; */
   background-color: #f8f9fa;
   color: black;
 }

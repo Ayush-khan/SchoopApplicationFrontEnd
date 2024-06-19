@@ -14,6 +14,7 @@ import { FaBirthdayCake } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { HiCollection } from "react-icons/hi";
 import { IoTicket } from "react-icons/io5";
+import NoticeBord from "./NoticeBord.jsx";
 
 const DashboardContent = () => {
   return (
@@ -154,7 +155,10 @@ const DashboardContent = () => {
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;",
           }}
-        ></div>
+        >
+          {" "}
+          <NoticeBord />
+        </div>
       </div>
 
       <Footer />

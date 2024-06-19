@@ -348,16 +348,25 @@ const EventCard = () => {
 
   return (
     <div
-      className={`${Styles.eventCardContainer} border-2 border-solid h-64 bg-slate-50`}
+      className={`${Styles.eventCardContainer} border-2 border-solid h-64 bg-slate-100`}
     >
       <div
         className={Styles.header}
-        style={{ fontWeight: "800", fontSize: "1.3em" }}
+        style={{
+          fontWeight: "800",
+          fontSize: "1.3em",
+        }}
       >
         <select
           value={selectedMonth}
           onChange={handleMonthChange}
           className={Styles.monthSelect}
+          style={{
+            backgroundColor: "transparent",
+            color: "#6B7280",
+            // color: "#A74592",
+            // color: "#3689E4",
+          }}
         >
           {months.map((month) => (
             <option key={month.value} value={month.value}>
@@ -369,14 +378,14 @@ const EventCard = () => {
           style={{
             marginTop: "0px",
             marginLeft: "7px",
-            width: "7em",
+            width: "6.5em",
             textAlign: "center",
           }}
         />
       </div>
       <div className={`${Styles.eventsList} rounded-lg pb-20 bg-gray-100`}>
         {filteredEvents.map((event, index) => (
-          <div key={index} className={`${Styles.eventCard} rounded-lg mt-2`}>
+          <div key={index} className={`${Styles.eventCard} rounded-lg mt-2 `}>
             <div
               className={`${Styles.date} bg-gray-500 h-full text-slate-50 text-md`}
             >
@@ -390,22 +399,30 @@ const EventCard = () => {
             <div className={Styles.details}>
               <h5
                 style={{
-                  fontSize: "1.3em",
+                  fontSize: "1.2em",
                   fontWeight: "550",
-                  marginTop: "1.8em",
+                  marginTop: "1em",
+                  color: "#6B7280",
                 }}
               >
                 {event.title}
               </h5>
               <div className="mb-3">
-                <p style={{ fontSize: "1.1em", paddingBottom: "0px" }}>
+                <p
+                  style={{
+                    fontSize: "1.1em",
+                    paddingBottom: "0px",
+                    marginBottom: "2px",
+                  }}
+                >
                   {event.description}
                 </p>
                 <p
                   style={{
                     fontSize: "11px",
                     color: "gray",
-                    paddingBottom: "10px",
+                    marginTop: "5px",
+                    marginBottom: "-10px",
                   }}
                 >
                   Last updated 3 min ago

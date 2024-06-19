@@ -76,13 +76,17 @@ function NavBar() {
       <div className="" style={{ position: "sticky", top: "0px" }}>
         <div
           className={`${styles.navbar} w-screen flex items-center justify-between px-2  h-12`}
-          style={{ background: " #E91E63;" }}
+          style={{
+            // background: "#C12D51"
+            // background: "rgb(200, 35, 69) ",
+            background: "#C03078",
+          }}
         >
           <div>
             <LuSchool className=" text-white " style={{ fontSize: "2em" }} />
           </div>
           <div className="flex-grow">
-            <p className="text-center  text-sm lg:text-2xl text-white mt-1">
+            <p className="text-center  text-sm lg:text-2xl text-white mt-1 font-semibold">
               St. Arnolds Central School (2023 - 2024)
             </p>
           </div>

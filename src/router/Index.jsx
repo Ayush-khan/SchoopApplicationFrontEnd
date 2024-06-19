@@ -11,6 +11,7 @@ import LandingPage from "../componants/LandingPage";
 import authManage from "../utils/auth";
 import AdminDashboard from "../componants/Dashbord/AdminDashboard";
 import EventCard from "../componants/Dashbord/EventCard";
+import NoticeBord from "../componants/Dashbord/NoticeBord";
 
 function Index() {
   return (
@@ -25,6 +26,7 @@ function Index() {
 
       {/* temoprary i have changed it */}
       <Route path="/dashboard" element={<AdminDashboard />} />
+      <Route path="/noticebord" element={<NoticeBord />} />
       <Route path="/" element={<NavBar />} />
       <Route path="/myprofile" element={<UserProfile />} />
       {/* <Route path='/' element={<LandingPage />} /> */}

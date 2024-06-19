@@ -10,9 +10,10 @@ const AdminDashboard = () => {
       className=" w-screen overflow-x-hidden h-screen"
       //   style={{ background: "rgb(252,252,252)" }}
       style={{
-        //         background: rgb(31,191,246);
-        // background: linear-gradient(0deg, rgba(31,191,246,1) 0%, rgba(245,6,51,1) 84%);
-        background: "  linear-gradient(to bottom, #E91E63, #2196F3)",
+        background: "   linear-gradient(to bottom, #E91E63, #2196F3)",
+
+        // background: "linear-gradient(to bottom, #C12A4D,#6C87BE, #5C99D2",
+
         // background:
         //   "rgb(31,136,246) linear-gradient(0deg, rgba(31,136,246,1) 0%, rgba(245,6,6,1) 91%)",
         // background:

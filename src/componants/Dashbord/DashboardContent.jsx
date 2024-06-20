@@ -9,6 +9,7 @@ import Style from "../../CSS/DashbordCss/Card.module.css";
 import Card from "../common/Card.jsx";
 import EventCard from "./EventCard.jsx";
 import CardStuStaf from "../common/CardStuStaf.jsx";
+import StudentsChart from "../Dashbord/Charts/StudentsChart.jsx";
 import Footer from "../../Layouts/Footer.jsx";
 import { FaBirthdayCake } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
@@ -143,12 +144,14 @@ const DashboardContent = () => {
 
       <div className="flex items-start justify-between w-full  pr-6 gap-10 h-1/2 px-6 ">
         <div
-          className=" w-2/3 grid grid-cols-3 gap-x-8 gap-y-3  p-4 h-full bg-white rounded-lg"
+          className=" w-2/3  gap-y-3 gap-x-3  h-full bg-slate-50 rounded-lg"
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;",
           }}
-        ></div>
+        >
+          <StudentsChart />
+        </div>
         <div
           className=" w-1/3 border-2 border-solid  h-full  bg-slate-50 rounded-lg"
           style={{

@@ -387,7 +387,8 @@ const EventCard = () => {
         {filteredEvents.map((event, index) => (
           <div key={index} className={`${Styles.eventCard} rounded-lg mt-2 `}>
             <div
-              className={`${Styles.date} bg-gray-500 h-full text-slate-50 text-md`}
+              className={`${Styles.date} bg-gray-500 h-full text-slate-50 text-md rounded-lg`}
+              // style={{ backgroundColor: "#8C56A6" }}
             >
               {new Date(event.date).getDate()}{" "}
               {new Date(event.date).toLocaleString("default", {

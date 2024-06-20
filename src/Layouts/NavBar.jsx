@@ -85,8 +85,8 @@ function NavBar() {
           <div>
             <LuSchool className=" text-white " style={{ fontSize: "2em" }} />
           </div>
-          <div className="flex-grow">
-            <p className="text-center  text-sm lg:text-2xl text-white mt-1 font-semibold">
+          <div className="flex-grow ">
+            <p className=" flex justify-center mt-3 items-center  text-sm lg:text-2xl text-white font-semibold">
               St. Arnolds Central School (2023 - 2024)
             </p>
           </div>
@@ -170,7 +170,7 @@ function NavBar() {
                 <Nav className="mr-auto text-xs lg:text-sm">
                   <NavDropdown
                     title="Students"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item as={Link} to="/student-create">
                       Add Student
@@ -192,7 +192,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Manage Staff"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">Add Staff</NavDropdown.Item>
                     <NavDropdown.Item href="#">Edit Staff</NavDropdown.Item>
@@ -200,7 +200,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Curriculum"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">
                       View Curriculum
@@ -211,7 +211,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Library"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">Add Book</NavDropdown.Item>
                     <NavDropdown.Item href="#">Edit Book</NavDropdown.Item>
@@ -219,7 +219,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="View"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">View Students</NavDropdown.Item>
                     <NavDropdown.Item href="#">View Staff</NavDropdown.Item>
@@ -230,7 +230,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Finance"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">
                       Financial Reports
@@ -239,7 +239,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Periodicals"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">Add Periodical</NavDropdown.Item>
                     <NavDropdown.Item href="#">
@@ -251,7 +251,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Masters"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">Masters</NavDropdown.Item>
                     <NavDropdown.Item href="#">
@@ -263,7 +263,7 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="Reports"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">
                       Generate Report
@@ -272,12 +272,12 @@ function NavBar() {
                   </NavDropdown>
                   <NavDropdown
                     title="System"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{ color: "black", fontWeight: "700" }}
                   >
                     <NavDropdown.Item href="#">
                       <NavDropdown
                         title="Settings"
-                        style={{ color: "black", fontWeight: "600" }}
+                        style={{ color: "black", fontWeight: "700" }}
                       >
                         <NavDropdown.Item href="#">Add Staff</NavDropdown.Item>
                         <NavDropdown.Item href="#">Edit Staff</NavDropdown.Item>
@@ -328,7 +328,7 @@ function NavBar() {
                 position: "relative",
                 right: "10px",
                 textAlign: "center",
-                // fontWeight: "500",
+                fontWeight: "600",
               }}
               onSelect={handleSelect}
             >

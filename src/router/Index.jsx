@@ -13,6 +13,8 @@ import AdminDashboard from "../componants/Dashbord/AdminDashboard";
 import EventCard from "../componants/Dashbord/EventCard";
 import NoticeBord from "../componants/Dashbord/NoticeBord";
 
+import StudentsChart from "../componants/Dashbord/Charts/StudentsChart";
+
 function Index() {
   return (
     <Routes>
@@ -26,6 +28,7 @@ function Index() {
 
       {/* temoprary i have changed it */}
       <Route path="/dashboard" element={<AdminDashboard />} />
+      <Route path="/studentschart" element={<StudentsChart />} />
       <Route path="/noticebord" element={<NoticeBord />} />
       <Route path="/" element={<NavBar />} />
       <Route path="/myprofile" element={<UserProfile />} />

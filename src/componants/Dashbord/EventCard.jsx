@@ -268,58 +268,17 @@
 //     </div>
 //   );
 // };
-
-// export default EventCard;
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Styles from "./EventCard.module.css"; // Import CSS module
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
 const EventCard = () => {
-  const [events, setEvents] = useState([
-    {
-      date: "2024-05-15",
-      title: "Card title",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-    },
-    {
-      date: "2024-06-15",
-      title: "Card title",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-    },
-    {
-      date: "2024-06-16",
-      title: "Fathers Day",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-    },
-    {
-      date: "2024-06-25",
-      title: "Card title",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-    },
-    {
-      date: "2024-07-05",
-      title: "Summer Event",
-      description:
-        "Enjoy the summer with our special event. This is a longer description for the event.",
-    },
-    {
-      date: "2024-07-10",
-      title: "Another Event",
-      description:
-        "Another event description goes here. It's a bit longer to see the scrollable effect.",
-    },
-    {
-      date: "2024-08-20",
-      title: "August Event",
-      description:
-        "Event happening in August. This card has a longer description for testing scroll.",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const currentYear = new Date().getFullYear();
+  const [error, setError] = useState(null);
 
   const months = [
     { value: 0, label: "January" },
@@ -336,14 +295,41 @@ const EventCard = () => {
     { value: 11, label: "December" },
   ];
 
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          throw new Error("No token found");
+        }
+
+        const response = await axios.get(`http://127.0.0.1:8000/api/events`, {
+          params: {
+            month: selectedMonth + 1, // API expects 1-based month index
+            year: currentYear,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-Academic-Year": "2023-2024",
+          },
+        });
+
+        setEvents(response.data);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedMonth]); // Fetch when selectedMonth changes
 
   const handleMonthChange = (e) => {
     setSelectedMonth(parseInt(e.target.value, 10));
   };
 
   const filteredEvents = events.filter(
-    (event) => new Date(event.date).getMonth() === selectedMonth
+    (event) => new Date(event.start_date).getMonth() === selectedMonth
   );
 
   return (
@@ -352,50 +338,35 @@ const EventCard = () => {
     >
       <div
         className={Styles.header}
-        style={{
-          fontWeight: "800",
-          fontSize: "1.3em",
-        }}
+        style={{ fontWeight: "800", fontSize: "1.3em" }}
       >
         <select
           value={selectedMonth}
           onChange={handleMonthChange}
           className={Styles.monthSelect}
-          style={{
-            backgroundColor: "transparent",
-            color: "#6B7280",
-            // color: "#A74592",
-            // color: "#3689E4",
-          }}
+          style={{ backgroundColor: "transparent", color: "#6B7280" }}
         >
           {months.map((month) => (
             <option key={month.value} value={month.value}>
-              {month.label} {new Date().getFullYear()}
+              {month.label} {currentYear}
             </option>
           ))}
         </select>
-        <hr
-          style={{
-            marginTop: "0px",
-            marginLeft: "7px",
-            width: "6.5em",
-            textAlign: "center",
-          }}
-        />
+        {/* <MdOutlineArrowDropDown /> */}
       </div>
       <div className={`${Styles.eventsList} rounded-lg pb-20 bg-gray-100`}>
         {filteredEvents.map((event, index) => (
           <div key={index} className={`${Styles.eventCard} rounded-lg mt-2 `}>
             <div
-              className={`${Styles.date} bg-gray-500 h-full text-slate-50 text-md rounded-lg`}
-              // style={{ backgroundColor: "#8C56A6" }}
+              className={`${Styles.date} bg-gray-500 h-full font-medium text-cyan-900 text-md rounded-lg`}
+              style={{ background: "#00FFFF", color: "#C3347D" }}
             >
-              {new Date(event.date).getDate()}{" "}
-              {new Date(event.date).toLocaleString("default", {
+              {new Date(event.start_date).getDate()}{" "}
+              {new Date(event.start_date).toLocaleString("default", {
                 month: "long",
               })}
               <br />
-              10:10 am
+              {event.start_time}
             </div>
             <div className={Styles.details}>
               <h5
@@ -403,10 +374,13 @@ const EventCard = () => {
                   fontSize: "1.2em",
                   fontWeight: "550",
                   marginTop: "1em",
-                  color: "#6B7280",
+                  color: "#00FFFF",
                 }}
               >
-                {event.title}
+                {event.title}{" "}
+                <span
+                  style={{ fontSize: ".8em", color: "#C334A2" }}
+                >{` (class-${event.class_name})`}</span>
               </h5>
               <div className="mb-3">
                 <p
@@ -415,9 +389,8 @@ const EventCard = () => {
                     paddingBottom: "0px",
                     marginBottom: "2px",
                   }}
-                >
-                  {event.description}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: event.event_desc }}
+                />
                 <p
                   style={{
                     fontSize: "11px",

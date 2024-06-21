@@ -16,10 +16,70 @@ import { GiAchievement } from "react-icons/gi";
 import { HiCollection } from "react-icons/hi";
 import { IoTicket } from "react-icons/io5";
 import NoticeBord from "./NoticeBord.jsx";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const DashboardContent = () => {
+  const [studentData, setStudentData] = useState({
+    total: 0,
+    present: 0,
+  });
+  const [staffData, setStaffData] = useState({
+    teachingStaff: 0,
+    nonTeachingStaff: 0,
+  });
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          throw new Error("No token found");
+        }
+
+        // Fetch student data
+        const studentResponse = await axios.get(
+          "http://127.0.0.1:8000/api/studentss",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Academic-Year": "2023-2024",
+            },
+          }
+        );
+
+        setStudentData({
+          total: studentResponse.data.count,
+          present: studentResponse.data.present,
+        });
+
+        // Fetch staff data
+        const staffResponse = await axios.get(
+          "http://127.0.0.1:8000/api/staff",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setStaffData({
+          teachingStaff: staffResponse.data.teachingStaff,
+          nonTeachingStaff: staffResponse.data.non_teachingStaff,
+        });
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
+      {/* {error && <div className="error-message">{error}</div>} */}
       <div className="flex items-start justify-between w-full  pr-6 gap-4 h-1/2 px-6">
         <div
           className={`${Style.adminDashboard} w-2/3 grid grid-cols-3 gap-x-8 gap-y-3  p-4 h-full  `}
@@ -36,11 +96,11 @@ const DashboardContent = () => {
             color="#FFC107"
             icon={<PiBookOpenUserLight />}
           /> */}
-
+          {/* {console.log("totalstudent", studentData.total)} */}
           <CardStuStaf
             title="Student"
-            TotalValue="125321"
-            presentValue="4521"
+            TotalValue={studentData.total}
+            presentValue={studentData.present}
             color="#4CAF50"
             icon={
               <FaUsersLine
@@ -53,14 +113,33 @@ const DashboardContent = () => {
               />
             }
           />
-          <Card
-            title="Employees"
-            value="3,47,000"
+          <CardStuStaf
+            title="Teachers"
+            TotalValue={staffData.teachingStaff}
+            // presentValue={staffData.teachingStaff}
+            presentValue={"present"}
             color="#2196F3"
             icon={
               <FaUserGroup
                 style={{
-                  color: "cyan",
+                  color: "#00FFFF",
+                  backgroundColor: "white",
+                  padding: "10px",
+                  borderRadius: "50%",
+                }}
+              />
+            }
+          />
+          <CardStuStaf
+            title="Staff"
+            TotalValue={staffData.nonTeachingStaff}
+            // presentValue={staffData.nonTeachingStaff}
+            presentValue={"Present"}
+            color="#2196F3"
+            icon={
+              <FaUserGroup
+                style={{
+                  color: "#A287F3",
                   backgroundColor: "white",
                   padding: "10px",
                   borderRadius: "50%",
@@ -90,7 +169,7 @@ const DashboardContent = () => {
             icon={
               <IoTicket
                 style={{
-                  color: "yellow",
+                  color: "#30C790",
                   backgroundColor: "white",
                   padding: "10px",
                   borderRadius: "50%",
@@ -98,7 +177,7 @@ const DashboardContent = () => {
               />
             }
           />
-          <Card
+          {/* <Card
             title="Acheivements"
             value="16"
             color="#4CAF50"
@@ -112,7 +191,7 @@ const DashboardContent = () => {
                 }}
               />
             }
-          />
+          /> */}
           <Card
             title="BirthDay"
             value="3,47,000"

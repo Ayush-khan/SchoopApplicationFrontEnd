@@ -1,213 +1,167 @@
-import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  //   CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import axios from "axios";
+import React, { useState } from "react";
+import Styles from "./EventCard.module.css"; // Import CSS module
+import { MdOutlineArrowDropDown } from "react-icons/md";
 
-const Example = () => {
-  const [data, setData] = useState([]);
+const EventCard = () => {
+  const [events, setEvents] = useState([
+    {
+      date: "2024-05-15",
+      title: "Card title",
+      description:
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
+    },
+    {
+      date: "2024-06-15",
+      title: "Card title",
+      description:
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
+    },
+    {
+      date: "2024-06-16",
+      title: "Fathers Day",
+      description:
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
+    },
+    {
+      date: "2024-06-25",
+      title: "Card title",
+      description:
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
+    },
+    {
+      date: "2024-07-05",
+      title: "Summer Event",
+      description:
+        "Enjoy the summer with our special event. This is a longer description for the event.",
+    },
+    {
+      date: "2024-07-10",
+      title: "Another Event",
+      description:
+        "Another event description goes here. It's a bit longer to see the scrollable effect.",
+    },
+    {
+      date: "2024-08-20",
+      title: "August Event",
+      description:
+        "Event happening in August. This card has a longer description for testing scroll.",
+    },
+  ]);
 
-  useEffect(() => {
-    // Mock API call to fetch data
-    const fetchData = async () => {
-      try {
-        // Replace the URL with your actual API endpoint
-        const response = await axios.get("https://api.example.com/data");
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        // Fallback to hardcoded data in case of error
-        setData([
-          {
-            class: "Nursery",
-            "Section-A": 130,
-            "Section-B": 228,
-            "Section-C": 125,
-            "Section-D": 277,
-          },
-          {
-            class: "LKG",
-            "Section-A": 32,
-            "Section-B": 29,
-            "Section-C": 26,
-            "Section-D": 28,
-          },
-          {
-            class: "UKG",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 1",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 2",
-            "Section-A": 32,
-            "Section-B": 29,
-            "Section-C": 26,
-            "Section-D": 28,
-          },
-          {
-            class: "class 3",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 4",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 5",
-            "Section-A": 32,
-            "Section-B": 29,
-            "Section-C": 26,
-            "Section-D": 28,
-          },
-          {
-            class: "class 6",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 7",
-            "Section-A": 309,
-            "Section-B": 128,
-            "Section-C": 215,
-            "Section-D": 217,
-          },
-          {
-            class: "class 8",
-            "Section-A": 32,
-            "Section-B": 29,
-            "Section-C": 26,
-            "Section-D": 28,
-          },
-          {
-            class: "class 9",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 10",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-          {
-            class: "class 11",
-            "Section-A": 32,
-            "Section-B": 29,
-            "Section-C": 26,
-            "Section-D": 128,
-          },
-          {
-            class: "class 12",
-            "Section-A": 30,
-            "Section-B": 28,
-            "Section-C": 25,
-            "Section-D": 27,
-          },
-        ]);
-      }
-    };
+  const months = [
+    { value: 0, label: "January" },
+    { value: 1, label: "February" },
+    { value: 2, label: "March" },
+    { value: 3, label: "April" },
+    { value: 4, label: "May" },
+    { value: 5, label: "June" },
+    { value: 6, label: "July" },
+    { value: 7, label: "August" },
+    { value: 8, label: "September" },
+    { value: 9, label: "October" },
+    { value: 10, label: "November" },
+    { value: 11, label: "December" },
+  ];
 
-    fetchData();
-  }, []);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      const sectionData = payload[0].payload;
-      return (
-        <div className="custom-tooltip" style={tooltipStyles}>
-          <p style={labelStyles}>{`Class: ${sectionData.class}`}</p>
-          {payload.map((entry, index) => (
-            <p
-              key={`item-${index}`}
-              style={{ ...itemStyles, color: entry.color }}
-            >{`${entry.name}: ${entry.value}`}</p>
-          ))}
-        </div>
-      );
-    }
-
-    return null;
-  };
-  const tooltipStyles = {
-    backgroundColor: "#fff",
-    fontWeight: "bold",
-    border: "1px solid #ccc",
-    color: "#000",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.33)",
-    borderRadius: "5px",
-    padding: "10px",
-    width: "100%",
-    height: "50%",
-    fontSize: ".7em",
+  const handleMonthChange = (e) => {
+    setSelectedMonth(parseInt(e.target.value, 10));
   };
 
-  const labelStyles = {
-    fontWeight: "900",
-    marginBottom: "5px",
-  };
-
-  const itemStyles = {
-    // backgroundColor: "#E5E7EB",
-    margin: 0,
-  };
+  const filteredEvents = events.filter(
+    (event) => new Date(event.date).getMonth() === selectedMonth
+  );
 
   return (
-    <ResponsiveContainer
-      className="w-2/3 gap-y-3 h-full bg-white rounded-lg"
-      width={"100%"}
-      height="70%"
-      style={{ border: "2px solid black" }}
+    <div
+      className={`${Styles.eventCardContainer} border-2 border-solid h-64 bg-slate-100`}
     >
-      <BarChart
-        data={data}
-        margin={{
-          top: 20,
-          right: 20,
-          left: 5,
-          bottom: 5,
+      <div
+        className={Styles.header}
+        style={{
+          fontWeight: "800",
+          fontSize: "1.3em",
         }}
       >
-        {/* <CartesianGrid strokeDasharray="3 3" />     */}{" "}
-        {/* This is the cartision line that show background of the graphs */}
-        <XAxis dataKey="class" tick={{ fontSize: ".8em" }} />
-        <YAxis tick={{ fontSize: ".8em" }} />
-        {/* <Tooltip /> */}
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="Section-A" stackId="a" fill="#8884d8" />
-        <Bar dataKey="Section-B" stackId="a" fill="#82ca9d" />
-        <Bar dataKey="Section-C" stackId="a" fill="#ffc658" />
-        <Bar dataKey="Section-D" stackId="a" fill="#d0ed57" />
-      </BarChart>
-    </ResponsiveContainer>
+        <select
+          value={selectedMonth}
+          onChange={handleMonthChange}
+          className={Styles.monthSelect}
+          style={{
+            backgroundColor: "transparent",
+            color: "#6B7280",
+            // color: "#A74592",
+            // color: "#3689E4",
+          }}
+        >
+          {months.map((month) => (
+            <option key={month.value} value={month.value}>
+              {month.label} {new Date().getFullYear()}
+            </option>
+          ))}
+        </select>
+        <hr
+          style={{
+            marginTop: "0px",
+            marginLeft: "7px",
+            width: "6.5em",
+            textAlign: "center",
+          }}
+        />
+      </div>
+      <div className={`${Styles.eventsList} rounded-lg pb-20 bg-gray-100`}>
+        {filteredEvents.map((event, index) => (
+          <div key={index} className={`${Styles.eventCard} rounded-lg mt-2 `}>
+            <div
+              className={`${Styles.date} bg-gray-500 h-full text-cyan-900 text-md rounded-lg`}
+              style={{ backgroundColor: "#00FFFF" }}
+            >
+              {new Date(event.date).getDate()}{" "}
+              {new Date(event.date).toLocaleString("default", {
+                month: "long",
+              })}
+              <br />
+              10:10 am
+            </div>
+            <div className={Styles.details}>
+              <h5
+                style={{
+                  fontSize: "1.2em",
+                  fontWeight: "550",
+                  marginTop: "1em",
+                  color: "#00FFFF",
+                }}
+              >
+                {event.title}
+              </h5>
+              <div className="mb-3">
+                <p
+                  style={{
+                    fontSize: "1.1em",
+                    paddingBottom: "0px",
+                    marginBottom: "2px",
+                  }}
+                >
+                  {event.description}
+                </p>
+                <p
+                  style={{
+                    fontSize: "11px",
+                    color: "gray",
+                    marginTop: "5px",
+                    marginBottom: "-10px",
+                  }}
+                >
+                  Last updated 3 min ago
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default Example;
+export default EventCard;

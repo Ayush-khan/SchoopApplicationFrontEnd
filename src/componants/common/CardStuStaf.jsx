@@ -1,6 +1,9 @@
 import styles from "../../CSS/DashbordCss/Card.module.css";
 import { FaArrowRightLong } from "react-icons/fa6";
 const Card = ({ title, TotalValue, presentValue, color, icon }) => {
+  {
+    console.log("this is totalValue=", presentValue);
+  }
   return (
     <div className="w-full rounded-lg bg-white flex items-center justify-around  shadow-card h-28 ">
       <div className="flex items-center justify-between flex-col w-1/2">
@@ -36,11 +39,15 @@ const Card = ({ title, TotalValue, presentValue, color, icon }) => {
         </div> */}
         <div
           className="flex align-item-center justify-between text-sm gap-1 flex-col  "
-          style={{ fontSize: "10px" }}
+          style={{ fontSize: ".9em" }}
         >
-          <div>{presentValue ? presentValue : "value"}</div>
+          <div style={{ textAlign: "center" }}>
+            {presentValue ? presentValue : "0"}
+          </div>
           <div style={{ border: "1px solid gray" }}></div>
-          <div>{TotalValue ? <div>{TotalValue}</div> : "value"}</div>
+          <div style={{ textAlign: "center" }}>
+            {TotalValue ? <div>{TotalValue}</div> : "value"}
+          </div>
         </div>
       </div>
     </div>

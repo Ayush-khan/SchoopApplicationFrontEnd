@@ -6,7 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { CiUser, CiLogout } from "react-icons/ci";
 import { LiaEdit } from "react-icons/lia";
 import "./NabarstyleBootstrap.css";
-import authManage from "../utils/auth";
+import authManage from "../utils/PrivateRoute";
 import styles from "../CSS/Navbar.module.css";
 import { LuSchool } from "react-icons/lu";
 import { RxHamburgerMenu } from "react-icons/rx";

@@ -1,14 +1,12 @@
-
 .loginForm {
-  background: rgba(225, 225, 225, 0.3); 
-  backdrop-filter: blur(5px); 
+  background: rgba(225, 225, 225, 0.3);
+  backdrop-filter: blur(5px);
   padding: 20px;
   border-radius: 20px;
   /* box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset; */
   box-shadow: 0 4px 30px #0000001a;
-width: 30%;
-  color: #000000; 
-
+  width: 30%;
+  color: #000000;
 }
 
 .loginForm h2 {
@@ -39,15 +37,16 @@ width: 30%;
 
 .inputWrapper,
 .passwordWrapper {
-  position: relative; 
+  position: relative;
 }
 
 .inputWrapper input,
 .passwordWrapper input {
-  width: 90%; 
+  width: 90%;
   position: relative;
   transform: translateX(5%);
-  padding: 10px 35px 10px 15px; 
+  /* padding: 10px 35px 10px 15px; */
+  padding: 10px 10px 10px 40px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background: rgba(136, 124, 124, 0.1);
@@ -61,25 +60,27 @@ width: 30%;
 }
 
 /* Icons CSS */
-.userIcon,
+
 .eyeIcon {
   position: absolute;
   top: 50%;
+  right: 1%;
   transform: translateY(-50%);
 }
-
 .userIcon {
-  right: 27px; 
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
 }
-
 .eyeIcon {
-  right: 27px; 
+  right: 27px;
 }
 
 .error {
   color: red;
-    background: rgba(225, 225, 225, 0.3); 
-  backdrop-filter: blur(7px); 
+  background: rgba(225, 225, 225, 0.3);
+  backdrop-filter: blur(7px);
   border-radius: 10px;
   font-size: 12px;
   margin-top: 5px;
@@ -87,29 +88,41 @@ width: 30%;
   font-weight: 600;
 }
 
-button {
+.loginButton {
   width: 90%;
+  padding: 10px;
   position: relative;
   transform: translateX(5%);
+  border: none;
+  border-radius: 5px;
+  background-color: #7699ae;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+/* button {
+
   padding: 10px;
   background-color: rgb(170, 45, 47);
 
   color: rgb(0, 0, 0);
   border: none;
-  font-weight: 500;
+
   border-radius: 10px;
-  cursor: pointer; 
-  
-}
+  cursor: pointer;
+} */
 
 button:hover {
-  transition:all 0.5 seconds;
+  transition: all 0.5 seconds;
   background-color: rgb(156, 48, 50);
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;    
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
-.formFooter{
+.formFooter {
   text-align: center;
-  margin-top:20px;
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 
@@ -118,7 +131,6 @@ button:hover {
   text-align: center;
   color: #000000;
   text-decoration: none;
-
 }
 
 .register:hover {
@@ -128,7 +140,7 @@ button:hover {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .loginForm {
-      width: 80vw;
-      padding: 15px;
+    width: 80vw;
+    padding: 15px;
   }
 }

@@ -361,7 +361,7 @@ const EventCard = () => {
               className={`${Styles.date} bg-gray-500 h-full font-medium text-cyan-900 text-md rounded-lg`}
               style={{ background: "#00FFFF", color: "#C3347D" }}
             >
-              {new Date(event.start_date).getDate()}{" "}
+              {new Date(event.start_date).getDate() + 1}{" "}
               {new Date(event.start_date).toLocaleString("default", {
                 month: "long",
               })}
@@ -399,7 +399,17 @@ const EventCard = () => {
                     marginBottom: "-10px",
                   }}
                 >
-                  Last updated 3 min ago
+                  {" "}
+                  {/* {new Date(event.end_date).getDate() + 1}{" "}
+                  {new Date(event.end_date).toLocaleString("default", {
+                    month: "long",
+                  })} */}
+                  {/* The event will conclude on March 8th, 2024, at 12:00 PM. */}
+                  {`The event will conclude on ${
+                    new Date(event.end_date).getDate() + 1
+                  } ${new Date(event.end_date).toLocaleString("default", {
+                    month: "long",
+                  })} at ${event.end_time}`}
                 </p>
               </div>
             </div>

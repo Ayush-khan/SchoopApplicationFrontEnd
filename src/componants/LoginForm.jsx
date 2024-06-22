@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import LoadingSpinner from "../componants/common/LoadingSpinner.jsx"; // Import the LoadingSpinner component
 import styles from "../CSS/LoginForm.module.css";
 
 const LoginForm = () => {
@@ -10,26 +11,24 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toggleShowPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({}); // Clear previous errors
+    setErrors({});
+    setLoading(true); // Set loading to true when form is submitted
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
         email,
         password,
       });
       localStorage.setItem("authToken", response.data.token);
-      console.log("authKone", response.data.token);
-      // Combine user and settings into one object
       const sessionData = {
         user: response.data.data,
         settings: response.data.settings,
       };
-
-      // Store the combined data in sessionStorage
       sessionStorage.setItem("sessionData", JSON.stringify(sessionData));
       navigate("/dashboard");
     } catch (error) {
@@ -47,6 +46,8 @@ const LoginForm = () => {
         newErrors.api = "An unexpected error occurred. Please try again later.";
       }
       setErrors(newErrors);
+    } finally {
+      setLoading(false); // Set loading to false after the request is complete
     }
   };
 
@@ -92,8 +93,12 @@ const LoginForm = () => {
           )}
         </div>
         {errors.api && <span className={styles.error}>{errors.api}</span>}
-        <button type="submit" className={styles.loginButton}>
-          Login
+        <button
+          type="submit"
+          className={`${styles.loginButton} flex place-items-center justify-center`}
+          disabled={loading}
+        >
+          {loading ? <LoadingSpinner /> : "Login"}
         </button>
         <div className={styles.formFooter}></div>
       </form>

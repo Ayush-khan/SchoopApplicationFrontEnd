@@ -1,61 +1,74 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Styles from "../../CSS/DashbordCss/NoticeBord.module.css";
-import Style from "@emotion/style";
 
 function NoticeBord() {
   const [activeTab, setActiveTab] = useState("noticeForParents");
+  const [parentNotices, setParentNotices] = useState([]);
+  const [staffNotices, setStaffNotices] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          throw new Error("No token found");
+        }
+
+        // Fetch parent notices
+        const parentResponse = await axios.get(
+          "http://127.0.0.1:8000/api/parent-notices",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Academic-Year": "2023-2024",
+            },
+          }
+        );
+        setParentNotices(parentResponse.data.parent_notices);
+
+        // Fetch staff notices
+        const staffResponse = await axios.get(
+          "http://127.0.0.1:8000/api/staff-notices",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Academic-Year": "2023-2024",
+            },
+          }
+        );
+        // console.log("staffResponse", staffResponse.data.notices);
+        setStaffNotices(staffResponse.data.notices);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching notices:", error);
+      }
+    };
+
+    fetchNotices();
+  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
-  const parentNotices = [
-    {
-      date: "16 May, 2017",
-      author: "Jennyfar Lopez",
-      time: "5 min ago",
-      message: "Great School management. Simply dummy text of the printing.",
-    },
-    {
-      date: "16 May, 2017",
-      author: "Killar Miller",
-      time: "55 min ago",
-      message: "Great School management. Simply dummy text of the printing.",
-    },
-    {
-      date: "16 May, 2017",
-      author: "Jennyfar Lopez",
-      time: "5 min ago",
-      message: "Great School management. Simply dummy text.",
-    },
-    {
-      date: "16 May, 2017",
-      author: "Mike Hussy",
-      time: "5 min ago",
-      message: "Great School management. Simply dummy text.",
-    },
-  ];
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
 
-  const staffNotices = [
-    {
-      date: "17 May, 2017",
-      author: "John Doe",
-      time: "10 min ago",
-      message: "Staff meeting at 3 PM in the conference room.",
-    },
-    {
-      date: "17 May, 2017",
-      author: "Jane Smith",
-      time: "30 min ago",
-      message: "Submit your weekly reports by EOD.",
-    },
-    {
-      date: "17 May, 2017",
-      author: "Richard Roe",
-      time: "1 hour ago",
-      message: "Training session on new software tomorrow at 10 AM.",
-    },
-  ];
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
   return (
     <div className={`${Styles.container} bg-slate-100`}>
@@ -84,16 +97,29 @@ function NoticeBord() {
             {parentNotices.map((notice, index) => (
               <div
                 key={index}
-                className={`${Styles.notice} box-border  shadow-md`}
+                className={`${Styles.notice} box-border shadow-md`}
               >
-                <div className={Styles.date}>{notice.date}</div>
-                <div className={Styles.author}>
-                  {notice.author}
-                  <span className={`${Styles.time}  ml-4`}>{notice.time}</span>
-                </div>
+                <div className={Styles.date}>
+                  {notice.notice_date}{" "}
+                  <span
+                    className={`${Styles.time} text-right float-end font-bold `}
+                  >
+                    {/* {console.log("notice message", notice.class_name)} */}
 
-                <div className={`${Styles.message} leading-6`}>
-                  {notice.message}
+                    {notice.notice_type}
+                  </span>
+                </div>
+                <div className={Styles.author}>
+                  {notice.subject}
+                  <span
+                    className={`${Styles.time}  ml-2`}
+                    style={{ fontSize: ".88em" }}
+                  >
+                    {`( classes-${notice.class_name} )`}
+                  </span>
+                </div>
+                <div className={`${Styles.message} leading-4`}>
+                  {notice.notice_desc}
                 </div>
               </div>
             ))}
@@ -101,24 +127,33 @@ function NoticeBord() {
         )}
 
         {activeTab === "noticeForStaff" && (
-          <div className={`${Styles.noticeBoard} `}>
+          <div className={`${Styles.noticeBoard}`}>
             {staffNotices.map((notice, index) => (
               <div
                 key={index}
-                className={`${Styles.notice} box-border shadow-md `}
-                // style={{
-                //   background: " #E91E63",
-                // }}
+                className={`${Styles.notice} box-border shadow-md`}
               >
-                <div className={Styles.date}>{notice.date}</div>
-                <div className={Styles.author}>
-                  {" "}
-                  {notice.author}
-                  <span className={`${Styles.time}  ml-4`}>{notice.time}</span>
-                </div>
+                <div className={Styles.date}>
+                  {notice.notice_date}{" "}
+                  <span
+                    className={`${Styles.time} text-right float-end font-bold `}
+                  >
+                    {console.log("notice message", notice.class_name)}
 
+                    {notice.notice_type}
+                  </span>
+                </div>
+                <div className={Styles.author}>
+                  {notice.subject}
+                  <span
+                    className={`${Styles.time}  ml-2`}
+                    style={{ fontSize: ".88em" }}
+                  >
+                    {`( ${notice.staff_name} )`}
+                  </span>
+                </div>
                 <div className={`${Styles.message} leading-6`}>
-                  {notice.message}
+                  {notice.notice_desc}
                 </div>
               </div>
             ))}

@@ -34,8 +34,10 @@ const DashboardContent = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        if (!token) {
-          throw new Error("No token found");
+        // const academicYr=localStorage.getItem("user");
+        const academicYr = localStorage.getItem("academicYear");
+        if (!token || !academicYr) {
+          throw new Error("No authentication token or academic year found");
         }
 
         // Fetch student data
@@ -44,7 +46,8 @@ const DashboardContent = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "X-Academic-Year": "2023-2024",
+
+              "X-Academic-Year": academicYr,
             },
           }
         );
@@ -60,6 +63,7 @@ const DashboardContent = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "X-Academic-Year": academicYr,
             },
           }
         );
@@ -252,9 +256,6 @@ export default DashboardContent;
 
 
 
-
-
-
 // this is the responsive code for the dashbord
 
 
@@ -435,7 +436,16 @@ const DashboardContent = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-10 p-6">
-        <div className="w-full lg:w-2/3 h-full bg-slate-50 rounded-lg shadow-md">
+        {/* <div className="w-full lg:w-2/3 h-full bg-slate-50 rounded-lg shadow-md">
+          <StudentsChart />
+        </div> */}
+        <div
+          className=" w-2/3  gap-y-3 gap-x-3  h-full bg-slate-50 rounded-lg"
+          style={{
+            boxShadow:
+              "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px"
+          }}
+        >
           <StudentsChart />
         </div>
         <div

@@ -275,6 +275,7 @@ import Styles from "./EventCard.module.css"; // Import CSS module
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
 const EventCard = () => {
+  const API_URL = import.meta.env.VITE_API_URL; // url for host
   const [events, setEvents] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const currentYear = new Date().getFullYear();
@@ -299,20 +300,29 @@ const EventCard = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        if (!token) {
-          throw new Error("No token found");
+        const academicYr = localStorage.getItem("academicYear");
+        console.log("academic year", academicYr);
+        console.log("token is", token);
+
+        if (!token || !academicYr) {
+          throw new Error("No authentication token or academic year found");
         }
 
-        const response = await axios.get(`http://127.0.0.1:8000/api/events`, {
-          params: {
-            month: selectedMonth + 1, // API expects 1-based month index
-            year: currentYear,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "X-Academic-Year": "2023-2024",
-          },
-        });
+        const response = await axios.get(
+          // `http://127.0.0.1:8000/api/events`,
+          `${API_URL}/api/events`,
+          {
+            params: {
+              month: selectedMonth + 1, // API expects 1-based month index
+              year: currentYear,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Academic-Year": academicYr,
+              // "X-Academic-Year": "2023-2024",
+            },
+          }
+        );
 
         setEvents(response.data);
       } catch (error) {

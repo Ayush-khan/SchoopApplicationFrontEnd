@@ -167,7 +167,7 @@ const Example = () => {
     fontWeight: "bold",
     // border: "1px solid #ccc",
     // color: "#000",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.33)",
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.33)",
     borderRadius: "5px",
     padding: "10px",
     paddingBottom: "0px",
@@ -205,7 +205,7 @@ const Example = () => {
       //   className="w-2/3 gap-y-3 h-full rounded-lg"
       width={"100%"}
       margin={"auto"}
-      height="100%"
+      height={"100%"}
       //   style={{ border: "2px solid black" }}
     >
       <BarChart

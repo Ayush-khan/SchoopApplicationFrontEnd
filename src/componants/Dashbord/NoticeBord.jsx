@@ -3,6 +3,7 @@ import axios from "axios";
 import Styles from "../../CSS/DashbordCss/NoticeBord.module.css";
 
 function NoticeBord() {
+  const API_URL = import.meta.env.VITE_API_URL; // url for host
   const [activeTab, setActiveTab] = useState("noticeForParents");
   const [parentNotices, setParentNotices] = useState([]);
   const [staffNotices, setStaffNotices] = useState([]);
@@ -12,17 +13,22 @@ function NoticeBord() {
     const fetchNotices = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        if (!token) {
-          throw new Error("No token found");
+        const academicYr = localStorage.getItem("academicYear");
+        // const academicYr = localStorage.getItem("X-Academic-Year");
+        if (!token || !academicYr) {
+          throw new Error("No authentication token or academic year found");
         }
 
         // Fetch parent notices
         const parentResponse = await axios.get(
-          "http://127.0.0.1:8000/api/parent-notices",
+          `${API_URL}/api/parent-notices`,
+          // "http://127.0.0.1:8000/api/parent-notices",
+
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "X-Academic-Year": "2023-2024",
+              "X-Academic-Year": academicYr,
+              // "X-Academic-Year": "2023-2024",
             },
           }
         );
@@ -30,7 +36,8 @@ function NoticeBord() {
 
         // Fetch staff notices
         const staffResponse = await axios.get(
-          "http://127.0.0.1:8000/api/staff-notices",
+          `${API_URL}/api/staff-notices`,
+          // "http://127.0.0.1:8000/api/staff-notices",
           {
             headers: {
               Authorization: `Bearer ${token}`,

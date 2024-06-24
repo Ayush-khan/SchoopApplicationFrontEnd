@@ -57,6 +57,8 @@ import NoticeBord from "../componants/Dashbord/NoticeBord";
 
 import StudentsChart from "../componants/Dashbord/Charts/StudentsChart";
 import PrivateRoute from "../utils/PrivateRoute";
+import ClassList from "../componants/TableComponentsNikhilbhai/ClassList";
+import Sections from "../componants/TableComponentsNikhilbhai/Sections";
 
 function Index() {
   return (
@@ -88,6 +90,10 @@ function Index() {
         path="/myprofile"
         element={<PrivateRoute element={UserProfile} />}
       />
+
+      {/* Nikhil bhai pages */}
+      <Route path="/classlist" element={<PrivateRoute element={ClassList} />} />
+      <Route path="/sections" element={<PrivateRoute element={Sections} />} />
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
     </Routes>

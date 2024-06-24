@@ -20,6 +20,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const DashboardContent = () => {
+  const API_URL = import.meta.env.VITE_API_URL; // url for host
   const [studentData, setStudentData] = useState({
     total: 0,
     present: 0,
@@ -34,20 +35,20 @@ const DashboardContent = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        if (!token) {
-          throw new Error("No token found");
+        // const academicYr=localStorage.getItem("user");
+        const academicYr = localStorage.getItem("academicYear");
+        if (!token || !academicYr) {
+          throw new Error("No authentication token or academic year found");
         }
 
         // Fetch student data
-        const studentResponse = await axios.get(
-          "http://127.0.0.1:8000/api/studentss",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "X-Academic-Year": "2023-2024",
-            },
-          }
-        );
+        const studentResponse = await axios.get(`${API_URL}/api/studentss`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+
+            "X-Academic-Year": academicYr,
+          },
+        });
 
         setStudentData({
           total: studentResponse.data.count,
@@ -56,14 +57,16 @@ const DashboardContent = () => {
 
         // Fetch staff data
         const staffResponse = await axios.get(
-          "http://127.0.0.1:8000/api/staff",
+          // "http://127.0.0.1:8000/api/staff",
+          `${API_URL}/api/staff`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "X-Academic-Year": academicYr,
             },
           }
         );
-
+        console.log("reponse of the staffAPI", staffResponse);
         setStaffData({
           teachingStaff: staffResponse.data.teachingStaff,
           nonTeachingStaff: staffResponse.data.non_teachingStaff,
@@ -80,7 +83,7 @@ const DashboardContent = () => {
   return (
     <>
       {/* {error && <div className="error-message">{error}</div>} */}
-      <div className="flex items-start justify-between w-full  pr-6 gap-4 h-1/2 px-6">
+      <div className="flex items-start justify-between w-full  pr-6 gap-4 h-1/2 px-6 lg:flex-row xm:flex-col">
         <div
           className={`${Style.adminDashboard} w-2/3 grid grid-cols-3 gap-x-8 gap-y-3  p-4 h-full  `}
         >
@@ -221,7 +224,7 @@ const DashboardContent = () => {
         </div>
       </div>
 
-      <div className="flex items-start justify-between w-full  pr-6 gap-10 h-1/2 px-6 ">
+      <div className="flex items-start justify-between w-full  pr-6 gap-10 h-1/2 px-6 lg:flex-row xm:flex-col">
         <div
           className=" w-2/3  gap-y-3 gap-x-3  h-full bg-slate-50 rounded-lg"
           style={{

@@ -45,7 +45,7 @@ function NavBar() {
     try {
       const token = localStorage.getItem("authToken");
       await axios.post(
-        "http://127.0.0.1:8000/api/logout",
+        "http://103.159.85.174:8507/api/logout",
         {},
         {
           headers: {

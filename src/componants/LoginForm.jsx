@@ -16,15 +16,23 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    const API_URL = import.meta.env.VITE_API_URL; // url for host
     e.preventDefault();
     setErrors({});
     setLoading(true); // Set loading to true when form is submitted
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        // "http://127.0.0.1:8000/api/login",
+        `${API_URL}/api/login`,
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("academicYear", response.data.academic_yr);
+      console.log("response", response);
+      // const academicYr = localStorage.getItem("academicYear");
       const sessionData = {
         user: response.data.data,
         settings: response.data.settings,

@@ -14,7 +14,6 @@ function NoticeBord() {
       try {
         const token = localStorage.getItem("authToken");
         const academicYr = localStorage.getItem("academicYear");
-        // const academicYr = localStorage.getItem("X-Academic-Year");
         if (!token || !academicYr) {
           throw new Error("No authentication token or academic year found");
         }
@@ -22,30 +21,22 @@ function NoticeBord() {
         // Fetch parent notices
         const parentResponse = await axios.get(
           `${API_URL}/api/parent-notices`,
-          // "http://127.0.0.1:8000/api/parent-notices",
-
           {
             headers: {
               Authorization: `Bearer ${token}`,
               "X-Academic-Year": academicYr,
-              // "X-Academic-Year": "2023-2024",
             },
           }
         );
         setParentNotices(parentResponse.data.parent_notices);
 
         // Fetch staff notices
-        const staffResponse = await axios.get(
-          `${API_URL}/api/staff-notices`,
-          // "http://127.0.0.1:8000/api/staff-notices",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "X-Academic-Year": "2023-2024",
-            },
-          }
-        );
-        // console.log("staffResponse", staffResponse.data.notices);
+        const staffResponse = await axios.get(`${API_URL}/api/staff-notices`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-Academic-Year": "2023-2024",
+          },
+        });
         setStaffNotices(staffResponse.data.notices);
       } catch (error) {
         setError(error.message);
@@ -60,30 +51,15 @@ function NoticeBord() {
     setActiveTab(tab);
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  };
-
-  const formatTime = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   return (
-    <div className={`${Styles.container} bg-slate-100`}>
-      <div className={Styles.tabs}>
+    <div
+      className={`${Styles.container} bg-slate-100 px-2 rounded-lg shadow-md `}
+    >
+      <div className="flex justify-between sm:mb-2  sm:flex flex-row">
         <button
           className={`${Styles.tab} ${
             activeTab === "noticeForParents" ? Styles.active : ""
-          }`}
+          } sm:mr-2 mb-2 sm:mb-0 flex-1 p-2 text-sm sm:w-1/2`}
           onClick={() => handleTabChange("noticeForParents")}
         >
           Notice for Parents
@@ -91,41 +67,36 @@ function NoticeBord() {
         <button
           className={`${Styles.tab} ${
             activeTab === "noticeForStaff" ? Styles.active : ""
-          }`}
+          } sm:mr-2 mb-2 sm:mb-0 flex-1 p-2 text-sm sm:w-1/2`}
           onClick={() => handleTabChange("noticeForStaff")}
         >
           Notice for Staff
         </button>
       </div>
 
-      <div className={Styles.content}>
+      <div className="overflow-y-auto max-h-64 ">
         {activeTab === "noticeForParents" && (
-          <div className={Styles.noticeBoard}>
+          <div className={`${Styles.noticeBoard} grid gap-2`}>
             {parentNotices.map((notice, index) => (
               <div
                 key={index}
-                className={`${Styles.notice} box-border shadow-md`}
+                className={`${Styles.notice}  sm:border-1 border-gray sm:px-3 sm:py-1 sm:leading-3 mb-0 sm:h-fit bg-white  box-border  rounded shadow-md `}
               >
-                <div className={Styles.date}>
-                  {notice.notice_date}{" "}
-                  <span
-                    className={`${Styles.time} text-right float-end font-bold `}
-                  >
-                    {/* {console.log("notice message", notice.class_name)} */}
-
+                <div className={`${Styles.date}  text-xs mb-2 sm:mb-1`}>
+                  {notice.notice_date}
+                  <span className={`${Styles.time} float-right font-bold`}>
                     {notice.notice_type}
                   </span>
                 </div>
-                <div className={Styles.author}>
+                <div className={`${Styles.author} text-sm mb-2 sm:mb-1`}>
                   {notice.subject}
                   <span
-                    className={`${Styles.time}  ml-2`}
-                    style={{ fontSize: ".88em" }}
-                  >
-                    {`( classes-${notice.class_name} )`}
-                  </span>
+                    className={`${Styles.time} ml-2 text-xs sm:mb-1`}
+                  >{`( classes-${notice.class_name} )`}</span>
                 </div>
-                <div className={`${Styles.message} leading-4`}>
+                <div
+                  className={`${Styles.message} text-sm leading-4 sm:leading-3 sm:mt-0`}
+                >
                   {notice.notice_desc}
                 </div>
               </div>
@@ -134,32 +105,25 @@ function NoticeBord() {
         )}
 
         {activeTab === "noticeForStaff" && (
-          <div className={`${Styles.noticeBoard}`}>
+          <div className={`${Styles.noticeBoard} grid gap-2`}>
             {staffNotices.map((notice, index) => (
               <div
                 key={index}
-                className={`${Styles.notice} box-border shadow-md`}
+                className={`${Styles.notice} sm:p-4 rounded shadow-md`}
               >
-                <div className={Styles.date}>
-                  {notice.notice_date}{" "}
-                  <span
-                    className={`${Styles.time} text-right float-end font-bold `}
-                  >
-                    {console.log("notice message", notice.class_name)}
-
+                <div className={`${Styles.date} text-xs mb-2`}>
+                  {notice.notice_date}
+                  <span className={`${Styles.time} float-right font-bold`}>
                     {notice.notice_type}
                   </span>
                 </div>
-                <div className={Styles.author}>
+                <div className={`${Styles.author} text-sm mb-2`}>
                   {notice.subject}
                   <span
-                    className={`${Styles.time}  ml-2`}
-                    style={{ fontSize: ".88em" }}
-                  >
-                    {`( ${notice.staff_name} )`}
-                  </span>
+                    className={`${Styles.time} ml-2 text-xs`}
+                  >{`( ${notice.staff_name} )`}</span>
                 </div>
-                <div className={`${Styles.message} leading-6`}>
+                <div className={`${Styles.message} text-sm leading-6`}>
                   {notice.notice_desc}
                 </div>
               </div>

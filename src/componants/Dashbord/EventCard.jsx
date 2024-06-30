@@ -347,7 +347,7 @@ const EventCard = () => {
       className={`${Styles.eventCardContainer} border-2 border-solid h-64 bg-slate-100`}
     >
       <div
-        className={Styles.header}
+        className={`${Styles.header} `}
         style={{ fontWeight: "800", fontSize: "1.3em" }}
       >
         <select
@@ -364,11 +364,13 @@ const EventCard = () => {
         </select>
         {/* <MdOutlineArrowDropDown /> */}
       </div>
-      <div className={`${Styles.eventsList} rounded-lg pb-20 bg-gray-100`}>
+      <div
+        className={`${Styles.eventsList} rounded-lg pb-20 sm:pb-20  bg-gray-100`}
+      >
         {filteredEvents.map((event, index) => (
-          <div key={index} className={`${Styles.eventCard} rounded-lg mt-2 `}>
+          <div key={index} className={`${Styles.eventCard} rounded-lg m-auto `}>
             <div
-              className={`${Styles.date} bg-gray-500 h-full font-medium text-cyan-900 text-md rounded-lg`}
+              className={`${Styles.date} bg-gray-500 h-full font-medium text-cyan-900 text-md rounded-lg flex items-center justify-around`}
               style={{ background: "#00FFFF", color: "#C3347D" }}
             >
               {new Date(event.start_date).getDate() + 1}{" "}
@@ -378,34 +380,35 @@ const EventCard = () => {
               <br />
               {event.start_time}
             </div>
+
             <div className={Styles.details}>
               <h5
+                className="sm:text-xs"
                 style={{
-                  fontSize: "1.2em",
+                  // fontSize: "1.1em",
                   fontWeight: "550",
-                  marginTop: "1em",
+                  // marginTop: "1em",
                   color: "#00FFFF",
                 }}
               >
                 {event.title}{" "}
                 <span
-                  style={{ fontSize: ".8em", color: "#C334A2" }}
+                  style={{ color: "#C334A2" }}
                 >{` (class-${event.class_name})`}</span>
               </h5>
               <div className="mb-3">
+                <div
+                  className={`${Styles.discription}{mb-0 p-0 text-sm  sm:mb-1 mt-0 text-gray-800}`}
+                  // dangerouslySetInnerHTML={{ __html: event.event_desc }}
+                >
+                  {event.event_desc}
+                </div>
                 <p
                   style={{
-                    fontSize: "1.1em",
-                    paddingBottom: "0px",
-                    marginBottom: "2px",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: event.event_desc }}
-                />
-                <p
-                  style={{
-                    fontSize: "11px",
+                    fontSize: ".9em",
                     color: "gray",
-                    marginTop: "5px",
+                    marginTop: "2px",
+                    marginLeft: "5px",
                     marginBottom: "-10px",
                   }}
                 >

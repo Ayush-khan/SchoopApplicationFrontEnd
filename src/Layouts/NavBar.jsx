@@ -14,6 +14,7 @@ import Sidebar from "./Sidebar";
 import { Translate } from "react-bootstrap-icons";
 
 function NavBar() {
+  const API_URL = import.meta.env.VITE_API_URL; //thsis is test url
   const navigate = useNavigate();
   const [isSidebar, setIsSidebar] = useState();
   const [instituteName, setInstituteName] = useState("");
@@ -45,7 +46,7 @@ function NavBar() {
     try {
       const token = localStorage.getItem("authToken");
       await axios.post(
-        "http://103.159.85.174:8507/api/logout",
+        `${API_URL}/api/logout`,
         {},
         {
           headers: {
@@ -73,7 +74,10 @@ function NavBar() {
   };
   return (
     <>
-      <div className="" style={{ position: "sticky", top: "0px" }}>
+      <div
+        className=""
+        style={{ position: "sticky", top: "0px", zIndex: "10" }}
+      >
         <div
           className={`${styles.navbar} w-screen flex items-center justify-between px-2  h-12`}
           style={{
@@ -86,9 +90,11 @@ function NavBar() {
             <LuSchool className=" text-white " style={{ fontSize: "2em" }} />
           </div>
           <div className="flex-grow ">
-            <p className=" flex justify-center mt-3 items-center  text-sm lg:text-2xl text-white font-semibold">
+            <h1
+              className={`${styles.headingSchool} flex justify-center items-center   lg:text-2xl  font-semibold   sm:font-bold  text-white `}
+            >
               St. Arnolds Central School (2023 - 2024)
-            </p>
+            </h1>
           </div>
           <h1 className="text-lg lg:text-sm text-white px-2 hidden lg:block mt-2">
             18 June 2024
@@ -158,19 +164,23 @@ function NavBar() {
             {/* joidsfj
             
             */}
-            <div className="container-fluid flex items-center ">
+            <div className="container-fluid flex items-center bg-gray-200 sm:w-40 box-border">
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
-                className="custom-toggler"
+                className="custom-toggler bg-transparent"
               />
               <Navbar.Collapse
                 id="basic-navbar-nav"
                 className="flex-grow-1 text-black "
               >
-                <Nav className="mr-auto text-xs lg:text-sm">
+                <Nav className="mr-auto text-xs lg:text-sm ">
                   <NavDropdown
                     title="Students"
-                    style={{ color: "black", fontWeight: "700" }}
+                    style={{
+                      color: "black",
+                      fontWeight: "700",
+                    }}
+                    className="pr-0 mr-0 w-fit"
                   >
                     <NavDropdown.Item as={Link} to="/student-create">
                       Add Student
@@ -313,14 +323,14 @@ function NavBar() {
                   paddingRight: "4px",
                   // Adjust the input text size if needed
                 }}
-                className={`${styles.customPlaceholder} w-12 lg:w-20 mr-4 outline-none border-1 border-gray-400  rounded-md py-0.5 text-xs lg:text-sm`}
+                className={` w-12 lg:w-20 mr-4 outline-none border-1 border-gray-400  rounded-md py-0.5 text-xs lg:text-sm`}
               />
             </div>
 
             <NavDropdown
               // title={selectedYear}
               title={selectedYear ? selectedYear : "Academic Year "}
-              className="academic-dropdown  outline-none border-1 border-gray-400 px-1 rounded-md py-0.5 text-xs lg:text-sm  "
+              className={`${styles.dropNaveBarAcademic} academic-dropdown outline-none border-1 border-gray-400 px-1 rounded-md py-0.5 text-xs lg:text-sm  `}
               style={{
                 boxSizing: "border-box",
                 width: "60%",

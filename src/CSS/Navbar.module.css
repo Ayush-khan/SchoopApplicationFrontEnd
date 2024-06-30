@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 /* for customise the placeholder  */
-.customPlaceholder::placeholder {
-  font-size: 13px; /* Smaller placeholder text size is */
-  padding-left: 1em;
-  /* pointer-events: none; */
-}
+/* .customPlaceholder::placeholder { */
+/* Smaller placeholder text size is */
+/* text-align: center; */
+/* pointer-events: none; */
+/* } */
 
 .navbar {
   /* background: rgb(63,94,251);
@@ -34,14 +34,26 @@
 }
 
 @media (max-width: 768px) {
+  .headingSchool {
+    font-size: 0.8em;
+    /* background: #000; */
+  }
+
   .custom-navbar .navbar-toggler {
-    margin-left: 5px;
+    /* margin-left: 5px; */
+    box-sizing: border-box;
+
+    /* background: white; */
   }
 
   .navBarSide {
     /* border: 2px solid rgb(26, 219, 0); */
     position: relative;
     transform: translate(0px);
+  }
+  .dropNaveBarAcademic {
+    /* background: #000; */
+  
   }
 }
 

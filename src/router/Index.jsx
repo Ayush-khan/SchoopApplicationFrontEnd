@@ -59,7 +59,7 @@ import StudentsChart from "../componants/Dashbord/Charts/StudentsChart";
 import PrivateRoute from "../utils/PrivateRoute";
 import ClassList from "../componants/TableComponentsNikhilbhai/ClassList";
 import Sections from "../componants/TableComponentsNikhilbhai/Sections";
-
+import NotificationPage from "../componants/NotificationPage";
 function Index() {
   return (
     <Routes>
@@ -96,6 +96,8 @@ function Index() {
       <Route path="/sections" element={<PrivateRoute element={Sections} />} />
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/notification" element={<NotificationPage />} />
+      {/* <Route path="/notification" element={<NotificationPage />} /> */}
     </Routes>
   );
 }

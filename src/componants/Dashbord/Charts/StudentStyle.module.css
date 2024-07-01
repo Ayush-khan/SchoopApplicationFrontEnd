@@ -45,4 +45,5 @@
 
 .studenChart .customScrollbar::-webkit-scrollbar-thumb:hover {
   background: #057fe4;
+  cursor: pointer;
 }

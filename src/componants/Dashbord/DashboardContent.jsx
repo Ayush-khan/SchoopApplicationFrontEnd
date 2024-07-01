@@ -20,18 +20,24 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import HouseStudentChart from "./Charts/HouseStudentChart.jsx";
 import TableFeeCollect from "./TableFeeCollect.jsx";
+import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../common/LoadingSpinner.jsx";
 
 const DashboardContent = () => {
   const API_URL = import.meta.env.VITE_API_URL; // url for host
+  const navigate = useNavigate();
   const [studentData, setStudentData] = useState({
     total: 0,
     present: 0,
   });
+
   const [staffData, setStaffData] = useState({
     teachingStaff: 0,
     nonTeachingStaff: 0,
   });
+  const [staffBirthday, setStaffBirthday] = useState(0);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +73,32 @@ const DashboardContent = () => {
               "X-Academic-Year": academicYr,
             },
           }
+        );
+        // Fetch birthday Count
+        const Birthdaycount = await axios.get(
+          `${API_URL}/api/staffbirthdaycount`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Academic-Year": academicYr,
+            },
+          }
+        );
+        setStaffBirthday(Birthdaycount.data);
+        // birthday list
+        const BirthdayList = await axios.get(
+          `${API_URL}/api/staffbirthdaylist`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Academic-Year": academicYr,
+            },
+          }
+        );
+        console.log("This is the list of birthdays", BirthdayList);
+        console.log(
+          "this is count of studentBirthday data",
+          Birthdaycount.data
         );
         console.log("reponse of the staffAPI", staffResponse);
         setStaffData({
@@ -167,7 +199,7 @@ const DashboardContent = () => {
           />
           <Card
             title="Ticketing Module"
-            value="68"
+            value={64}
             color="#FFC107"
             icon={
               <IoTicket
@@ -195,24 +227,30 @@ const DashboardContent = () => {
               />
             }
           /> */}
-          <Card
-            title="BirthDay"
-            value="3,47,000"
-            color="#2196F3"
-            icon={
-              <FaBirthdayCake
-                style={{
-                  color: "cyan",
-                  backgroundColor: "white",
-                  padding: "10px",
-                  borderRadius: "50%",
-                }}
-              />
-            }
-          />
+
+          <Link to="/staffbirthlist" className="no-underline">
+            <Card
+              title="BirthDay"
+              value={staffBirthday}
+              // {loading ? <LoadingSpinner /> :   value={staffBirthday}}
+
+              color="#2196F3"
+              icon={
+                <FaBirthdayCake
+                  style={{
+                    color: "cyan",
+                    backgroundColor: "white",
+                    padding: "10px",
+                    borderRadius: "50%",
+                  }}
+                />
+              }
+            />
+          </Link>
           {/* you can add more cards here just add on */}
         </div>
-        <div className="w-full lg:w-1/3 h-64 mt-6 lg:mt-0 bg-slate-100 overflow-y-hidden rounded-lg shadow-md">
+
+        <div className="w-full lg:w-1/3 lg:h-full sm:h-3/4 mt-6 lg:mt-0 bg-slate-100 overflow-y-hidden rounded-lg shadow-md">
           <EventCard />
         </div>
       </div>
@@ -231,7 +269,7 @@ const DashboardContent = () => {
           <StudentsChart />
         </div>
         <div
-          className="w-full lg:w-1/3 border-2 border-solid  lg:h-full sm:h-3/4 bg-slate-50 rounded-lg  "
+          className="w-full lg:w-1/3 border-2 border-solid   bg-slate-50 rounded-lg  h-3/4 lg:h-full "
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
@@ -242,9 +280,9 @@ const DashboardContent = () => {
       </div>
       {/* extra layout */}
       {/* this is extra layout */}
-      <div className="flex flex-col-reverse lg:flex-row items-start justify-between w-full  pr-6 gap-5 px-6 sm:flex-col-reverse mr-12 mb-6 mt-6">
+      <div className="flex flex-col-reverse lg:flex-row items-start justify-between w-full  pr-6 gap-5 px-6 sm:flex-col-reverse mr-12  mt-6">
         <div
-          className="w-full lg:w-1/4 gap-y-3 gap-x-3  bg-slate-50 rounded-lg lg:h-full sm:h-3/4"
+          className="w-full lg:w-1/4 gap-y-3 gap-x-3  bg-slate-50 rounded-lg  h-3/4"
           // className="w-full lg:w-2/3 gap-y-3 gap-x-3 h-full bg-slate-50 rounded-lg lg:h-full sm:h-1/2"
           style={{
             boxShadow:
@@ -261,7 +299,7 @@ const DashboardContent = () => {
           </div> */}
         </div>
         <div
-          className=" w-full lg:w-[70%] border-2 border-solid h-full bg-slate-50 rounded-lg  "
+          className=" w-full lg:w-[70%] border-2 border-solid  bg-slate-50 rounded-lg lg:h-full sm:h-3/4 "
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
@@ -271,7 +309,7 @@ const DashboardContent = () => {
           <HouseStudentChart />
         </div>
       </div>
-      <div className="mt-10">
+      <div className="mt-6 ">
         {" "}
         <Footer />
       </div>

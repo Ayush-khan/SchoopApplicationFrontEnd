@@ -55,11 +55,11 @@ function NoticeBord() {
     <div
       className={`${Styles.container} bg-slate-100 px-2 rounded-lg shadow-md `}
     >
-      <div className="flex justify-between sm:mb-2  sm:flex flex-row">
+      <div className="flex justify-between sm:mb-2 gap-2 w-full  sm:flex flex-row">
         <button
           className={`${Styles.tab} ${
             activeTab === "noticeForParents" ? Styles.active : ""
-          } sm:mr-2 mb-2 sm:mb-0 flex-1 p-2 text-sm sm:w-1/2`}
+          } sm:mr-2 mb-2 sm:mb-0 flex-1 p-2  text-sm sm:w-1/2`}
           onClick={() => handleTabChange("noticeForParents")}
         >
           Notice for Parents

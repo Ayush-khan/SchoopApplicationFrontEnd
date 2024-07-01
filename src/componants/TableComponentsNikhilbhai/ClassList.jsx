@@ -3144,8 +3144,7 @@
 //     );
 // }
 
-// export default ClassList;
-import React, { useEffect, useState } from "react";
+// export default ClassList;import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import NavBar from "../../Layouts/NavBar";
@@ -3206,7 +3205,7 @@ function ClassList() {
       if (!token || !academicYr) {
         throw new Error("No authentication token or academic year found");
       }
-      // http://103.159.85.174:8507/api/staff
+
       const response = await axios.get(`${API_URL}/api/sections`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -3395,7 +3394,9 @@ function ClassList() {
                   {displayedClasses.map((classItem) => (
                     <tr key={classItem.class_id}>
                       <td>{classItem.name}</td>
-                      <td>{classItem.get_department.name}</td>
+                      <td>
+                        {classItem.get_department?.name || "No Department"}
+                      </td>
                       <td className="text-center">
                         <FontAwesomeIcon
                           icon={faEdit}
@@ -3428,7 +3429,7 @@ function ClassList() {
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
-                containerClassName={"pagination justify-content-center"}
+                containerClassName={"pagination"}
                 pageClassName={"page-item"}
                 pageLinkClassName={"page-link"}
                 previousClassName={"page-item"}
@@ -3442,16 +3443,13 @@ function ClassList() {
         </div>
       </div>
 
-      {/* Modal for adding a new class */}
+      {/* Add Modal */}
       {showAddModal && (
-        <div
-          className="modal"
-          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
+        <div className="modal show" style={{ display: "block" }}>
+          <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add New Class</h5>
+                <h5 className="modal-title">Add Class</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -3459,45 +3457,47 @@ function ClassList() {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="mb-3">
-                  <label htmlFor="className" className="form-label">
-                    Class Name
-                  </label>
+                <div className="form-group">
+                  <label htmlFor="newClassName">Class Name</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="className"
+                    id="newClassName"
                     value={newClassName}
                     onChange={(e) => setNewClassName(e.target.value)}
                   />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="departmentSelect" className="form-label">
-                    Department
-                  </label>
+                <div className="form-group">
+                  <label htmlFor="newDepartmentId">Department</label>
                   <select
                     className="form-control"
-                    id="departmentSelect"
+                    id="newDepartmentId"
                     value={newDepartmentId}
                     onChange={(e) => setNewDepartmentId(e.target.value)}
                   >
                     <option value="">Select Department</option>
-                    {departments.map((dept) => (
+                    {departments.map((department) => (
                       <option
-                        key={dept.department_id}
-                        value={dept.department_id}
+                        key={department.department_id}
+                        value={department.department_id}
                       >
-                        {dept.name}
+                        {department.name}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
-              <div className="modal-footer d-flex justify-content-end">
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCloseModal}
+                >
+                  Close
+                </button>
                 <button
                   type="button"
                   className="btn btn-primary"
-                  style={{ marginRight: "40px" }}
                   onClick={handleSubmitAdd}
                 >
                   Add
@@ -3508,13 +3508,10 @@ function ClassList() {
         </div>
       )}
 
-      {/* Modal for editing a class */}
+      {/* Edit Modal */}
       {showEditModal && (
-        <div
-          className="modal"
-          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
+        <div className="modal show" style={{ display: "block" }}>
+          <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Edit Class</h5>
@@ -3525,35 +3522,31 @@ function ClassList() {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="mb-3">
-                  <label htmlFor="editClassName" className="form-label">
-                    Class Name
-                  </label>
+                <div className="form-group">
+                  <label htmlFor="newClassName">Class Name</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="editClassName"
+                    id="newClassName"
                     value={newClassName}
                     onChange={(e) => setNewClassName(e.target.value)}
                   />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="editDepartmentSelect" className="form-label">
-                    Department
-                  </label>
+                <div className="form-group">
+                  <label htmlFor="newDepartmentId">Department</label>
                   <select
                     className="form-control"
-                    id="editDepartmentSelect"
+                    id="newDepartmentId"
                     value={newDepartmentId}
                     onChange={(e) => setNewDepartmentId(e.target.value)}
                   >
                     <option value="">Select Department</option>
-                    {departments.map((dept) => (
+                    {departments.map((department) => (
                       <option
-                        key={dept.department_id}
-                        value={dept.department_id}
+                        key={department.department_id}
+                        value={department.department_id}
                       >
-                        {dept.name}
+                        {department.name}
                       </option>
                     ))}
                   </select>
@@ -3562,11 +3555,17 @@ function ClassList() {
               <div className="modal-footer">
                 <button
                   type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCloseModal}
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
                   className="btn btn-primary"
-                  style={{ marginRight: "40px" }}
                   onClick={handleSubmitEdit}
                 >
-                  Update
+                  Save Changes
                 </button>
               </div>
             </div>
@@ -3574,33 +3573,36 @@ function ClassList() {
         </div>
       )}
 
-      {/* Modal for confirming deletion */}
+      {/* Delete Modal */}
       {showDeleteModal && (
-        <div
-          className="modal"
-          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
+        <div className="modal show" style={{ display: "block" }}>
+          <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Confirm Deletion</h5>
+                <h5 className="modal-title">Delete Class</h5>
                 <button
                   type="button"
                   className="btn-close"
-                  onClick={handleCloseModal}
+                  onClick={() => setShowDeleteModal(false)}
                 ></button>
               </div>
               <div className="modal-body">
+                <p>Are you sure you want to delete this class?</p>
                 <p>
-                  Are you sure you want to delete class:{" "}
-                  <strong>{currentClass.name}</strong>?
+                  <strong>{currentClass?.name}</strong>
                 </p>
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
                   className="btn btn-danger"
-                  style={{ marginRight: "40px" }}
                   onClick={handleSubmitDelete}
                 >
                   Delete

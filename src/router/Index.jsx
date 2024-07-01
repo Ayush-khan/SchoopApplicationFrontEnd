@@ -60,6 +60,7 @@ import PrivateRoute from "../utils/PrivateRoute";
 import ClassList from "../componants/TableComponentsNikhilbhai/ClassList";
 import Sections from "../componants/TableComponentsNikhilbhai/Sections";
 import NotificationPage from "../componants/NotificationPage";
+import StaffBirthdayTabList from "../componants/AllTableList/StaffBirthdayTabList";
 function Index() {
   return (
     <Routes>
@@ -98,6 +99,12 @@ function Index() {
       <Route path="/login" element={<Login />} />
       <Route path="/notification" element={<NotificationPage />} />
       {/* <Route path="/notification" element={<NotificationPage />} /> */}
+      {/* ALlTableList EndPoints */}
+      {/* <StaffBirthdayTabList /> */}
+      <Route
+        path="/staffbirthlist"
+        element={<PrivateRoute element={StaffBirthdayTabList} />}
+      />
     </Routes>
   );
 }

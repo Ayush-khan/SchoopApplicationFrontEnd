@@ -263,6 +263,12 @@ function NavBar() {
                     title="Masters"
                     style={{ color: "black", fontWeight: "700" }}
                   >
+                    <NavDropdown.Item as={Link} to="/classlist">
+                      Class List
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/sections">
+                      Sections
+                    </NavDropdown.Item>
                     <NavDropdown.Item href="#">Masters</NavDropdown.Item>
                     <NavDropdown.Item href="#">
                       Edit Master Record

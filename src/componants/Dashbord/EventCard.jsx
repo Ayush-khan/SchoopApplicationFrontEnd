@@ -353,7 +353,7 @@ const EventCard = () => {
         <select
           value={selectedMonth}
           onChange={handleMonthChange}
-          className={Styles.monthSelect}
+          className={`${Styles.monthSelect}  hover:cursor-pointer`}
           style={{ backgroundColor: "transparent", color: "#6B7280" }}
         >
           {months.map((month) => (

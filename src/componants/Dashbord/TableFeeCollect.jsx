@@ -232,7 +232,7 @@ function ListFinal() {
     <div className="container mx-auto p-3 pt-6 md:p-6 lg:p-12 h-[18.75rem]">
       <div className="header flex justify-between gap-2 mb-3">
         <select
-          className="pl-2 md:pr-5 lg:pr-8 text-sm text-gray-700 font-bold"
+          className="pl-2 md:pr-5 lg:pr-8 text-sm text-gray-700 font-bold  hover:cursor-pointer"
           value={selectedClass}
           onChange={(e) => setSelectedClass(e.target.value)}
         >
@@ -244,7 +244,7 @@ function ListFinal() {
           ))}
         </select>
         <select
-          className="pl-2 pr-8 text-sm text-gray-700 font-bold"
+          className="pl-2 pr-8 text-sm text-gray-700 font-bold  hover:cursor-pointer"
           value={selectedAccount}
           onChange={(e) => setSelectedAccount(e.target.value)}
         >

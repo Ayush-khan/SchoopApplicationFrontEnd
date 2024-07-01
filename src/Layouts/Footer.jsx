@@ -3,7 +3,7 @@ import { MdMarkEmailRead } from "react-icons/md";
 const Footer = () => {
   return (
     <footer
-      className="text-white p-4 text-center md:text-left box-border"
+      className="text-white p-4 text-center md:text-left box-border lg:h-20  "
       style={{
         backgroundColor: "#2196f3",
         // height: "50px",

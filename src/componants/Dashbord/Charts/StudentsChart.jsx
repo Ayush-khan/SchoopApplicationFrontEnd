@@ -534,7 +534,7 @@ const StudentsChart = () => {
   const [xAxisTickMargin, setXAxisTickMargin] = useState(5);
   const [xAxisTickWidth, setXAxisTickWidth] = useState(1);
   const [labelFontSize, setLabelFontSize] = useState("0.6em");
-  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     // Set barCategoryGap based on the initial screen size
     const updateBarCategoryGap = () => {
@@ -570,8 +570,7 @@ const StudentsChart = () => {
         }
 
         const response = await axios.get(
-          `${API_URL}/api/getClassDivisionTotalStudents`,
-          // `http://127.0.0.1:8000/api/getClassDivisionTotalStudents`,
+          `http://127.0.0.1:8000/api/getClassDivisionTotalStudents`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

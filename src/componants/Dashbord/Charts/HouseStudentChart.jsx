@@ -282,10 +282,10 @@ const HouseStudentChart = () => {
   return (
     // <div className="studenChart flex flex-col w-full">
     <div className={`${styles.studenChart} flex flex-col w-full`}>
-      <div className="flex flex-row justify-between items-center bg-gray-200 p-1">
-        <p className="lg:text-lg sm:text-xs font-bold text-gray-500 pl-2">
-          Charts-House's
-        </p>
+      <div className="flex flex-row justify-between   items-center bg-gray-200 p-1">
+        <span className="lg:text-lg sm:text-xs sm:font-semibold  text-gray-500 ">
+          House_chart
+        </span>
         <div className="w-64 sm:w-1/2 flex flex-row justify-end items-center gap-x-2">
           <label
             htmlFor="class-select"
@@ -297,7 +297,7 @@ const HouseStudentChart = () => {
             id="class-select"
             value={selectedClass}
             onChange={(e) => setSelectedClass(e.target.value)}
-            className="block h-fit px-2 bg-gray-100 border border-gray-950 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="block h-fit px-2 bg-gray-100 border border-gray-950 rounded-md shadow-sm  hover:cursor-pointer focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             {Array.from({ length: 12 }, (_, i) => i + 1).map((cls) => (
               <option key={cls} value={`class${cls}`}>
@@ -312,12 +312,14 @@ const HouseStudentChart = () => {
         <p>Loading...</p>
       ) : (
         // <div className="flex rounded-lg overflow-x-scroll w-full">
-        <div className={`flex rounded-lg ${styles.customScrollbar} w-full`}>
+        <div
+          className={`flex  mt-2  rounded-lg ${styles.customScrollbar} w-full`}
+        >
           {["Section-A", "Section-B", "Section-C", "Section-D"].map(
             (section) => (
               <div
                 key={section}
-                className="flex flex-col justify-center items-center gap-y-2 w-full px-4 "
+                className="flex flex-col justify-center items-center gap-y-4 w-full px-4 "
                 style={{
                   // border: "1px solid black",
                   alignItems: "center",

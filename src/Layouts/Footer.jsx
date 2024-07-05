@@ -3,24 +3,25 @@ import { MdMarkEmailRead } from "react-icons/md";
 const Footer = () => {
   return (
     <footer
-      className="text-white p-4 text-center md:text-left box-border lg:h-20  "
+      className="text-white p-4 text-center md:text-left box-border md:h-9  "
       style={{
         backgroundColor: "#2196f3",
-        // height: "50px",
+
+        width: "100%",
         boxShadow:
           "rgba(0, 0, 0, 0.16) 0px -3px 6px, rgba(0, 0, 0, 0.23) 0px -3px 6px",
         position: "relative",
         bottom: "0",
-        width: "100%",
+
         left: "0",
         right: "0",
       }}
     >
-      <div className="flex flex-col md:flex-row justify-between items-center text-white">
-        <div className="mb-2 md:mb-0 text-sm md:text-base">
+      <div className="flex flex-col  md:flex-row justify-between items-center text-white ">
+        <div className=" md:mb-0 text-sm md:text-base">
           <p>Copyright © 2016-2018 Aceventura Services. All rights reserved.</p>
         </div>
-        <div className="mb-2 md:mb-0 text-sm md:text-base">
+        <div className=" md:mb-0 text-sm md:text-base">
           <p>
             <a
               href="/terms-and-conditions"

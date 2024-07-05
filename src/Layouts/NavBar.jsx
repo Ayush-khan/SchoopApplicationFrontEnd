@@ -18,7 +18,7 @@ function NavBar() {
   const navigate = useNavigate();
   const [isSidebar, setIsSidebar] = useState();
   const [instituteName, setInstituteName] = useState("");
-  const [academicYear, setAcademicYear] = useState("");
+  const [academicYear, setAcademicYear] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuDropdownOpen, setMenuDropdownOpen] = useState({});
   const [inputValueGR, setInputValueGR] = useState("");
@@ -26,7 +26,9 @@ function NavBar() {
 
   const handleSelect = (eventKey) => {
     setSelectedYear(eventKey);
-    console.log("this is ", eventKey);
+    localStorage.setItem("academicYear", eventKey);
+    const academicYear = localStorage.getItem("academicYear");
+    console.log("this is selected academicYear", academicYear);
   };
 
   useEffect(() => {
@@ -40,11 +42,37 @@ function NavBar() {
       setInstituteName(sessionData.settings[0].institute_name);
       setAcademicYear(sessionData.settings[0].academic_yr);
     }
+
+    // Fetch the data of academic year
+    const token = localStorage.getItem("authToken");
+    const fetchAcademicYear = async () => {
+      try {
+        const acdemicyearres = await axios.get(
+          `${API_URL}/api/getAcademicYear`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setAcademicYear(acdemicyearres.data.academic_years);
+        console.log(
+          "academic year data is",
+          acdemicyearres.data.academic_years
+        );
+      } catch (error) {
+        console.error("Error fetching academic year data:", error);
+      }
+    };
+
+    fetchAcademicYear();
   }, []);
 
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("authToken");
+
+      // Logout API
       await axios.post(
         `${API_URL}/api/logout`,
         {},
@@ -55,6 +83,7 @@ function NavBar() {
         }
       );
       localStorage.removeItem("authToken");
+      localStorage.removeItem("academicYear");
       localStorage.removeItem("user");
       localStorage.removeItem("settings");
       sessionStorage.removeItem("sessionData");
@@ -336,7 +365,7 @@ function NavBar() {
             <NavDropdown
               // title={selectedYear}
               title={selectedYear ? selectedYear : "Academic Year "}
-              className={`${styles.dropNaveBarAcademic} academic-dropdown outline-none border-1 border-gray-400 px-1 rounded-md py-0.5 text-xs lg:text-sm  `}
+              className={`${styles.dropNaveBarAcademic} academic-dropdown outline-none border-1 border-gray-400 px-1 rounded-md py-0.5 text-xs lg:text-sm   `}
               style={{
                 boxSizing: "border-box",
                 width: "60%",
@@ -348,24 +377,18 @@ function NavBar() {
               }}
               onSelect={handleSelect}
             >
-              <NavDropdown.Item eventKey="2016-2017">
-                2016-2017
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="2017-2018">
-                2017-2018
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="2018-2019">
-                2018-2019
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="2019-2020">
-                2019-2020
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="2020-2021">
-                2020-2021
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="2021-2022">
-                2021-2022
-              </NavDropdown.Item>
+              <div className=" text-start text-sm bg-gray-50 text-gray-300  h-28 overflow-y-scroll">
+                {academicYear.map((year) => (
+                  <NavDropdown.Item
+                    key={year}
+                    eventKey={year}
+                    value={year}
+                    // onChange={(e) => setChangedAcedemicYear(e.target.value)}
+                  >
+                    {year}
+                  </NavDropdown.Item>
+                ))}
+              </div>
             </NavDropdown>
           </div>
         </div>

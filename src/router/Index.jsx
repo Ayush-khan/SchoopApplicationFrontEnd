@@ -61,6 +61,8 @@ import ClassList from "../componants/TableComponentsNikhilbhai/ClassList";
 import Sections from "../componants/TableComponentsNikhilbhai/Sections";
 import NotificationPage from "../componants/NotificationPage";
 import StaffBirthdayTabList from "../componants/AllTableList/StaffBirthdayTabList";
+import TickitingCountList from "../componants/AllTableList/TickitingCountList";
+import FeePendingList from "../componants/AllTableList/FeePendingList.jsx";
 function Index() {
   return (
     <Routes>
@@ -101,6 +103,16 @@ function Index() {
       {/* <Route path="/notification" element={<NotificationPage />} /> */}
       {/* ALlTableList EndPoints */}
       {/* <StaffBirthdayTabList /> */}
+      {/* <TickitingCountList /> */}
+      {/* Routes for the listing cards */}
+      <Route
+        path="/ticktinglist"
+        element={<PrivateRoute element={TickitingCountList} />}
+      />
+      <Route
+        path="/feependinglist"
+        element={<PrivateRoute element={FeePendingList} />}
+      />
       <Route
         path="/staffbirthlist"
         element={<PrivateRoute element={StaffBirthdayTabList} />}

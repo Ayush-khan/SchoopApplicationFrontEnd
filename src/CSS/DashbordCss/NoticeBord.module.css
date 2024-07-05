@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-around;
   border-bottom: 1px solid #ddd;
+  background: #000;
   margin-bottom: 20px;
 }
 
@@ -22,14 +23,15 @@
   background-color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  flex-grow: 1;
-  text-align: center;
-  font-size: 16px;
+  /* flex-grow: 1; */
+  /* text-align: center; */
+  /* font-size: 16px; */
 }
 .tab:hover {
   background: transparent;
   font-weight: bold;
   color: #3d86df;
+  box-sizing: border-box;
 }
 .tab.active {
   background-color: #f0f0f0;

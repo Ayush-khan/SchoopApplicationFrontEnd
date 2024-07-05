@@ -55,19 +55,23 @@ function NoticeBord() {
     <div
       className={`${Styles.container} bg-slate-100 px-2 rounded-lg shadow-md `}
     >
-      <div className="flex justify-between sm:mb-2 gap-2 w-full  sm:flex flex-row">
+      <div
+        className={` flex justify-between sm:mb-2  w-full  sm:flex flex-row mb-2`}
+      >
         <button
-          className={`${Styles.tab} ${
+          // style={{ width: "100%", height: "3em", fontSize: ".8em" }}
+          className={`${Styles.tab} w-full h-1/4 text-sm font-bold  ${
             activeTab === "noticeForParents" ? Styles.active : ""
-          } sm:mr-2 mb-2 sm:mb-0 flex-1 p-2  text-sm sm:w-1/2`}
+          } sm:mr-1 mx-0 sm:mb-0  p-2  text-sm sm:w-1/2`}
           onClick={() => handleTabChange("noticeForParents")}
         >
           Notice for Parents
         </button>
         <button
-          className={`${Styles.tab} ${
+          // style={{ width: "100%", height: "3em", fontSize: ".8em" }}
+          className={`${Styles.tab} w-full h-1/4 text-sm font-bold  ${
             activeTab === "noticeForStaff" ? Styles.active : ""
-          } sm:mr-2 mb-2 sm:mb-0 flex-1 p-2 text-sm sm:w-1/2`}
+          } sm:mr-1 mx-0 sm:mb-0  p-2 text-sm sm:w-1/2`}
           onClick={() => handleTabChange("noticeForStaff")}
         >
           Notice for Staff

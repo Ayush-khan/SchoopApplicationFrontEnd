@@ -54,37 +54,64 @@ function NavBar() {
   //   console.log("this is selected academicYear", academicYear);
   // };
 
+  // const handleSelect = async (eventKey) => {
+  //   setSelectedYear(eventKey);
+  //   localStorage.setItem("academicYear", eventKey);
+  //   const academic_yr = localStorage.getItem("academicYear");
+
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     if (!token || !academic_yr) {
+  //       throw new Error("No authentication token or academic year found");
+  //     }
+
+  //     console.log("api claing");
+  //     const response = await axios.put(
+  //       `${API_URL}/api/updateAcademicYear`,
+  //       {
+  //         academic_yr: eventKey,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     console.log("the response data", response.data.success);
+  //     if (response.data.success) {
+  //       console.log("Academic year updated successfully");
+  //       window.location.reload();
+  //     }
+  //   } catch (error) {
+  //     console.log("error aa rhi hai ");
+  //     console.error("Error updating academic year:", error);
+  //   }
+  // };
+
   const handleSelect = async (eventKey) => {
     setSelectedYear(eventKey);
-    localStorage.setItem("academicYear", eventKey);
-    const academic_yr = localStorage.getItem("academicYear");
+
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      console.error('No authentication token found');
+      return;
+    }
 
     try {
-      const token = localStorage.getItem("authToken");
-      if (!token || !academic_yr) {
-        throw new Error("No authentication token or academic year found");
-      }
-
-      console.log("api claing");
-      const response = await axios.put(
-        `${API_URL}/api/updateAcademicYear`,
-        {
-          academic_yr: eventKey,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+      const response = await axios.post(${API_URL}/api/update_academic_year, {
+        academic_year: eventKey
+      }, {
+        headers: {
+          Authorization: Bearer ${token}
         }
-      );
-      console.log("the response data", response.data.success);
-      if (response.data.success) {
-        console.log("Academic year updated successfully");
-        window.location.reload();
-      }
+      });
+
+      localStorage.setItem("authToken", response.data.token);
+      // Refresh the page after updating the token
+      window.location.reload();
     } catch (error) {
-      console.log("error aa rhi hai ");
       console.error("Error updating academic year:", error);
     }
   };

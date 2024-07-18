@@ -61,14 +61,15 @@ function TickitingCountList() {
     return { formattedDate, formattedTime };
   }
   return (
-    <div
+    <>
+      {/* <div
       className="  "
       style={{
         height: "100vh",
         background: "   linear-gradient(to bottom, #E91E63, #2196F3)",
       }}
-    >
-      <NavBar />
+    > */}
+      {/* <NavBar /> */}
       <div className="container mt-4 ">
         <div className="  card mx-auto lg:w-3/4  shadow-lg ">
           {/* <div className="card mx-auto w-3/4"> */}
@@ -177,7 +178,8 @@ function TickitingCountList() {
           </div>
         </div>
       </div>
-    </div>
+      {/* </div> */}
+    </>
   );
 }
 

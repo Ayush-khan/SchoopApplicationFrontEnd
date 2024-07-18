@@ -337,9 +337,9 @@ const DashboardContent = () => {
           <HouseStudentChart />
         </div>
       </div>
-      <div className=" mt-6 ">
+      {/* <div className=" mt-6 ">
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 };

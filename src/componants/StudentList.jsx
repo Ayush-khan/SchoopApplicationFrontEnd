@@ -84,7 +84,7 @@ function StudentList() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
 
       <div className="container mt-5">
         <div className="row">

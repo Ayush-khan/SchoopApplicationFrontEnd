@@ -103,7 +103,7 @@ function StudentEdit() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
 
       <div className="container-fluid mt-4">
         <div className="row">

@@ -344,8 +344,7 @@
 //     )
 // }
 // export default Sections;
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import NavBar from "../../Layouts/NavBar";
@@ -535,67 +534,98 @@ function Sections() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <ToastContainer />
 
       <div className="container mt-4">
-        <div className="card" style={{ margin: "0 auto", width: "70%" }}>
-          <div className="card-header d-flex justify-content-between align-items-center">
-            <h3>Departments</h3>
-            <button
-              className="btn btn-primary btn-sm"
-              style={{ width: "80px" }}
-              onClick={handleAdd}
-            >
-              <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
-              Add
-            </button>
+        <div className="card mx-auto lg:w-3/4 shadow-lg">
+          <div className="card-header flex justify-between items-center">
+            <h3 className="text-gray-700 mt-1 text-md lg:text-xl">
+              Department
+            </h3>
+            <div className=" box-border flex gap-x-2  justify-end md:h-10 ">
+              <div className="">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search "
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <button
+                className="btn btn-primary btn-sm h-9"
+                // style={{ width: "80px" }}
+                onClick={handleAdd}
+              >
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
+                Add
+              </button>
+            </div>
           </div>
 
-          <div className="card-body">
-            <div className="d-flex justify-content-end mb-2">
-              <input
-                type="text"
-                className="form-control w-25"
-                placeholder="Search by name"
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="table-responsive">
-              <table className="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {displayedSections.map((section) => (
-                    <tr key={section.department_id}>
-                      <td>{section.name}</td>
-                      <td className="text-center">
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          className="text-warning"
-                          onClick={() => handleEdit(section)}
-                          style={{ cursor: "pointer", fontSize: "1.5em" }}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="text-danger"
-                          onClick={() => handleDelete(section.department_id)}
-                          style={{ cursor: "pointer", fontSize: "1.5em" }}
-                        />
-                      </td>
+          <div className="card-body w-full">
+            <div className="h-96 lg:h-96 overflow-y-scroll lg:overflow-x-hidden">
+              <div className="bg-white rounded-lg shadow-xs">
+                <table className="min-w-full leading-normal table-auto">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        S.No
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Name
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Edit
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Delete
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {displayedSections.map((section, index) => (
+                      <tr
+                        key={section.department_id}
+                        className={`${
+                          index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                        } hover:bg-gray-50`}
+                      >
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                            {index + 1}
+                          </p>
+                        </td>
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                            {section.name}
+                          </p>
+                        </td>
+
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <button
+                            className="text-blue-600 hover:text-blue-800 hover:bg-transparent "
+                            onClick={() => handleEdit(section)}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                        </td>
+
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <button
+                            className="text-red-600 hover:text-red-800 hover:bg-transparent "
+                            onClick={() => handleDelete(section.department_id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div className="d-flex justify-content-center mt-3">
+            <div className=" flex justify-center  pt-2 -mb-3">
               <ReactPaginate
                 previousLabel={"previous"}
                 nextLabel={"next"}
@@ -622,44 +652,46 @@ function Sections() {
 
       {/* Modal for adding a new section */}
       {showAddModal && (
-        <div
-          className="modal"
-          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add New Section</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleCloseModal}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <div className="mb-3">
-                  <label htmlFor="sectionName" className="form-label">
-                    Section Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="sectionName"
-                    value={newSectionName}
-                    onChange={(e) => setNewSectionName(e.target.value)}
-                  />
+        <div className="fixed inset-0 z-50   flex items-center justify-center bg-black bg-opacity-50">
+          <div
+            className="modal"
+            style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          >
+            <div className="modal-dialog modal-dialog-centered ">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add New Section</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={handleCloseModal}
+                  ></button>
                 </div>
-              </div>
-              <div className="modal-footer d-flex justify-content-end">
-                {/* <button type="button" className="btn btn-secondary me-2" onClick={handleCloseModal}>Cancel</button> */}
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{ marginRight: "40px" }}
-                  onClick={handleSubmitAdd}
-                >
-                  Add
-                </button>
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label htmlFor="sectionName" className="form-label">
+                      Section Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="sectionName"
+                      value={newSectionName}
+                      onChange={(e) => setNewSectionName(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer d-flex justify-content-end">
+                  {/* <button type="button" className="btn btn-secondary me-2" onClick={handleCloseModal}>Cancel</button> */}
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{}}
+                    onClick={handleSubmitAdd}
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -701,7 +733,7 @@ function Sections() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  style={{ marginRight: "40px" }}
+                  style={{}}
                   onClick={handleSubmitEdit}
                 >
                   Update
@@ -739,7 +771,7 @@ function Sections() {
                 <button
                   type="button"
                   className="btn btn-danger"
-                  style={{ marginRight: "40px" }}
+                  style={{}}
                   onClick={handleSubmitDelete}
                 >
                   Delete
@@ -752,4 +784,5 @@ function Sections() {
     </>
   );
 }
+
 export default Sections;

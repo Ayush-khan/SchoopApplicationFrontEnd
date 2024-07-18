@@ -12,7 +12,6 @@ import { LuSchool } from "react-icons/lu";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Sidebar from "./Sidebar";
 import { Translate } from "react-bootstrap-icons";
-
 function NavBar() {
   const API_URL = import.meta.env.VITE_API_URL; //thsis is test url
   const navigate = useNavigate();
@@ -23,12 +22,71 @@ function NavBar() {
   const [menuDropdownOpen, setMenuDropdownOpen] = useState({});
   const [inputValueGR, setInputValueGR] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
+  function getCurrentDate() {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
 
-  const handleSelect = (eventKey) => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const monthIndex = today.getMonth();
+    const year = String(today.getFullYear()).slice();
+
+    const monthName = months[monthIndex];
+
+    return `${day} ${monthName} ${year}`;
+  }
+  // const handleSelect = (eventKey) => {
+  //   setSelectedYear(eventKey);
+  //   localStorage.setItem("academicYear", eventKey);
+  //   const academicYear = localStorage.getItem("academicYear");
+  //   console.log("this is selected academicYear", academicYear);
+  // };
+
+  const handleSelect = async (eventKey) => {
     setSelectedYear(eventKey);
     localStorage.setItem("academicYear", eventKey);
-    const academicYear = localStorage.getItem("academicYear");
-    console.log("this is selected academicYear", academicYear);
+    const academic_yr = localStorage.getItem("academicYear");
+
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token || !academic_yr) {
+        throw new Error("No authentication token or academic year found");
+      }
+
+      console.log("api claing");
+      const response = await axios.put(
+        `${API_URL}/api/updateAcademicYear`,
+        {
+          academic_yr: eventKey,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("the response data", response.data.success);
+      if (response.data.success) {
+        console.log("Academic year updated successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("error aa rhi hai ");
+      console.error("Error updating academic year:", error);
+    }
   };
 
   useEffect(() => {
@@ -105,7 +163,12 @@ function NavBar() {
     <>
       <div
         className=""
-        style={{ position: "sticky", top: "0px", zIndex: "10" }}
+        style={{
+          position: "fixed",
+          top: "0px",
+          zIndex: "10",
+          backgroundColor: "#D61D5E",
+        }}
       >
         <div
           className={`${styles.navbar} w-screen flex items-center justify-between px-2  h-12`}
@@ -122,11 +185,14 @@ function NavBar() {
             <h1
               className={`${styles.headingSchool} flex justify-center items-center   lg:text-2xl  font-semibold   sm:font-bold  text-white `}
             >
-              St. Arnolds Central School (2023 - 2024)
+              {localStorage.getItem("instituteName")} {"("}
+              {localStorage.getItem("academicYear")}
+              {")"}
+              {/* St. Arnolds Central School (2023 - 2024) */}
             </h1>
           </div>
           <h1 className="text-lg lg:text-sm text-white px-2 hidden lg:block mt-2">
-            18 June 2024
+            {getCurrentDate()}
           </h1>
           <div className="flex items-center ">
             <NavDropdown
@@ -151,7 +217,12 @@ function NavBar() {
                 </div>
               </NavDropdown.Item>
               <NavDropdown.Item>
-                <div className="flex items-center gap-2">
+                <div
+                  className="flex items-center gap-2"
+                  onClick={() => {
+                    navigate("/changepassword");
+                  }}
+                >
                   <LiaEdit style={{ fontSize: "1.5rem" }} />
                   <span style={{ fontSize: ".8em" }}>Change Password</span>
                 </div>
@@ -233,6 +304,9 @@ function NavBar() {
                     title="Manage Staff"
                     style={{ color: "black", fontWeight: "700" }}
                   >
+                    <NavDropdown.Item as={Link} to="/StaffList">
+                      StaffList
+                    </NavDropdown.Item>
                     <NavDropdown.Item href="#">Add Staff</NavDropdown.Item>
                     <NavDropdown.Item href="#">Edit Staff</NavDropdown.Item>
                     <NavDropdown.Item href="#">Delete Staff</NavDropdown.Item>
@@ -324,7 +398,9 @@ function NavBar() {
                         title="Settings"
                         style={{ color: "black", fontWeight: "700" }}
                       >
-                        <NavDropdown.Item href="#">Add Staff</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/StaffList">
+                          StaffList
+                        </NavDropdown.Item>
                         <NavDropdown.Item href="#">Edit Staff</NavDropdown.Item>
                         <NavDropdown.Item href="#">
                           Delete Staff
@@ -378,7 +454,7 @@ function NavBar() {
               onSelect={handleSelect}
             >
               <div className=" text-start text-sm bg-gray-50 text-gray-300  h-28 overflow-y-scroll">
-                {academicYear.map((year) => (
+                {/* {academicYear.map((year) => (
                   <NavDropdown.Item
                     key={year}
                     eventKey={year}
@@ -387,7 +463,15 @@ function NavBar() {
                   >
                     {year}
                   </NavDropdown.Item>
-                ))}
+                ))} */}
+                {/* new logic */}
+                {academicYear &&
+                  academicYear.length > 0 &&
+                  academicYear.map((year) => (
+                    <NavDropdown.Item key={year} eventKey={year}>
+                      {year}
+                    </NavDropdown.Item>
+                  ))}
               </div>
             </NavDropdown>
           </div>

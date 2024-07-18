@@ -3149,6 +3149,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import NavBar from "../../Layouts/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -3354,74 +3355,108 @@ function ClassList() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <ToastContainer />
-
       <div className="container mt-4">
-        <div className="card" style={{ margin: "0 auto", width: "70%" }}>
-          <div className="card-header d-flex justify-content-between align-items-center">
-            <h3>Classes</h3>
-            <button
-              className="btn btn-primary btn-sm"
-              style={{ width: "80px" }}
-              onClick={handleAdd}
-            >
-              <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
-              Add
-            </button>
+        <div className="card mx-auto lg:w-3/4 shadow-lg">
+          <div className="card-header flex justify-between items-center">
+            <h3 className="text-gray-700 mt-1 text-md lg:text-xl">Classes</h3>
+            <div className=" box-border flex gap-x-2  justify-end md:h-10 ">
+              <div className=" ">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <button
+                className="btn btn-primary btn-sm h-9"
+                onClick={handleAdd}
+              >
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
+                Add
+              </button>
+            </div>
           </div>
 
-          <div className="card-body">
-            <div className="d-flex justify-content-end mb-2">
-              <input
-                type="text"
-                className="form-control w-25"
-                placeholder="Search by name"
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="table-responsive">
-              <table className="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {displayedClasses.map((classItem) => (
-                    <tr key={classItem.class_id}>
-                      <td>{classItem.name}</td>
-                      <td>
-                        {classItem.get_department?.name || "No Department"}
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          className="text-warning"
-                          onClick={() => handleEdit(classItem)}
-                          style={{ cursor: "pointer", fontSize: "1.5em" }}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="text-danger"
-                          onClick={() => handleDelete(classItem.class_id)}
-                          style={{ cursor: "pointer", fontSize: "1.5em" }}
-                        />
-                      </td>
+          <div className="card-body w-full">
+            <div className="h-96 lg:h-96 overflow-y-scroll lg:overflow-x-hidden">
+              <div className="bg-white rounded-lg shadow-xs">
+                <table className="min-w-full leading-normal table-auto">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        S.No
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Name
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Department
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Edit
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Delete
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {displayedClasses.map((classItem, index) => (
+                      <tr
+                        key={classItem.class_id}
+                        className={`${
+                          index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                        } hover:bg-gray-50`}
+                      >
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                            {index + 1}
+                          </p>
+                        </td>
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                            {classItem.name}
+                          </p>
+                        </td>
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                            {
+                              departments.find(
+                                (dep) =>
+                                  dep.department_id === classItem.department_id
+                              )?.name
+                            }
+                          </p>
+                        </td>
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <button
+                            className="text-blue-600 hover:text-blue-800 hover:bg-transparent "
+                            onClick={() => handleEdit(classItem)}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                        </td>
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <button
+                            className="text-red-600 hover:text-red-800 hover:bg-transparent "
+                            onClick={() => handleDelete(classItem.class_id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div className="d-flex justify-content-center mt-3">
+            <div className=" flex justify-center  pt-2 -mb-3">
               <ReactPaginate
-                previousLabel={"previous"}
-                nextLabel={"next"}
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
                 breakLabel={"..."}
                 breakClassName={"page-item"}
                 breakLinkClassName={"page-link"}
@@ -3445,63 +3480,65 @@ function ClassList() {
 
       {/* Add Modal */}
       {showAddModal && (
-        <div className="modal show" style={{ display: "block" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Class</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleCloseModal}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="newClassName">Class Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="newClassName"
-                    value={newClassName}
-                    onChange={(e) => setNewClassName(e.target.value)}
-                  />
+        <div className="fixed inset-0 z-50   flex items-center justify-center bg-black bg-opacity-50">
+          <div className="modal show" style={{ display: "block" }}>
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Class</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={handleCloseModal}
+                  ></button>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="newDepartmentId">Department</label>
-                  <select
-                    className="form-control"
-                    id="newDepartmentId"
-                    value={newDepartmentId}
-                    onChange={(e) => setNewDepartmentId(e.target.value)}
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label htmlFor="newClassName">Class Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="newClassName"
+                      value={newClassName}
+                      onChange={(e) => setNewClassName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="newDepartmentId">Department</label>
+                    <select
+                      className="form-control"
+                      id="newDepartmentId"
+                      value={newDepartmentId}
+                      onChange={(e) => setNewDepartmentId(e.target.value)}
+                    >
+                      <option value="">Select Department</option>
+                      {departments.map((department) => (
+                        <option
+                          key={department.department_id}
+                          value={department.department_id}
+                        >
+                          {department.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleCloseModal}
                   >
-                    <option value="">Select Department</option>
-                    {departments.map((department) => (
-                      <option
-                        key={department.department_id}
-                        value={department.department_id}
-                      >
-                        {department.name}
-                      </option>
-                    ))}
-                  </select>
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSubmitAdd}
+                  >
+                    Add
+                  </button>
                 </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCloseModal}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSubmitAdd}
-                >
-                  Add
-                </button>
               </div>
             </div>
           </div>
@@ -3510,63 +3547,65 @@ function ClassList() {
 
       {/* Edit Modal */}
       {showEditModal && (
-        <div className="modal show" style={{ display: "block" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Edit Class</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleCloseModal}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="newClassName">Class Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="newClassName"
-                    value={newClassName}
-                    onChange={(e) => setNewClassName(e.target.value)}
-                  />
+        <div className="fixed inset-0 z-50   flex items-center justify-center bg-black bg-opacity-50">
+          <div className="modal show " style={{ display: "block" }}>
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Edit Class</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={handleCloseModal}
+                  ></button>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="newDepartmentId">Department</label>
-                  <select
-                    className="form-control"
-                    id="newDepartmentId"
-                    value={newDepartmentId}
-                    onChange={(e) => setNewDepartmentId(e.target.value)}
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label htmlFor="newClassName">Class Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="newClassName"
+                      value={newClassName}
+                      onChange={(e) => setNewClassName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="newDepartmentId">Department</label>
+                    <select
+                      className="form-control"
+                      id="newDepartmentId"
+                      value={newDepartmentId}
+                      onChange={(e) => setNewDepartmentId(e.target.value)}
+                    >
+                      <option value="">Select Department</option>
+                      {departments.map((department) => (
+                        <option
+                          key={department.department_id}
+                          value={department.department_id}
+                        >
+                          {department.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  {/* <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleCloseModal}
                   >
-                    <option value="">Select Department</option>
-                    {departments.map((department) => (
-                      <option
-                        key={department.department_id}
-                        value={department.department_id}
-                      >
-                        {department.name}
-                      </option>
-                    ))}
-                  </select>
+                    Close
+                  </button> */}
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSubmitEdit}
+                  >
+                    Save Changes
+                  </button>
                 </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCloseModal}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSubmitEdit}
-                >
-                  Save Changes
-                </button>
               </div>
             </div>
           </div>
@@ -3574,39 +3613,42 @@ function ClassList() {
       )}
 
       {/* Delete Modal */}
+
       {showDeleteModal && (
-        <div className="modal show" style={{ display: "block" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Delete Class</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowDeleteModal(false)}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <p>Are you sure you want to delete this class?</p>
-                <p>
-                  <strong>{currentClass?.name}</strong>
-                </p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowDeleteModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={handleSubmitDelete}
-                >
-                  Delete
-                </button>
+        <div className="fixed inset-0 z-50   flex items-center justify-center bg-black bg-opacity-50">
+          <div className="modal show " style={{ display: "block" }}>
+            <div className="modal-dialog  modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Delete Class</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setShowDeleteModal(false)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <p>Are you sure you want to delete this class?</p>
+                  <p>
+                    <strong>{currentClass?.name}</strong>
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  {/* <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => setShowDeleteModal(false)}
+                  >
+                    Cancel
+                  </button> */}
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={handleSubmitDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>

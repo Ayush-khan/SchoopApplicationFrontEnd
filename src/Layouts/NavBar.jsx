@@ -95,18 +95,22 @@ function NavBar() {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      console.error('No authentication token found');
+      console.error("No authentication token found");
       return;
     }
 
     try {
-      const response = await axios.post(${API_URL}/api/update_academic_year, {
-        academic_year: eventKey
-      }, {
-        headers: {
-          Authorization: Bearer ${token}
+      const response = await axios.post(
+        `${API_URL}/api/update_academic_year`,
+        {
+          academic_year: eventKey,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       localStorage.setItem("authToken", response.data.token);
       // Refresh the page after updating the token

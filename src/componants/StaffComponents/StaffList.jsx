@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-// This is the
 function StaffList() {
   const API_URL = import.meta.env.VITE_API_URL; // url for host
   const [staffs, setStaffs] = useState([]);

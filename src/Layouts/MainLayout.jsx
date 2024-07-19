@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 // import NavBar from "./NavBar";
-// This is
+// This is not
 function MainLayout() {
   return (
     <div>

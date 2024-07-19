@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 // import NavBar from "./NavBar";
 // This is a function of the
+
 function MainLayout() {
   return (
     <div>

@@ -1,3 +1,4 @@
+// secondtryimport { useEffect, useState } from "react";
 import axios from "axios";
 import { IoIosArrowForward } from "react-icons/io";
 // import { RxCross1, RxCrosshair1 } from "react-icons/rx";

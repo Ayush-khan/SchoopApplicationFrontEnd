@@ -128,7 +128,7 @@ const DashboardContent = () => {
           "the birthday count and it's value is=",
           Birthdaycount.data.count
         );
-        setStaffBirthday(Birthdaycount.data);
+        setStaffBirthday(Birthdaycount.data.count);
       } catch (error) {
         setError(error.message);
         console.error("Error fetching data:", error);

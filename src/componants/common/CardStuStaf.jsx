@@ -28,7 +28,15 @@ const Card = ({ title, TotalValue, presentValue, color, icon }) => {
           fontWeight: "500",
         }}
       >
-      
+        {/* <div> {TotalValue} </div> */}
+        {/* <div
+          className="flex align-item-center justify-between text-sm gap-1 flex-col mr-2"
+          style={{ fontSize: "12px" }}
+        >
+          <div>{presentValue ? <span>Present</span> : "value"}</div>
+          <div style={{ border: " 1px solid black" }}></div>
+          <div>{TotalValue ? <span>Total</span> : "value"}</div>
+        </div> */}
         <div
           className="flex align-item-center justify-between text-sm gap-1 flex-col  "
           style={{ fontSize: ".9em" }}

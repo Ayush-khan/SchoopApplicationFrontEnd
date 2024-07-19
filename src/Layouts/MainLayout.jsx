@@ -7,9 +7,9 @@ import Footer from "./Footer";
 function MainLayout() {
   return (
     <div>
-      <NavBar  />
+      <NavBar />
       <div
-        className="content w-screen overflow-x-hidden h-screen  pb-4 mt-[7%] "
+        className="content w-screen overflow-x-hidden h-screen  pb-4 mt-[10%] pt-[16%] md:pt-1 md:mt-[7%] "
         style={{
           background: "   linear-gradient(to bottom, #E91E63, #2196F3)",
         }}

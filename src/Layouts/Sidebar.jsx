@@ -208,9 +208,9 @@ export default function Sidebar({ isSidebar, setIsSidebar }) {
   };
   console.log("updatevisitedpath", updateTabVisits);
   return (
-    <div className="fixed z-30">
+    <div className="hidden md:block md:fixed z-30">
       <div
-        className={`w-36 lg:h-[80vh] bg-gray-200 mt-0.5 shadow-lg relative right-36 transform transition-all duration-500 text-center pr-3 ${
+        className={` md:w-36 lg:h-[80vh] bg-gray-200 mt-0.5 shadow-lg relative right-36 transform transition-all duration-500 text-center pr-3 ${
           isSidebar
             ? "relative transform translate-x-36 transition-all duration-500"
             : "relative transform translate-x-0 transition-all duration-500"

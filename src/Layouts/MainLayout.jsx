@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 // import NavBar from "./NavBar";
-// This is a function of the mainLayout components where all routes rende
+// This is a function of the mainLayout components where all routes render here
 
 function MainLayout() {
   return (

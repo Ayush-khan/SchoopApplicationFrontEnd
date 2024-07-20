@@ -50,7 +50,7 @@ const DashboardContent = () => {
         const roleId = localStorage.getItem("roleId");
         console.log("**** role ID******", roleId);
 
-        if (!token || !academicYr) {
+        if (!token) {
           throw new Error("No authentication token or academic year found");
         }
 

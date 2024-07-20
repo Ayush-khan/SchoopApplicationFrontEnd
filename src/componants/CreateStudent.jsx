@@ -4,7 +4,7 @@ import axios from "axios";
 import "../componants/studentstyle.css";
 // Base URL for your API
 function CreateStudent() {
-  const API_URL = import.meta.env.VITE_API_URL; 
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     first_name: "",
     middle_name: "",
@@ -43,7 +43,7 @@ function CreateStudent() {
   });
 
   const navigate = useNavigate();
-  const token = "your-auth-token";
+  // const token = localStorage.getItem("authToken");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

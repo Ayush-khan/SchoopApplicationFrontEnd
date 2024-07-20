@@ -374,8 +374,8 @@ function Sections() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr) {
-        throw new Error("No authentication token or academic year found");
+      if (!token) {
+        throw new Error("No authentication token found");
       }
 
       const response = await axios.get(`${API_URL}/api/sections`, {
@@ -426,7 +426,7 @@ function Sections() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr) {
+      if (!token) {
         throw new Error("No authentication token or academic year found");
       }
 
@@ -455,7 +455,7 @@ function Sections() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr) {
+      if (!token) {
         throw new Error("No authentication token or academic year found");
       }
 
@@ -490,12 +490,7 @@ function Sections() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (
-        !token ||
-        !academicYr ||
-        !currentSection ||
-        !currentSection.department_id
-      ) {
+      if (!token || !currentSection || !currentSection.department_id) {
         throw new Error("Section ID is missing");
       }
 

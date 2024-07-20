@@ -304,8 +304,8 @@ const EventCard = () => {
         console.log("academic year", academicYr);
         console.log("token is", token);
 
-        if (!token || !academicYr) {
-          throw new Error("No authentication token or academic year found");
+        if (!token) {
+          throw new Error("No authentication token found");
         }
 
         const response = await axios.get(

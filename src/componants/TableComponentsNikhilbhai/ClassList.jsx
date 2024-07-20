@@ -3177,8 +3177,8 @@ function ClassList() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr) {
-        throw new Error("No authentication token or academic year found");
+      if (!token) {
+        throw new Error("No authentication token found");
       }
 
       const response = await axios.get(`${API_URL}/api/classes`, {
@@ -3203,8 +3203,8 @@ function ClassList() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr) {
-        throw new Error("No authentication token or academic year found");
+      if (!token) {
+        throw new Error("No authentication token found");
       }
 
       const response = await axios.get(`${API_URL}/api/sections`, {
@@ -3255,8 +3255,8 @@ function ClassList() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr) {
-        throw new Error("No authentication token or academic year found");
+      if (!token) {
+        throw new Error("No authentication token found");
       }
 
       await axios.post(
@@ -3284,7 +3284,7 @@ function ClassList() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr || !currentClass || !currentClass.class_id) {
+      if (!token || !currentClass || !currentClass.class_id) {
         throw new Error("Class ID is missing");
       }
 
@@ -3319,7 +3319,7 @@ function ClassList() {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
 
-      if (!token || !academicYr || !currentClass || !currentClass.class_id) {
+      if (!token || !currentClass || !currentClass.class_id) {
         throw new Error("Class ID is missing");
       }
 

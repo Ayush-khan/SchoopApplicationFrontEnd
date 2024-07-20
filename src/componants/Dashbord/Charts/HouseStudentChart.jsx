@@ -302,12 +302,13 @@ import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import axios from "axios";
 import styles from "../Charts/StudentStyle.module.css";
 import LoadingSpinner from "../../common/LoadingSpinner";
-
-const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
+// const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
+// const API_URL = "http://127.0.0.1:8000";
 
 const COLORS = ["#00FFFF", "#A287F3", "#34D399", "#EE82EE"]; // Define your colors
 
 const HouseStudentChart = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [selectedClass, setSelectedClass] = useState("1"); // Default class set to "1"
   const [sectionsData, setSectionsData] = useState({});
   const [houseNames, setHouseNames] = useState([]);
@@ -325,7 +326,7 @@ const HouseStudentChart = () => {
         console.log("academic year", academicYr);
         console.log("token is", token);
 
-        if (!token || !academicYr) {
+        if (!token) {
           throw new Error("No authentication token or academic year found");
         }
         const response = await axios.get(`${API_URL}/api/getHouseViseStudent`, {

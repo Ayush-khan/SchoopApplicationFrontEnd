@@ -13,8 +13,9 @@ import {
   LabelList,
 } from "recharts";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
+
 const StudentsChart = () => {
+  const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
   const [data, setData] = useState([]);
   const [barCategoryGap, setBarCategoryGap] = useState("40%");
   const [xAxisFontSize, setXAxisFontSize] = useState(7);
@@ -52,8 +53,8 @@ const StudentsChart = () => {
       try {
         const token = localStorage.getItem("authToken");
         const academicYear = localStorage.getItem("academicYear");
-        if (!token || !academicYear) {
-          throw new Error("No authentication token or academic year found");
+        if (!token) {
+          throw new Error("No authentication token found");
         }
 
         const response = await axios.get(

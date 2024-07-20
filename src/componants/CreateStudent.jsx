@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import Link component from react-router-dom
 import axios from "axios";
 import "../componants/studentstyle.css";
-const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
+// Base URL for your API
 function CreateStudent() {
+  const API_URL = import.meta.env.VITE_API_URL; 
   const [formData, setFormData] = useState({
     first_name: "",
     middle_name: "",

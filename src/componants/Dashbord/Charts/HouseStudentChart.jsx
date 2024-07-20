@@ -297,13 +297,13 @@
 // export default HouseStudentChart;
 
 // Second try WIth API calling
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import axios from "axios";
 import styles from "../Charts/StudentStyle.module.css";
 import LoadingSpinner from "../../common/LoadingSpinner";
 
-const API_URL = "http://127.0.0.1:8000"; // Base URL for your API
+const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
 
 const COLORS = ["#00FFFF", "#A287F3", "#34D399", "#EE82EE"]; // Define your colors
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../Layouts/NavBar";
-
+const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
 function StudentList() {
   const [students, setStudents] = useState([]);
 
@@ -11,7 +11,7 @@ function StudentList() {
       const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          const res = await axios.get("http://127.0.0.1:8000/api/students", {
+          const res = await axios.get(`${API_URL}/api/students`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -35,14 +35,11 @@ function StudentList() {
       const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          await axios.delete(
-            `http://127.0.0.1:8000/api/students/${id}/delete`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          await axios.delete(`${API_URL}/api/students/${id}/delete`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setStudents((prevStudents) =>
             prevStudents.filter((student) => student.id !== id)
           );

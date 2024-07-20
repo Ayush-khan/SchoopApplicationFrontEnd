@@ -39,17 +39,6 @@ const LoginForm = () => {
       //     "institutename": "St. Arnold's Central School"}
 
       localStorage.setItem("authToken", response.data.token);
-      localStorage.setItem("academicYear", response.data.academic_yr);
-      const academicYr = localStorage.getItem("academicYear");
-      console.log("acdemic year", academicYr);
-      localStorage.setItem("roleId", response.data.role_id);
-      console.log(
-        "the role id inside the login when i save it",
-        response.data.role_id
-      );
-      localStorage.setItem("regId", response.data.reg_id);
-      localStorage.setItem("instituteName", response.data.institutename);
-      console.log("response", response);
 
       const sessionData = {
         user: response.data.data,

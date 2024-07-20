@@ -7,7 +7,7 @@ function StudentEdit() {
   let { id } = useParams();
   const navigate = useNavigate(); // Move useNavigate to the correct place
   const token = "your-auth-token"; // Replace with actual token or fetch from context/state
-
+  const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API
   const [formData, setFormData] = useState({
     first_name: "",
     middle_name: "",
@@ -57,7 +57,7 @@ function StudentEdit() {
     }
 
     axios
-      .get(`http://127.0.0.1:8000/api/students/${id}/edit`, {
+      .get(`${API_URL}/api/students/${id}/edit`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,7 +84,7 @@ function StudentEdit() {
     const token = localStorage.getItem("authToken");
 
     axios
-      .put(`http://127.0.0.1:8000/api/students/${id}/update`, formData, {
+      .put(`${API_URL}/api/students/${id}/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

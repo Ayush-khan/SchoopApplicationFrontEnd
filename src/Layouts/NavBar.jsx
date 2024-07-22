@@ -219,8 +219,8 @@ function NavBar() {
               {/* {localStorage.getItem("instituteName")} {"("}
               {localStorage.getItem("academicYear")}
               {")"} */}
-              St. Arnolds Central School {academicYear}
-              {console.log("this is academic year", academicYear)}
+              St. Arnolds Central School {2023 - 2024}
+              {/* {console.log("this is academic year", academicYear)} */}
             </h1>
           </div>
           <h1 className="text-lg lg:text-sm text-white px-2 hidden lg:block mt-2">

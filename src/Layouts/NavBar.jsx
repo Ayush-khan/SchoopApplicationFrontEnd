@@ -219,7 +219,7 @@ function NavBar() {
               {/* {localStorage.getItem("instituteName")} {"("}
               {localStorage.getItem("academicYear")}
               {")"} */}
-              St. Arnolds Central School {2023 - 2024}
+              St. Arnolds Central School (2023 - 2024)
               {/* {console.log("this is academic year", academicYear)} */}
             </h1>
           </div>

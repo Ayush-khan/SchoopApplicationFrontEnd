@@ -29,19 +29,8 @@ function FeePendingList() {
             "X-Academic-Year": academicYr,
           },
         });
-        console.log("resposne of the birthday list is**", response.data);
-        console.log(
-          "resposne of the birthday list is",
-          response.data.staffBirthday
-        );
-        // Ensure the data is an array
-        if (response.data && Array.isArray(response.data.staffBirthday)) {
-          setStaffBirthday(response.data.staffBirthday);
-        } else {
-          throw new Error("Unexpected response data format");
-        }
-
-        // setStaffBirthday(response.data);
+        console.log("resposne of the birthday list is", response);
+        setStaffBirthday(response.data);
       } catch (error) {
         setError(error.message);
       } finally {

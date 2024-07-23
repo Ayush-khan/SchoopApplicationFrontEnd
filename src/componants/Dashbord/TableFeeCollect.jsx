@@ -535,7 +535,7 @@ function ListFinal() {
         console.log("academic year", academicYr);
         console.log("token is", token);
 
-        if (!token || !academicYr) {
+        if (!token) {
           throw new Error("No authentication token or academic year found");
         }
 

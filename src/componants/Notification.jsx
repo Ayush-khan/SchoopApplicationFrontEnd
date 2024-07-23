@@ -38,7 +38,7 @@ import styles from "../CSS/Notification.module.css";
 
 export default function NotificationsPanel() {
   return (
-    <div className={styles.notification}>
+    <div className={`${styles.notification} `}>
       <h6 className={styles.notificationHeading}>General Instructions:</h6>
       <ul className={styles.list}>
         <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>

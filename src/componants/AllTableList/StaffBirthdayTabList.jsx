@@ -185,7 +185,7 @@ function StaffBirthdayTabList() {
         const academicYr = localStorage.getItem("academicYear");
 
         if (!token) {
-          throw new Error("No authentication token  found");
+          throw new Error("No authentication token or academic year found");
         }
 
         const response = await axios.get(`${API_URL}/api/staffbirthdaylist`, {

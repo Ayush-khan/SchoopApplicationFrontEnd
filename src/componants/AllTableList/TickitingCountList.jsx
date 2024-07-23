@@ -19,11 +19,12 @@ function TickitingCountList() {
         const academicYr = localStorage.getItem("academicYear");
         const rollId = localStorage.getItem("roleId");
 
-        // if (!token|| !rollId) {
+        // if (!token || !rollId) {
         //   throw new Error("No authentication token or academic year found");
         // }
+
         if (!token) {
-          throw new Error("No authentication token found");
+          throw new Error("No authentication token or academic year found");
         }
         const response = await axios.get(`${API_URL}/api/ticketlist`, {
           headers: {

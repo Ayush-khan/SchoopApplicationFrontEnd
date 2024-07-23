@@ -1,30 +1,31 @@
-// second try
 import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 function CreateStaff() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     name: "",
-    dateOfBirth: "",
-    dateOfJoining: "",
+    birthday: "",
+    date_of_joining: "",
     designation: "",
-    academicQualification: [],
-    professionalQualification: "",
-    trainingStatus: "",
+    academic_qual: [],
+    professional_qual: "",
+    trained: "",
     experience: "",
-    gender: "",
-    bloodGroup: "",
+    sex: "",
+    blood_group: "",
     religion: "",
     address: "",
     phone: "",
     email: "",
-    aadhaarCardNo: "",
+    aadhar_card_no: "",
     role: "",
     employeeId: "",
     photo: null,
-    specialSubject: "",
+    special_sub: "",
   });
   const [errors, setErrors] = useState({});
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -33,11 +34,10 @@ function CreateStaff() {
   const validate = () => {
     const newErrors = {};
     if (!formData.name) newErrors.name = "Name is required";
-    if (!formData.dateOfBirth)
-      newErrors.dateOfBirth = "Date of Birth is required";
-    if (!formData.dateOfJoining)
-      newErrors.dateOfJoining = "Date of Joining is required";
-    if (!formData.gender) newErrors.gender = "Gender is required";
+    if (!formData.birthday) newErrors.birthday = "Date of Birth is required";
+    if (!formData.date_of_joining)
+      newErrors.date_of_joining = "Date of Joining is required";
+    if (!formData.sex) newErrors.sex = "sex is required";
     if (!formData.address) newErrors.address = "Address is required";
     if (!formData.phone) newErrors.phone = "Phone number is required";
     if (!/^\d{10}$/.test(formData.phone))
@@ -53,17 +53,17 @@ function CreateStaff() {
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
 
-    if (name === "academicQualification") {
+    if (name === "academic_qual") {
       setFormData((prevData) => {
         if (checked) {
           return {
             ...prevData,
-            academicQualification: [...prevData.academicQualification, value],
+            academic_qual: [...prevData.academic_qual, value],
           };
         } else {
           return {
             ...prevData,
-            academicQualification: prevData.academicQualification.filter(
+            academic_qual: prevData.academic_qual.filter(
               (qualification) => qualification !== value
             ),
           };
@@ -89,47 +89,68 @@ function CreateStaff() {
   const formatDateString = (dateString) => {
     if (!dateString) return "";
     const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
+    return `${year}-${month}-${day}`;
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      Object.values(validationErrors).forEach((error) => {
+        toast.error(error);
+      });
       return;
     }
-
-    // Format dates before submitting
     const formattedFormData = {
       ...formData,
-      dateOfBirth: formatDateString(formData.dateOfBirth),
-      dateOfJoining: formatDateString(formData.dateOfJoining),
+      birthday: formatDateString(formData.birthday),
+      date_of_joining: formatDateString(formData.date_of_joining),
     };
-    console.log(formattedFormData);
-  };
+    // api calling
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("No authentication token is found");
+      }
+      console.log("formata", formattedFormData);
+      const response = await axios.post(
+        `${API_URL}/api/store_staff`,
+        formattedFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Form validation
-  //   if (
-  //     !formData.name ||
-  //     !formData.dateOfBirth ||
-  //     !formData.dateOfJoining ||
-  //     !formData.gender ||
-  //     !formData.address ||
-  //     !formData.phone ||
-  //     !formData.email ||
-  //     !formData.role ||
-  //     !formData.employeeId
-  //   ) {
-  //     alert("Please fill out all required fields.");
-  //     return;
-  //   }
-  //   console.log(formData);
-  // };
+      console.log("Response:", response.data);
+
+      if (response.status === 201) {
+        toast.success("Teacher created successfully!");
+        setTimeout(() => {
+          navigate("/StaffList");
+        }, 3000); // 3000 milliseconds = 3 seconds
+        // navigate("/StaffList");
+      }
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+      toast.error("An error occurred while creating the teacher.");
+      console.log("the error is", error.response?.data || error.message);
+      toast.error("Error message is", error.response?.data || error.message);
+    }
+    // // Format dates before submitting
+    // const formattedFormData = {
+    //   ...formData,
+    //   birthday: formatDateString(formData.birthday),
+    //   date_of_joining: formatDateString(formData.date_of_joining),
+    // };
+    // console.log(formattedFormData);
+  };
 
   return (
     <div className="container mx-auto p-4 ">
+      <ToastContainer />
       <div className="card p-4 rounded-md ">
         <div className=" card-header mb-4 flex justify-between items-center ">
           <h5 className="text-gray-700 mt-1 text-md lg:text-lg">
@@ -172,7 +193,7 @@ function CreateStaff() {
             </div>
             <div className="col-span-1">
               <label
-                htmlFor="academicQualification"
+                htmlFor="academic_qual"
                 className="block font-bold  text-xs mb-2"
               >
                 Academic Qualification
@@ -206,11 +227,9 @@ function CreateStaff() {
                   >
                     <input
                       type="checkbox"
-                      name="academicQualification"
+                      name="academic_qual"
                       value={qualification}
-                      checked={formData.academicQualification.includes(
-                        qualification
-                      )}
+                      checked={formData.academic_qual.includes(qualification)}
                       onChange={handleChange}
                       className="mr-1 "
                     />
@@ -259,24 +278,24 @@ function CreateStaff() {
 
             <div>
               <label
-                htmlFor="trainingStatus"
+                htmlFor="trained"
                 className="block font-bold  text-xs mb-2"
               >
                 Training Status
               </label>
               <select
-                id="trainingStatus"
-                name="trainingStatus"
-                value={formData.trainingStatus}
+                id="trained"
+                name="trained"
+                value={formData.trained}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option className="bg-gray-300" value="">
                   Select
                 </option>{" "}
-                <option value="Trained-PGT">Trained-PGT</option>
-                <option value="Trained-TGT">Trained-TGT</option>{" "}
-                <option value="Trained-PRT">Trained-PRT</option>
+                <option value="trained-PGT">trained-PGT</option>
+                <option value="trained-TGT">trained-TGT</option>{" "}
+                <option value="trained-PRT">trained-PRT</option>
                 <option value="NTT">NTT</option>
                 <option value="ECCE">ECCE</option>
                 <option value="Untrained">Untrained</option>
@@ -309,9 +328,33 @@ function CreateStaff() {
                 )}
               </div>
             </div>
+
             <div>
               <label
-                htmlFor="dateOfBirth"
+                htmlFor="birthday"
+                className="block font-bold text-xs mb-2"
+              >
+                Date of Birth <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                id="birthday"
+                name="birthday"
+                value={formData.birthday}
+                onChange={handleChange}
+                className="block border w-full border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+                required
+              />
+              {errors.birthday && (
+                <div className="text-red-500 text-xs mt-1">
+                  {errors.birthday}
+                </div>
+              )}
+            </div>
+
+            {/* <div>
+              <label
+                htmlFor=" birthday"
                 className="block font-bold  text-xs mb-2"
               >
                 Date Of Birth <span className="text-red-500">*</span>
@@ -319,24 +362,24 @@ function CreateStaff() {
               <input
                 // type="date"
                 type="date"
-                id="dateOfBirth"
-                name="dateOfBirth"
-                value={formData.dateOfBirth}
-                placeholder="dd/MM/yyyy"
+                id=" birthday"
+                name=" birthday"
+                value={formData.birthday}
+                // placeholder="dd/MM/yyyy"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
-                required
+                // required
               />
-              {errors.dateOfBirth && (
-                <p className="text-red-500 text-xs">{errors.dateOfBirth}</p>
+              {errors.birthday && (
+                <p className="text-red-500 text-xs">{errors.birthday}</p>
               )}
-            </div>
+            </div> */}
             <div>
               <label
                 htmlFor="experience"
                 className="block font-bold  text-xs mb-2"
               >
-                Experience
+                experience
               </label>
               <input
                 type="text"
@@ -367,32 +410,32 @@ function CreateStaff() {
             </div>
             <div>
               <label
-                htmlFor="dateOfJoining"
+                htmlFor="date_of_joining"
                 className="block font-bold  text-xs mb-2"
               >
                 Date Of Joining <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
-                id="dateOfJoining"
-                name="dateOfJoining"
-                value={formData.dateOfJoining}
+                id="date_of_joining"
+                name="date_of_joining"
+                value={formData.date_of_joining}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
                 required
               />
-              {errors.dateOfJoining && (
-                <p className="text-red-500 text-xs">{errors.dateOfJoining}</p>
+              {errors.date_of_joining && (
+                <p className="text-red-500 text-xs">{errors.date_of_joining}</p>
               )}
             </div>
             <div className="">
-              <label htmlFor="gender" className="block font-bold  text-xs mb-2">
-                Gender <span className="text-red-500">*</span>
+              <label htmlFor="sex" className="block font-bold  text-xs mb-2">
+                sex <span className="text-red-500">*</span>
               </label>
               <select
-                id="gender"
-                name="gender"
-                value={formData.gender}
+                id="sex"
+                name="sex"
+                value={formData.sex}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
                 required
@@ -404,22 +447,22 @@ function CreateStaff() {
                 <option value="female">Female</option>
                 <option value="other">Other</option>
               </select>
-              {errors.gender && (
-                <p className="text-red-500 text-xs">{errors.gender}</p>
+              {errors.sex && (
+                <p className="text-red-500 text-xs">{errors.sex}</p>
               )}
             </div>
             <div>
               <label
-                htmlFor="aadhaarCardNo"
+                htmlFor="aadhar_card_no"
                 className="block font-bold  text-xs mb-2"
               >
                 Aadhaar Card No.
               </label>
               <input
                 type="text"
-                id="aadhaarCardNo"
-                name="aadhaarCardNo"
-                value={formData.aadhaarCardNo}
+                id="aadhar_card_no"
+                name="aadhar_card_no"
+                value={formData.aadhar_card_no}
                 pattern="\d{12}"
                 title="Aadhaar Card Number must be exactly 12 digits"
                 onChange={handleChange}
@@ -431,7 +474,7 @@ function CreateStaff() {
                 htmlFor="designation"
                 className="block font-bold  text-xs mb-2"
               >
-                Designation
+                designation <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -439,20 +482,21 @@ function CreateStaff() {
                 name="designation"
                 value={formData.designation}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
             <div>
               <label
-                htmlFor="bloodGroup"
+                htmlFor="blood_group"
                 className="block font-bold  text-xs mb-2"
               >
                 Blood Group
               </label>
               <select
-                id="bloodGroup"
-                name="bloodGroup"
-                value={formData.bloodGroup}
+                id="blood_group"
+                name="blood_group"
+                value={formData.blood_group}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
@@ -484,18 +528,18 @@ function CreateStaff() {
                 <option className="bg-gray-300" value="">
                   Select
                 </option>
-                <option value="Admin">Admin</option>
-                <option value="Bus">Bus</option>
-                <option value="Data Entry">Data Entry</option>
-                <option value="Finance">Finance</option>
-                <option value="Librarian">Librarian</option>
-                <option value="Management">Management</option>
-                <option value="Printer">Printer</option>
-                <option value="owner">owner</option>
-                <option value="Support">Support</option>
-                <option value="Teacher">Teacher</option>
-                <option value="Support Staff">Support Staff</option>
-                <option value="Security">Security</option>
+                <option value="A">Admin</option>
+                <option value="B">Bus</option>
+                <option value="E">Data Entry</option>
+                <option value="F">Finance</option>
+                <option value="L">Librarian</option>
+                <option value="M">Management</option>
+                <option value="N">Printer</option>
+                <option value="O">owner</option>
+                <option value="R">Support</option>
+                <option value="T">Teacher</option>
+                <option value="X">Support Staff</option>
+                <option value="Y">Security</option>
               </select>
               {errors.role && (
                 <p className="text-red-500 text-xs">{errors.role}</p>
@@ -504,15 +548,15 @@ function CreateStaff() {
             <div>
               <div>
                 <label
-                  htmlFor="professionalQualification"
+                  htmlFor="professional_qual"
                   className="block font-bold  text-xs mb-2"
                 >
                   Professional Qualification
                 </label>
                 <select
-                  id="professionalQualification"
-                  name="professionalQualification"
-                  value={formData.professionalQualification}
+                  id="professional_qual"
+                  name="professional_qual"
+                  value={formData.professional_qual}
                   onChange={handleChange}
                   className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
                 >
@@ -569,16 +613,16 @@ function CreateStaff() {
 
             <div>
               <label
-                htmlFor="specialSubject"
+                htmlFor="special_sub"
                 className="block font-bold  text-xs mb-2"
               >
                 Special Subject
               </label>
               <input
                 type="text"
-                id="specialSubject"
-                name="specialSubject"
-                value={formData.specialSubject}
+                id="special_sub"
+                name="special_sub"
+                value={formData.special_sub}
                 onChange={handleChange}
                 placeholder="Special Subject for D.Ed/B.Ed"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"

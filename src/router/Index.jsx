@@ -114,11 +114,14 @@ import MainLayout from "../Layouts/MainLayout";
 import PageNotFounde from "./PageNotFound.jsx";
 import StaffList from "../componants/StaffComponents/StaffList.jsx";
 import CreateStaff from "../componants/StaffComponents/CreateStaff.jsx";
+import EditStaff from "../componants/StaffComponents/EditStaff.jsx";
+import ViewStaff from "../componants/StaffComponents/ViewStaff.jsx";
 function Index() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/notification" element={<NotificationPage />} />
       <Route path="/" element={<MainLayout />}>
         <Route
           path="/student-create"
@@ -145,7 +148,14 @@ function Index() {
           path="/CreateStaff"
           element={<PrivateRoute element={CreateStaff} />}
         />
-
+        <Route
+          path="/staff/edit/:id"
+          element={<PrivateRoute element={EditStaff} />}
+        />
+        <Route
+          path="/staff/view/:id"
+          element={<PrivateRoute element={ViewStaff} />}
+        />
         <Route
           path="/eventcard"
           element={<PrivateRoute element={EventCard} />}

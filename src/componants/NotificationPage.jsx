@@ -87,7 +87,7 @@ const NotificationPage = () => {
     <div className={`${styles.notificationPage} flex bg-slate-50   `}>
       <Notification />
       <button
-        className={`${styles.closeButton} fixed top-4 left-80 z-10  `}
+        className={`${styles.closeButton}  float-right fixed top-4 right-2 z-10  `}
         onClick={closeNotificationPage}
       >
         <MdCancel fontSize={"1.9em"} fill="white" />

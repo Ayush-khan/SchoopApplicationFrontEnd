@@ -1,349 +1,409 @@
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 // import ReactPaginate from "react-paginate";
-// import NavBar from "../Header/NavBar";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+// // import NavBar from "../Header/NavBar";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEdit, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 // function Sections() {
-//     const [sections, setSections] = useState([]);
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
-//     const [showAddModal, setShowAddModal] = useState(false);
-//     const [showEditModal, setShowEditModal] = useState(false);
-//     const [showDeleteModal, setShowDeleteModal] = useState(false);
-//     const [currentSection, setCurrentSection] = useState(null);
-//     const [newSectionName, setNewSectionName] = useState('');
-//     const [searchTerm, setSearchTerm] = useState('');
-//     const [currentPage, setCurrentPage] = useState(0);
-//     const [pageCount, setPageCount] = useState(0);
-//     const pageSize = 20;
+//   const [sections, setSections] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [showAddModal, setShowAddModal] = useState(false);
+//   const [showEditModal, setShowEditModal] = useState(false);
+//   const [showDeleteModal, setShowDeleteModal] = useState(false);
+//   const [currentSection, setCurrentSection] = useState(null);
+//   const [newSectionName, setNewSectionName] = useState("");
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [currentPage, setCurrentPage] = useState(0);
+//   const [pageCount, setPageCount] = useState(0);
+//   const pageSize = 20;
 
-//     const fetchSections = async () => {
-//         try {
-//             const token = localStorage.getItem('authToken');
-//             const academicYr = localStorage.getItem('academicYear');
+//   const fetchSections = async () => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+//       const academicYr = localStorage.getItem("academicYear");
 
-//             if (!token || !academicYr) {
-//                 throw new Error('No authentication token or academic year found');
-//             }
+//       if (!token) {
+//         throw new Error("No authentication token or academic year found");
+//       }
 
-//             const response = await axios.get('http://127.0.0.1:8000/api/sections', {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                     'X-Academic-Year': academicYr,
-//                 },
-//                 withCredentials: true,
-//             });
+//       const response = await axios.get("http://127.0.0.1:8000/api/sections", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "X-Academic-Year": academicYr,
+//         },
+//         withCredentials: true,
+//       });
 
-//             setSections(response.data);
-//             setPageCount(Math.ceil(response.data.length / pageSize));
-//         } catch (error) {
-//             setError(error.message);
-//         } finally {
-//             setLoading(false);
+//       setSections(response.data);
+//       setPageCount(Math.ceil(response.data.length / pageSize));
+//     } catch (error) {
+//       setError(error.message);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchSections();
+//   }, []);
+
+//   const handlePageClick = (data) => {
+//     setCurrentPage(data.selected);
+//   };
+
+//   const handleEdit = (section) => {
+//     setCurrentSection(section);
+//     setNewSectionName(section.name);
+//     setShowEditModal(true);
+//   };
+
+//   const handleAdd = () => {
+//     setShowAddModal(true);
+//   };
+
+//   const handleCloseModal = () => {
+//     setShowAddModal(false);
+//     setShowEditModal(false);
+//     setShowDeleteModal(false);
+//     setNewSectionName("");
+//     setCurrentSection(null);
+//   };
+
+//   const handleSubmitAdd = async () => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+//       const academicYr = localStorage.getItem("academicYear");
+
+//       if (!token) {
+//         throw new Error("No authentication token or academic year found");
+//       }
+
+//       await axios.post(
+//         "http://127.0.0.1:8000/api/sections",
+//         { name: newSectionName },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             "X-Academic-Year": academicYr,
+//           },
+//           withCredentials: true,
 //         }
-//     };
+//       );
 
-//     useEffect(() => {
-//         fetchSections();
-//     }, []);
+//       fetchSections();
+//       handleCloseModal();
+//       toast.success("Section added successfully!");
+//     } catch (error) {
+//       console.error("Error adding section:", error);
+//     }
+//   };
 
-//     const handlePageClick = (data) => {
-//         setCurrentPage(data.selected);
-//     };
+//   const handleSubmitEdit = async () => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+//       const academicYr = localStorage.getItem("academicYear");
 
-//     const handleEdit = (section) => {
-//         setCurrentSection(section);
-//         setNewSectionName(section.name);
-//         setShowEditModal(true);
-//     };
+//       if (!token) {
+//         throw new Error("No authentication token or academic year found");
+//       }
 
-//     const handleAdd = () => {
-//         setShowAddModal(true);
-//     };
-
-//     const handleCloseModal = () => {
-//         setShowAddModal(false);
-//         setShowEditModal(false);
-//         setShowDeleteModal(false);
-//         setNewSectionName('');
-//         setCurrentSection(null);
-//     };
-
-//     const handleSubmitAdd = async () => {
-//         try {
-//             const token = localStorage.getItem('authToken');
-//             const academicYr = localStorage.getItem('academicYear');
-
-//             if (!token || !academicYr) {
-//                 throw new Error('No authentication token or academic year found');
-//             }
-
-//             await axios.post(
-//                 'http://127.0.0.1:8000/api/sections',
-//                 { name: newSectionName },
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                         'X-Academic-Year': academicYr,
-//                     },
-//                     withCredentials: true,
-//                 }
-//             );
-
-//             fetchSections();
-//             handleCloseModal();
-//             toast.success('Section added successfully!');
-
-//         } catch (error) {
-//             console.error('Error adding section:', error);
+//       await axios.put(
+//         `http://127.0.0.1:8000/api/sections/${currentSection.department_id}`,
+//         { name: newSectionName },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             "X-Academic-Year": academicYr,
+//           },
+//           withCredentials: true,
 //         }
-//     };
+//       );
 
-//     const handleSubmitEdit = async () => {
-//         try {
-//             const token = localStorage.getItem('authToken');
-//             const academicYr = localStorage.getItem('academicYear');
+//       fetchSections();
+//       handleCloseModal();
+//     } catch (error) {
+//       console.error("Error editing section:", error);
+//     }
+//   };
 
-//             if (!token || !academicYr) {
-//                 throw new Error('No authentication token or academic year found');
-//             }
+//   const handleDelete = (id) => {
+//     const sectionToDelete = sections.find((sec) => sec.department_id === id);
+//     setCurrentSection(sectionToDelete);
+//     setShowDeleteModal(true);
+//   };
 
-//             await axios.put(
-//                 `http://127.0.0.1:8000/api/sections/${currentSection.department_id}`,
-//                 { name: newSectionName },
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                         'X-Academic-Year': academicYr,
-//                     },
-//                     withCredentials: true,
-//                 }
-//             );
+//   const handleSubmitDelete = async () => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+//       const academicYr = localStorage.getItem("academicYear");
 
-//             fetchSections();
-//             handleCloseModal();
-//         } catch (error) {
-//             console.error('Error editing section:', error);
+//       if (
+//         !token ||
+//         // !academicYr ||
+//         !currentSection ||
+//         !currentSection.department_id
+//       ) {
+//         throw new Error("Section ID is missing");
+//       }
+
+//       await axios.delete(
+//         `http://127.0.0.1:8000/api/sections/${currentSection.department_id}`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             "X-Academic-Year": academicYr,
+//           },
+//           withCredentials: true,
 //         }
-//     };
+//       );
 
-//     const handleDelete = (id) => {
-//         const sectionToDelete = sections.find(sec => sec.department_id === id);
-//         setCurrentSection(sectionToDelete);
-//         setShowDeleteModal(true);
-//     };
+//       fetchSections();
+//       setShowDeleteModal(false);
+//       setCurrentSection(null);
+//       toast.success("Section deleted successfully!");
+//     } catch (error) {
+//       console.error("Error deleting section:", error);
+//       setError(error.message);
+//     }
+//   };
 
-//     const handleSubmitDelete = async () => {
-//         try {
-//             const token = localStorage.getItem('authToken');
-//             const academicYr = localStorage.getItem('academicYear');
+//   const filteredSections = sections.filter((section) =>
+//     section.name.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
 
-//             if (!token || !academicYr || !currentSection || !currentSection.department_id) {
-//                 throw new Error('Section ID is missing');
-//             }
+//   const displayedSections = filteredSections.slice(
+//     currentPage * pageSize,
+//     (currentPage + 1) * pageSize
+//   );
 
-//             await axios.delete(
-//                 `http://127.0.0.1:8000/api/sections/${currentSection.department_id}`,
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                         'X-Academic-Year': academicYr,
-//                     },
-//                     withCredentials: true,
-//                 }
-//             );
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error: {error}</p>;
 
-//             fetchSections();
-//             setShowDeleteModal(false);
-//             setCurrentSection(null);
-//             toast.success('Section deleted successfully!');
+//   return (
+//     <>
+//       {/* <NavBar /> */}
+//       <ToastContainer />
 
-//         } catch (error) {
-//             console.error('Error deleting section:', error);
-//             setError(error.message);
-//         }
-//     };
-
-//     const filteredSections = sections.filter(section =>
-//         section.name.toLowerCase().includes(searchTerm.toLowerCase())
-//     );
-
-//     const displayedSections = filteredSections.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
-
-//     if (loading) return <p>Loading...</p>;
-//     if (error) return <p>Error: {error}</p>;
-
-//     return (
-//         <>
-//             <NavBar />
-//             <ToastContainer />
-
-//             <div className="container mt-4">
-//                 <div className="card" style={{ margin: '0 auto', width: '70%' }}>
-//                     <div className="card-header d-flex justify-content-between align-items-center">
-//                         <h3>Sections</h3>
-//                         <button className="btn btn-primary btn-sm" style={{ width: '80px' }} onClick={handleAdd}>
-//                             <FontAwesomeIcon icon={faPlus} style={{ marginRight: '5px' }} />
-//                             Add
-//                         </button>
-//                     </div>
-//                     <div className="card-body">
-//                         <div className="d-flex justify-content-end mb-3">
-//                             <input
-//                                 type="text"
-//                                 className="form-control w-50"
-//                                 placeholder="Search by name"
-//                                 onChange={(e) => setSearchTerm(e.target.value)}
-//                             />
-//                         </div>
-//                         <div className="table-responsive">
-//                             <table className="table table-bordered table-striped">
-//                                 <thead>
-//                                     <tr>
-//                                         <th>Name</th>
-//                                         <th>Edit</th>
-//                                         <th>Delete</th>
-//                                     </tr>
-//                                 </thead>
-//                                 <tbody>
-//                                     {displayedSections.map((section) => (
-//                                         <tr key={section.department_id}>
-//                                             <td>{section.name}</td>
-//                                             <td className="text-center">
-//                                                 <FontAwesomeIcon
-//                                                     icon={faEdit}
-//                                                     className="text-warning"
-//                                                     onClick={() => handleEdit(section)}
-//                                                     style={{ cursor: 'pointer', fontSize: '1.5em' }}
-//                                                 />
-//                                             </td>
-//                                             <td className="text-center">
-//                                                 <FontAwesomeIcon
-//                                                     icon={faTrash}
-//                                                     className="text-danger"
-//                                                     onClick={() => handleDelete(section.department_id)}
-//                                                     style={{ cursor: 'pointer', fontSize: '1.5em' }}
-//                                                 />
-//                                             </td>
-//                                         </tr>
-//                                     ))}
-//                                 </tbody>
-//                             </table>
-//                         </div>
-//                         <div className="d-flex justify-content-center mt-3">
-//                             <ReactPaginate
-//                                 previousLabel={'previous'}
-//                                 nextLabel={'next'}
-//                                 breakLabel={'...'}
-//                                 breakClassName={'page-item'}
-//                                 breakLinkClassName={'page-link'}
-//                                 pageCount={pageCount}
-//                                 marginPagesDisplayed={2}
-//                                 pageRangeDisplayed={5}
-//                                 onPageChange={handlePageClick}
-//                                 containerClassName={'pagination justify-content-center'}
-//                                 pageClassName={'page-item'}
-//                                 pageLinkClassName={'page-link'}
-//                                 previousClassName={'page-item'}
-//                                 previousLinkClassName={'page-link'}
-//                                 nextClassName={'page-item'}
-//                                 nextLinkClassName={'page-link'}
-//                                 activeClassName={'active'}
-//                             />
-//                         </div>
-//                     </div>
-//                 </div>
+//       <div className="container mt-4">
+//         <div className="card" style={{ margin: "0 auto", width: "70%" }}>
+//           <div className="card-header d-flex justify-content-between align-items-center">
+//             <h3>Sections</h3>
+//             <button
+//               className="btn btn-primary btn-sm"
+//               style={{ width: "80px" }}
+//               onClick={handleAdd}
+//             >
+//               <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
+//               Add
+//             </button>
+//           </div>
+//           <div className="card-body">
+//             <div className="d-flex justify-content-end mb-3">
+//               <input
+//                 type="text"
+//                 className="form-control w-50"
+//                 placeholder="Search by name"
+//                 onChange={(e) => setSearchTerm(e.target.value)}
+//               />
 //             </div>
+//             <div className="table-responsive">
+//               <table className="table table-bordered table-striped">
+//                 <thead>
+//                   <tr>
+//                     <th>Name</th>
+//                     <th>Edit</th>
+//                     <th>Delete</th>
+//                   </tr>
+//                 </thead>
+//                 <tbody>
+//                   {displayedSections.map((section) => (
+//                     <tr key={section.department_id}>
+//                       <td>{section.name}</td>
+//                       <td className="text-center">
+//                         <FontAwesomeIcon
+//                           icon={faEdit}
+//                           className="text-warning"
+//                           onClick={() => handleEdit(section)}
+//                           style={{ cursor: "pointer", fontSize: "1.5em" }}
+//                         />
+//                       </td>
+//                       <td className="text-center">
+//                         <FontAwesomeIcon
+//                           icon={faTrash}
+//                           className="text-danger"
+//                           onClick={() => handleDelete(section.department_id)}
+//                           style={{ cursor: "pointer", fontSize: "1.5em" }}
+//                         />
+//                       </td>
+//                     </tr>
+//                   ))}
+//                 </tbody>
+//               </table>
+//             </div>
+//             <div className="d-flex justify-content-center mt-3">
+//               <ReactPaginate
+//                 previousLabel={"previous"}
+//                 nextLabel={"next"}
+//                 breakLabel={"..."}
+//                 breakClassName={"page-item"}
+//                 breakLinkClassName={"page-link"}
+//                 pageCount={pageCount}
+//                 marginPagesDisplayed={2}
+//                 pageRangeDisplayed={5}
+//                 onPageChange={handlePageClick}
+//                 containerClassName={"pagination justify-content-center"}
+//                 pageClassName={"page-item"}
+//                 pageLinkClassName={"page-link"}
+//                 previousClassName={"page-item"}
+//                 previousLinkClassName={"page-link"}
+//                 nextClassName={"page-item"}
+//                 nextLinkClassName={"page-link"}
+//                 activeClassName={"active"}
+//               />
+//             </div>
+//           </div>
+//         </div>
+//       </div>
 
-//             {/* Modal for adding a new section */}
-//             {showAddModal && (
-//                 <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-//                     <div className="modal-dialog modal-dialog-centered">
-//                         <div className="modal-content">
-//                             <div className="modal-header">
-//                                 <h5 className="modal-title">Add New Section</h5>
-//                                 <button type="button" className="btn-close" onClick={handleCloseModal}></button>
-//                             </div>
-//                             <div className="modal-body">
-//                                 <div className="mb-3">
-//                                     <label htmlFor="sectionName" className="form-label">Section Name</label>
-//                                     <input
-//                                         type="text"
-//                                         className="form-control"
-//                                         id="sectionName"
-//                                         value={newSectionName}
-//                                         onChange={(e) => setNewSectionName(e.target.value)}
-//                                     />
-//                                 </div>
-//                             </div>
-//                             <div className="modal-footer d-flex justify-content-end">
-//                                 {/* <button type="button" className="btn btn-secondary me-2" onClick={handleCloseModal}>Cancel</button> */}
-//                                 <button type="button" className="btn btn-primary" style={{ marginRight: '40px' }} onClick={handleSubmitAdd}>Add</button>
-//                             </div>
-//                         </div>
-//                     </div>
+//       {/* Modal for adding a new section */}
+//       {showAddModal && (
+//         <div
+//           className="modal"
+//           style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+//         >
+//           <div className="modal-dialog modal-dialog-centered">
+//             <div className="modal-content">
+//               <div className="modal-header">
+//                 <h5 className="modal-title">Add New Section</h5>
+//                 <button
+//                   type="button"
+//                   className="btn-close"
+//                   onClick={handleCloseModal}
+//                 ></button>
+//               </div>
+//               <div className="modal-body">
+//                 <div className="mb-3">
+//                   <label htmlFor="sectionName" className="form-label">
+//                     Section Name
+//                   </label>
+//                   <input
+//                     type="text"
+//                     className="form-control"
+//                     id="sectionName"
+//                     value={newSectionName}
+//                     onChange={(e) => setNewSectionName(e.target.value)}
+//                   />
 //                 </div>
-//             )}
+//               </div>
+//               <div className="modal-footer d-flex justify-content-end">
+//                 {/* <button type="button" className="btn btn-secondary me-2" onClick={handleCloseModal}>Cancel</button> */}
+//                 <button
+//                   type="button"
+//                   className="btn btn-primary"
+//                   style={{ marginRight: "40px" }}
+//                   onClick={handleSubmitAdd}
+//                 >
+//                   Add
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
 
-//             {/* Modal for editing a section */}
-//             {showEditModal && (
-//                 <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-//                     <div className="modal-dialog modal-dialog-centered">
-//                         <div className="modal-content">
-//                             <div className="modal-header">
-//                                 <h5 className="modal-title">Edit Section</h5>
-//                                 <button type="button" className="btn-close" onClick={handleCloseModal}></button>
-//                             </div>
-//                             <div className="modal-body">
-//                                 <div className="mb-3">
-//                                     <label htmlFor="editSectionName" className="form-label">New Section Name</label>
-//                                     <input
-//                                         type="text"
-//                                         className="form-control"
-//                                         id="editSectionName"
-//                                         value={newSectionName}
-//                                         onChange={(e) => setNewSectionName(e.target.value)}
-//                                     />
-//                                 </div>
-//                             </div>
-//                             <div className="modal-footer">
-//                                 {/* <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button> */}
-//                                 <button type="button" className="btn btn-primary" style={{ marginRight: '40px' }} onClick={handleSubmitEdit}>Update</button>
-//                             </div>
-//                         </div>
-//                     </div>
+//       {/* Modal for editing a section */}
+//       {showEditModal && (
+//         <div
+//           className="modal"
+//           style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+//         >
+//           <div className="modal-dialog modal-dialog-centered">
+//             <div className="modal-content">
+//               <div className="modal-header">
+//                 <h5 className="modal-title">Edit Section</h5>
+//                 <button
+//                   type="button"
+//                   className="btn-close"
+//                   onClick={handleCloseModal}
+//                 ></button>
+//               </div>
+//               <div className="modal-body">
+//                 <div className="mb-3">
+//                   <label htmlFor="editSectionName" className="form-label">
+//                     New Section Name
+//                   </label>
+//                   <input
+//                     type="text"
+//                     className="form-control"
+//                     id="editSectionName"
+//                     value={newSectionName}
+//                     onChange={(e) => setNewSectionName(e.target.value)}
+//                   />
 //                 </div>
-//             )}
+//               </div>
+//               <div className="modal-footer">
+//                 {/* <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button> */}
+//                 <button
+//                   type="button"
+//                   className="btn btn-primary"
+//                   style={{ marginRight: "40px" }}
+//                   onClick={handleSubmitEdit}
+//                 >
+//                   Update
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
 
-//             {/* Modal for confirming deletion */}
-//             {showDeleteModal && (
-//                 <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-//                     <div className="modal-dialog modal-dialog-centered">
-//                         <div className="modal-content">
-//                             <div className="modal-header">
-//                                 <h5 className="modal-title">Confirm Deletion</h5>
-//                                 <button type="button" className="btn-close" onClick={handleCloseModal}></button>
-//                             </div>
-//                             <div className="modal-body">
-//                                 <p>Are you sure you want to delete section: <strong>{currentSection.name}</strong>?</p>
-//                             </div>
-//                             <div className="modal-footer">
-//                                 {/* <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button> */}
-//                                 <button type="button" className="btn btn-danger" style={{ marginRight: '40px' }} onClick={handleSubmitDelete}>Delete</button>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             )}
-//         </>
-//     )
+//       {/* Modal for confirming deletion */}
+//       {showDeleteModal && (
+//         <div
+//           className="modal"
+//           style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+//         >
+//           <div className="modal-dialog modal-dialog-centered">
+//             <div className="modal-content">
+//               <div className="modal-header">
+//                 <h5 className="modal-title">Confirm Deletion</h5>
+//                 <button
+//                   type="button"
+//                   className="btn-close"
+//                   onClick={handleCloseModal}
+//                 ></button>
+//               </div>
+//               <div className="modal-body">
+//                 <p>
+//                   Are you sure you want to delete section:{" "}
+//                   <strong>{currentSection.name}</strong>?
+//                 </p>
+//               </div>
+//               <div className="modal-footer">
+//                 {/* <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button> */}
+//                 <button
+//                   type="button"
+//                   className="btn btn-danger"
+//                   style={{ marginRight: "40px" }}
+//                   onClick={handleSubmitDelete}
+//                 >
+//                   Delete
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </>
+//   );
 // }
 // export default Sections;
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
@@ -429,7 +489,7 @@ function Sections() {
       if (!token) {
         throw new Error("No authentication token or academic year found");
       }
-
+      console.log("Name is:", newSectionName);
       await axios.post(
         `${API_URL}/api/sections`,
         { name: newSectionName },

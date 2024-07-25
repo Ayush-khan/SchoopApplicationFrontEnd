@@ -215,7 +215,7 @@
 //                 name="teacher_image_name"
 //                 accept="image/*"
 //                 onChange={handleFileChange}
-//                 className="input-field text-xs box-border mt-2 bg-black text-white  "
+//                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner text-xs box-border mt-2 bg-black text-white  "
 //               />
 //             </div>
 //             <div className="col-span-1">
@@ -278,7 +278,7 @@
 //                 name="address"
 //                 value={formData.address}
 //                 onChange={handleChange}
-//                 className="input-field resize block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+//                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner resize block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 rows="4"
 //                 required
 //               />
@@ -352,7 +352,7 @@
 //                     name={field.name}
 //                     value={formData[field.name]}
 //                     onChange={handleChange}
-//                     className="input-field  w-full"
+//                     className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner  w-full"
 //                     required
 //                   >
 //                     {field.options.map((option) => (
@@ -368,7 +368,7 @@
 //                     name={field.name}
 //                     value={formData[field.name]}
 //                     onChange={handleChange}
-//                     className="input-field  w-full"
+//                     className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner  w-full"
 //                     required={
 //                       field.label !== "Father/Spouse Name" &&
 //                       field.label !== "Religion" &&
@@ -577,7 +577,9 @@ function EditStaff() {
 
       if (response.status === 200) {
         toast.success("Teacher updated successfully!");
-        navigate("/StaffList");
+        setTimeout(() => {
+          navigate("/StaffList");
+        }, 3000);
       }
     } catch (error) {
       toast.error("An error occurred while updating the teacher.");
@@ -591,7 +593,7 @@ function EditStaff() {
       <div className="card p-4 rounded-md ">
         <div className=" card-header mb-4 flex justify-between items-center ">
           <h5 className="text-gray-700 mt-1 text-md lg:text-lg">
-            Edit Staff Form
+            Edit User Profile
           </h5>
 
           <RxCross1
@@ -680,53 +682,20 @@ function EditStaff() {
             </div>
             <div className="col-span-1">
               <label
-                htmlFor="class_id"
+                htmlFor="address"
                 className="block font-bold  text-xs mb-2"
               >
-                Class
+                Address
               </label>
-              <input
-                type="text"
-                id="class_id"
-                name="class_id"
-                value={formData.class_id}
+              <textarea
+                id="address"
+                name="address"
+                value={formData.address}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="section_id"
-                className="block font-bold  text-xs mb-2"
-              >
-                Section
-              </label>
-              <input
-                type="text"
-                id="section_id"
-                name="section_id"
-                value={formData.section_id}
-                onChange={handleChange}
-                className="input-field"
-              />
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="employee_id"
-                className="block font-bold  text-xs mb-2"
-              >
-                Employee ID
-              </label>
-              <input
-                type="text"
-                id="employee_id"
-                name="employee_id"
-                value={formData.employee_id}
-                onChange={handleChange}
-                className="input-field"
-              />
-              {errors.employee_id && (
-                <div className="text-red-500 text-xs">{errors.employee_id}</div>
+              {errors.address && (
+                <div className="text-red-500 text-xs">{errors.address}</div>
               )}
             </div>
             <div className="col-span-1">
@@ -739,27 +708,63 @@ function EditStaff() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.name && (
                 <div className="text-red-500 text-xs">{errors.name}</div>
               )}
             </div>
-            <div className="col-span-1">
+            <div>
               <label
-                htmlFor="father_spouse_name"
+                htmlFor="trained"
                 className="block font-bold  text-xs mb-2"
               >
-                Father/Spouse Name
+                Training Status
               </label>
-              <input
-                type="text"
-                id="father_spouse_name"
-                name="father_spouse_name"
-                value={formData.father_spouse_name}
+              <select
+                id="trained"
+                name="trained"
+                value={formData.trained}
                 onChange={handleChange}
-                className="input-field"
-              />
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              >
+                <option className="bg-gray-300" value="">
+                  Select
+                </option>{" "}
+                <option value="trained-PGT">trained-PGT</option>
+                <option value="trained-TGT">trained-TGT</option>{" "}
+                <option value="trained-PRT">trained-PRT</option>
+                <option value="NTT">NTT</option>
+                <option value="ECCE">ECCE</option>
+                <option value="Untrained">Untrained</option>
+                <option value="NA">NA</option>
+                {/* Add training status options here */}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="phone" className="block font-bold  text-xs mb-2">
+                Phone <span className="text-red-500">*</span>
+              </label>
+              <div className="flex ">
+                <span className=" rounded-l-md pt-1 bg-gray-200 text-black font-bold px-2 pointer-events-none ml-1">
+                  +91
+                </span>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  pattern="\d{10}"
+                  maxLength="10"
+                  title="Please enter only 10 digit number "
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="input-field block w-full border border-gray-300 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
+                  required
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-xs">{errors.phone}</p>
+                )}
+              </div>
             </div>
             <div className="col-span-1">
               <label
@@ -774,10 +779,42 @@ function EditStaff() {
                 name="birthday"
                 value={formData.birthday}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.birthday && (
                 <div className="text-red-500 text-xs">{errors.birthday}</div>
+              )}
+            </div>
+            <div className="col-span-1">
+              <label
+                htmlFor="experience"
+                className="block font-bold  text-xs mb-2"
+              >
+                Experience
+              </label>
+              <input
+                type="text"
+                id="experience"
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="email" className="block font-bold  text-xs mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+              {errors.email && (
+                <div className="text-red-500 text-xs">{errors.email}</div>
               )}
             </div>
             <div className="col-span-1">
@@ -793,7 +830,7 @@ function EditStaff() {
                 name="date_of_joining"
                 value={formData.date_of_joining}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.date_of_joining && (
                 <div className="text-red-500 text-xs">
@@ -810,7 +847,7 @@ function EditStaff() {
                 name="sex"
                 value={formData.sex}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option value="">Select Gender</option>
                 <option value="M">Male</option>
@@ -820,6 +857,146 @@ function EditStaff() {
               {errors.sex && (
                 <div className="text-red-500 text-xs">{errors.sex}</div>
               )}
+            </div>
+            <div className="col-span-1">
+              <label
+                htmlFor="class_teacher_of"
+                className="block font-bold  text-xs mb-2"
+              >
+                Class teacher of
+              </label>
+              <input
+                type="text"
+                id="class_teacher_of"
+                name="class_teacher_of"
+                value={formData.class_teacher_of}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+            </div>
+            {/* <div>
+              <label htmlFor="role" className="block font-bold  text-xs mb-2">
+                Role <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+                required
+              >
+                <option className="bg-gray-300" value="">
+                  Select
+                </option>
+                <option value="A">Admin</option>
+                <option value="B">Bus</option>
+                <option value="E">Data Entry</option>
+                <option value="F">Finance</option>
+                <option value="L">Librarian</option>
+                <option value="M">Management</option>
+                <option value="N">Printer</option>
+                <option value="O">owner</option>
+                <option value="R">Support</option>
+                <option value="T">Teacher</option>
+                <option value="X">Support Staff</option>
+                <option value="Y">Security</option>
+              </select>
+              {errors.role && (
+                <p className="text-red-500 text-xs">{errors.role}</p>
+              )}
+            </div> */}
+            <div className="col-span-1">
+              <label
+                htmlFor="designation"
+                className="block font-bold  text-xs mb-2"
+              >
+                Designation
+              </label>
+              <input
+                type="text"
+                id="designation"
+                name="designation"
+                value={formData.designation}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+              {errors.designation && (
+                <div className="text-red-500 text-xs">{errors.designation}</div>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="blood_group"
+                className="block font-bold  text-xs mb-2"
+              >
+                Blood Group
+              </label>
+              <select
+                id="blood_group"
+                name="blood_group"
+                value={formData.blood_group}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              >
+                <option className="bg-gray-300" value="">
+                  Select
+                </option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="aadhar_card_no"
+                className="block font-bold  text-xs mb-2"
+              >
+                Aadhaar Card No.
+              </label>
+              <input
+                type="text"
+                id="aadhar_card_no"
+                name="aadhar_card_no"
+                value={formData.aadhar_card_no}
+                pattern="\d{12}"
+                title="Aadhaar Card Number must be exactly 12 digits"
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+            </div>
+            <div>
+              <div>
+                <label
+                  htmlFor="professional_qual"
+                  className="block font-bold  text-xs mb-2"
+                >
+                  Professional Qualification
+                </label>
+                <select
+                  id="professional_qual"
+                  name="professional_qual"
+                  value={formData.professional_qual}
+                  onChange={handleChange}
+                  className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+                >
+                  <option className="bg-gray-300" value="">
+                    Select
+                  </option>
+                  <option value="D.Ed">D.Ed</option>
+                  <option value="B.Ed">B.Ed</option>
+                  <option value="B.P.Ed">B.P.Ed</option>
+                  <option value="M.P.Ed">M.P.Ed</option>
+                  <option value="M.Ed">M.Ed</option>
+                  <option value="NA">NA</option>
+                  {/* Add professional qualification options here */}
+                </select>
+              </div>
             </div>
             <div className="col-span-1">
               <label
@@ -834,109 +1011,28 @@ function EditStaff() {
                 name="religion"
                 value={formData.religion}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
+
             <div className="col-span-1">
               <label
-                htmlFor="blood_group"
+                htmlFor="employee_id"
                 className="block font-bold  text-xs mb-2"
               >
-                Blood Group
+                Employee ID
               </label>
               <input
                 type="text"
-                id="blood_group"
-                name="blood_group"
-                value={formData.blood_group}
+                id="employee_id"
+                name="employee_id"
+                value={formData.employee_id}
                 onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="address"
-                className="block font-bold  text-xs mb-2"
-              >
-                Address
-              </label>
-              <textarea
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="input-field"
-              />
-              {errors.address && (
-                <div className="text-red-500 text-xs">{errors.address}</div>
+              {errors.employee_id && (
+                <div className="text-red-500 text-xs">{errors.employee_id}</div>
               )}
-            </div>
-            <div className="col-span-1">
-              <label htmlFor="phone" className="block font-bold  text-xs mb-2">
-                Phone
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="input-field"
-              />
-              {errors.phone && (
-                <div className="text-red-500 text-xs">{errors.phone}</div>
-              )}
-            </div>
-            <div className="col-span-1">
-              <label htmlFor="email" className="block font-bold  text-xs mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="input-field"
-              />
-              {errors.email && (
-                <div className="text-red-500 text-xs">{errors.email}</div>
-              )}
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="designation"
-                className="block font-bold  text-xs mb-2"
-              >
-                Designation
-              </label>
-              <input
-                type="text"
-                id="designation"
-                name="designation"
-                value={formData.designation}
-                onChange={handleChange}
-                className="input-field"
-              />
-              {errors.designation && (
-                <div className="text-red-500 text-xs">{errors.designation}</div>
-              )}
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="professional_qual"
-                className="block font-bold  text-xs mb-2"
-              >
-                Professional Qualification
-              </label>
-              <input
-                type="text"
-                id="professional_qual"
-                name="professional_qual"
-                value={formData.professional_qual}
-                onChange={handleChange}
-                className="input-field"
-              />
             </div>
             <div className="col-span-1">
               <label
@@ -951,43 +1047,11 @@ function EditStaff() {
                 name="special_sub"
                 value={formData.special_sub}
                 onChange={handleChange}
-                className="input-field"
-              />
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="trained"
-                className="block font-bold  text-xs mb-2"
-              >
-                Trained
-              </label>
-              <input
-                type="text"
-                id="trained"
-                name="trained"
-                value={formData.trained}
-                onChange={handleChange}
-                className="input-field"
-              />
-            </div>
-            <div className="col-span-1">
-              <label
-                htmlFor="experience"
-                className="block font-bold  text-xs mb-2"
-              >
-                Experience
-              </label>
-              <input
-                type="text"
-                id="experience"
-                name="experience"
-                value={formData.experience}
-                onChange={handleChange}
-                className="input-field"
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
           </div>
-          <div className="col-span-3  text-right">
+          <div className="col-span-3 md:mr-9 my-2 text-right">
             <button
               type="submit"
               style={{ backgroundColor: "#2196F3" }}

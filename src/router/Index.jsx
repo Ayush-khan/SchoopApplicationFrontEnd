@@ -116,6 +116,9 @@ import StaffList from "../componants/StaffComponents/StaffList.jsx";
 import CreateStaff from "../componants/StaffComponents/CreateStaff.jsx";
 import EditStaff from "../componants/StaffComponents/EditStaff.jsx";
 import ViewStaff from "../componants/StaffComponents/ViewStaff.jsx";
+import ShowRolesWithMenu from "../componants/RoleMangement/ShowRolesWithMenu.jsx";
+import Roles from "../componants/RoleMangement/Roles.jsx";
+import ManageRoleAccess from "../componants/RoleMangement/ManageRoleAccess.jsx";
 function Index() {
   return (
     <Routes>
@@ -123,6 +126,16 @@ function Index() {
       <Route path="/login" element={<Login />} />
       <Route path="/notification" element={<NotificationPage />} />
       <Route path="/" element={<MainLayout />}>
+        {/* Role Management */}
+        <Route path="/roles" element={<PrivateRoute element={Roles} />} />
+        <Route
+          path="/show_roles"
+          element={<PrivateRoute element={ShowRolesWithMenu} />}
+        />
+        <Route
+          path="//manage-role-access/:roleId"
+          element={<PrivateRoute element={ManageRoleAccess} />}
+        />
         <Route
           path="/student-create"
           element={<PrivateRoute element={CreateStudent} />}

@@ -348,6 +348,21 @@ function NavBar() {
                       Dashboard
                     </div>
                     <NavDropdown
+                      title="Role"
+                      style={{
+                        color: "black",
+                        fontWeight: "700",
+                      }}
+                      className="pr-0 mr-0 w-fit"
+                    >
+                      <NavDropdown.Item as={Link} to="/roles">
+                        Manage Role
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/show_roles">
+                        Manage Access
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown
                       title="My Actions"
                       style={{
                         color: "black",

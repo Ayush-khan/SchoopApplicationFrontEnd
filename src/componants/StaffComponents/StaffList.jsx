@@ -283,11 +283,11 @@ function StaffList() {
       <div className="container md:mt-4">
         <div className="card mx-auto lg:w-full shadow-lg">
           <div className="card-header flex justify-between items-center">
-            <h3 className="text-gray-700 mt-1 text-md lg:text-xl">
+            <h3 className="text-gray-700 mt-1 text-[1.2em] lg:text-xl text-nowrap">
               Staff List
             </h3>
-            <div className="box-border flex gap-x-2 justify-end md:h-10">
-              <div>
+            <div className="box-border flex md:gap-x-2 justify-end md:h-10">
+              <div className=" w-1/2 md:w-fit mr-1">
                 <input
                   type="text"
                   className="form-control"
@@ -296,7 +296,7 @@ function StaffList() {
                 />
               </div>
               <button
-                className="btn btn-primary btn-sm h-9"
+                className="btn btn-primary btn-sm md:h-9 text-xs md:text-sm"
                 onClick={() => navigate("/CreateStaff")}
               >
                 <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
@@ -455,7 +455,34 @@ function StaffList() {
                 </table>
               </div>
             </div>
-            <div className=" flex justify-center  pt-2 -mb-3 ">
+            {/* <div className="flex justify-center py-4 md:w-full">
+              <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={"flex space-x-1"}
+                pageClassName={"page-item"}
+                pageLinkClassName={
+                  "page-link px-1 md:px-3 py-1 text-blue-500 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white"
+                }
+                previousClassName={"page-item"}
+                previousLinkClassName={
+                  "page-link px-1 md:px-3 py-1 text-blue-500 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white"
+                }
+                nextClassName={"page-item"}
+                nextLinkClassName={
+                  "page-link  px-1 md:px-3 py-1 text-blue-500 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white"
+                }
+                activeClassName={"bg-blue-500 text-white"}
+              />
+            </div> */}
+            <div className=" flex justify-center  pt-2 -mb-3  box-border  overflow-hidden">
               <ReactPaginate
                 previousLabel={"Previous"}
                 nextLabel={"Next"}
@@ -468,11 +495,17 @@ function StaffList() {
                 onPageChange={handlePageClick}
                 containerClassName={"pagination"}
                 pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
+                pageLinkClassName={
+                  "page-link px-1 md:px-3 py-1 text-blue-500 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white"
+                }
                 previousClassName={"page-item"}
-                previousLinkClassName={"page-link"}
+                previousLinkClassName={
+                  "page-link  px-1 md:px-3 py-1 text-blue-500 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white"
+                }
                 nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
+                nextLinkClassName={
+                  "page-link px-1 md:px-3 py-1 text-blue-500 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white"
+                }
                 activeClassName={"active"}
               />
             </div>

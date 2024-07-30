@@ -595,6 +595,29 @@ function Sections() {
       <div className="container mt-4">
         <div className="card mx-auto lg:w-3/4 shadow-lg">
           <div className="card-header flex justify-between items-center">
+            <h3 className="text-gray-700 mt-1 text-[1.2em] lg:text-xl text-nowrap">
+              Department
+            </h3>
+            <div className="box-border flex md:gap-x-2 justify-end md:h-10">
+              <div className=" w-1/2 md:w-fit mr-1">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search "
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <button
+                className="btn btn-primary btn-sm md:h-9 text-xs md:text-sm"
+                onClick={handleAdd}
+                // onClick={() => navigate("/CreateStaff")}
+              >
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
+                Add
+              </button>
+            </div>
+          </div>
+          {/* <div className="card-header flex justify-between items-center">
             <h3 className="text-gray-700 mt-1 text-md lg:text-xl">
               Department
             </h3>
@@ -616,7 +639,7 @@ function Sections() {
                 Add
               </button>
             </div>
-          </div>
+          </div> */}
 
           <div className="card-body w-full">
             <div className="h-96 lg:h-96 overflow-y-scroll lg:overflow-x-hidden">

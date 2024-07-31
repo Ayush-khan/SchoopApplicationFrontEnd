@@ -154,7 +154,7 @@ function CreateStaff() {
       <div className="card p-4 rounded-md ">
         <div className=" card-header mb-4 flex justify-between items-center ">
           <h5 className="text-gray-700 mt-1 text-md lg:text-lg">
-            Staff Registration Form
+            Create a New Staff
           </h5>
 
           <RxCross1
@@ -164,6 +164,9 @@ function CreateStaff() {
             }}
           />
         </div>
+        <p className="  md:absolute md:right-10  md:top-[10%]   text-gray-500 ">
+          <span className="text-red-500">*</span>indicates mandatory information
+        </p>
         <form
           onSubmit={handleSubmit}
           className="  md:mx-5 overflow-x-hidden shadow-md p-2 bg-gray-50"
@@ -635,7 +638,7 @@ function CreateStaff() {
                 style={{ backgroundColor: "#2196F3" }}
                 className=" text-white font-bold py-1 border-1 border-blue-500 px-4 rounded"
               >
-                Submit
+                Create Staff
               </button>
             </div>
           </div>

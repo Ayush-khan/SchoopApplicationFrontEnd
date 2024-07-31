@@ -241,7 +241,8 @@
 
 // export default StudentsChart;
 
-// Arranged the classs for accending order.
+// Arranged the classs for accending order and make changes in the secions PCM and PCB etc baranches
+// SECOND TRY FOR IMPLEMENTING THE CLASS FOR 11 AND 12 LIKE PCM AND MATHS
 import { useState, useEffect } from "react";
 import Style from "../Charts/StudentStyle.module.css";
 import {
@@ -267,10 +268,8 @@ const StudentsChart = () => {
   const [labelFontSize, setLabelFontSize] = useState("0.6em");
 
   useEffect(() => {
-    // Set barCategoryGap based on the initial screen size
     const updateBarCategoryGap = () => {
       if (window.innerWidth > 768) {
-        // Assuming 768px is the breakpoint for mobile
         setBarCategoryGap("20%");
         setXAxisFontSize(14);
         setXAxisTickMargin(10);
@@ -284,7 +283,7 @@ const StudentsChart = () => {
         setLabelFontSize("0.4em");
       }
     };
-    // Call the function on mount
+
     updateBarCategoryGap();
     window.addEventListener("resize", updateBarCategoryGap);
 
@@ -413,6 +412,15 @@ const StudentsChart = () => {
     fontSize: "1em",
   };
 
+  // Extract all section keys dynamically
+  const sectionKeys = [
+    ...new Set(
+      data.flatMap((entry) =>
+        Object.keys(entry).filter((key) => key.startsWith("Section-"))
+      )
+    ),
+  ];
+
   return (
     <>
       <ResponsiveContainer
@@ -443,45 +451,37 @@ const StudentsChart = () => {
             interval={0}
             tickMargin={xAxisTickMargin}
             tickSize={xAxisTickWidth}
-            type="category"
-            domain={["auto", "auto"]}
           />
           <YAxis />
           <Tooltip content={renderTooltip} />
           <Legend />
-          <Bar dataKey="Section-A" stackId="a" fill="#00FFFF">
-            <LabelList
-              className="abclist"
-              dataKey="Section-A"
-              fill="white"
-              style={{ fontSize: labelFontSize }}
-            />
-          </Bar>
-          <Bar dataKey="Section-B" stackId="a" fill="#34d399">
-            <LabelList
-              dataKey="Section-B"
-              fill="white"
-              style={{ fontSize: labelFontSize }}
-            />
-          </Bar>
-          <Bar dataKey="Section-C" stackId="a" fill="#a78bfa">
-            <LabelList
-              dataKey="Section-C"
-              fill="white"
-              style={{ fontSize: labelFontSize }}
-            />
-          </Bar>
-          <Bar dataKey="Section-D" stackId="a" fill="#E77EE7">
-            <LabelList
-              dataKey="Section-D"
-              fill="white"
-              style={{ fontSize: labelFontSize }}
-            />
-          </Bar>
+          {sectionKeys.map((section, index) => (
+            <Bar
+              key={section}
+              dataKey={section}
+              stackId="a"
+              fill={colors[index % colors.length]}
+            >
+              <LabelList
+                dataKey={section}
+                fill="white"
+                style={{ fontSize: labelFontSize }}
+              />
+            </Bar>
+          ))}
         </BarChart>
       </ResponsiveContainer>
     </>
   );
 };
+
+const colors = [
+  "#00FFFF",
+  "#34d399",
+  "#a78bfa",
+  "#E77EE7",
+  "#FF5733",
+  "#C70039",
+];
 
 export default StudentsChart;

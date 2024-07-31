@@ -3381,7 +3381,7 @@ function ClassList() {
           </div> */}
           <div className="card-header flex justify-between items-center">
             <h3 className="text-gray-700 mt-1 text-[1.2em] lg:text-xl text-nowrap">
-              Classes
+              Class
             </h3>
             <div className="box-border flex md:gap-x-2 justify-end md:h-10">
               <div className=" w-1/2 md:w-fit mr-1">
@@ -3412,10 +3412,10 @@ function ClassList() {
                         S.No
                       </th>
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
-                        Name
+                        Class
                       </th>
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
-                        Department
+                        Section
                       </th>
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
                         Edit
@@ -3426,6 +3426,7 @@ function ClassList() {
                     </tr>
                   </thead>
                   <tbody>
+                    {console.log("classLIst module api", displayedClasses)}
                     {displayedClasses.map((classItem, index) => (
                       <tr
                         key={classItem.class_id}

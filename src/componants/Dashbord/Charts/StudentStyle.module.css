@@ -1,25 +1,23 @@
-/* .chart-container {
-  width: 100%;
-  height: 100%;
+.xAxisText {
+  font-size: 0.4em; /* Default mobile font size */
 }
 
-@media (max-width: 600px) {
-  .chart-container {
-    padding: 10px;
-  }
-  .custom-tooltip {
-    font-size: 0.8em;
+@media (min-width: 768px) {
+  .xAxisText {
+    font-size: 0.8em; /* Font size for larger screens */
   }
 }
-.recharts-default-legend {
-  background-color: black;
+
+.labelText {
+  font-size: 0.4em; /* Default mobile font size */
+}
+/* .recharts-default-legend {
+  background: #000;
 } */
-/* .chart-container {
-  padding-left: 100px; /* or margin-left: 10px; */
-/* } */
-
-.studenChart {
-  /* Add other styles if necessary */
+@media (min-width: 768px) {
+  .labelText {
+    font-size: 0.8em; /* Font size for larger screens */
+  }
 }
 
 .studenChart .customScrollbar {

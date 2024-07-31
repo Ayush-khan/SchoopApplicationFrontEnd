@@ -435,7 +435,7 @@ function EditStaff() {
     designation: "",
     academic_qual: [],
     professional_qual: "",
-    special_sub: "",
+    class_teacher_of: "",
     trained: "",
     experience: "",
     aadhar_card_no: "",
@@ -593,7 +593,7 @@ function EditStaff() {
       <div className="card p-4 rounded-md ">
         <div className=" card-header mb-4 flex justify-between items-center ">
           <h5 className="text-gray-700 mt-1 text-md lg:text-lg">
-            Edit User Profile
+            Edit Staff information
           </h5>
 
           <RxCross1
@@ -603,6 +603,9 @@ function EditStaff() {
             }}
           />
         </div>
+        <p className="  md:absolute md:right-10  md:top-[10%]   text-gray-500 ">
+          <span className="text-red-500">*</span>indicates mandatory information
+        </p>
         <form
           onSubmit={handleSubmit}
           className="  md:mx-5 overflow-x-hidden shadow-md p-2 bg-gray-50"
@@ -638,7 +641,7 @@ function EditStaff() {
                 htmlFor="academic_qual"
                 className="block font-bold  text-xs mb-2"
               >
-                Academic Qualification
+                Academic Qualification <span className="text-red-500">*</span>
               </label>
               <div className="flex flex-wrap ">
                 {[
@@ -674,6 +677,8 @@ function EditStaff() {
                       checked={formData.academic_qual.includes(qualification)}
                       onChange={handleChange}
                       className="mr-2"
+                      // required
+                      title="please check atleast one box to move futher"
                     />
                     {qualification}
                   </label>
@@ -685,13 +690,14 @@ function EditStaff() {
                 htmlFor="address"
                 className="block font-bold  text-xs mb-2"
               >
-                Address
+                Address <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="address"
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.address && (
@@ -700,7 +706,7 @@ function EditStaff() {
             </div>
             <div className="col-span-1">
               <label htmlFor="name" className="block font-bold  text-xs mb-2">
-                Name
+                Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -708,6 +714,7 @@ function EditStaff() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.name && (
@@ -719,13 +726,14 @@ function EditStaff() {
                 htmlFor="trained"
                 className="block font-bold  text-xs mb-2"
               >
-                Training Status
+                Training Status <span className="text-red-500">*</span>
               </label>
               <select
                 id="trained"
                 name="trained"
                 value={formData.trained}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option className="bg-gray-300" value="">
@@ -771,7 +779,7 @@ function EditStaff() {
                 htmlFor="birthday"
                 className="block font-bold  text-xs mb-2"
               >
-                Date of Birth
+                Date of Birth <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
@@ -779,6 +787,7 @@ function EditStaff() {
                 name="birthday"
                 value={formData.birthday}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.birthday && (
@@ -790,7 +799,7 @@ function EditStaff() {
                 htmlFor="experience"
                 className="block font-bold  text-xs mb-2"
               >
-                Experience
+                Experience <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -798,6 +807,7 @@ function EditStaff() {
                 name="experience"
                 value={formData.experience}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
@@ -822,7 +832,7 @@ function EditStaff() {
                 htmlFor="date_of_joining"
                 className="block font-bold  text-xs mb-2"
               >
-                Date of Joining
+                Date of Joining <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
@@ -830,6 +840,7 @@ function EditStaff() {
                 name="date_of_joining"
                 value={formData.date_of_joining}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.date_of_joining && (
@@ -840,13 +851,14 @@ function EditStaff() {
             </div>
             <div className="col-span-1">
               <label htmlFor="sex" className="block font-bold  text-xs mb-2">
-                Gender
+                Gender <span className="text-red-500">*</span>
               </label>
               <select
                 id="sex"
                 name="sex"
                 value={formData.sex}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option value="">Select Gender</option>
@@ -1020,7 +1032,7 @@ function EditStaff() {
                 htmlFor="employee_id"
                 className="block font-bold  text-xs mb-2"
               >
-                Employee ID
+                Employee ID <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -1028,6 +1040,7 @@ function EditStaff() {
                 name="employee_id"
                 value={formData.employee_id}
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.employee_id && (
@@ -1039,13 +1052,13 @@ function EditStaff() {
                 htmlFor="special_sub"
                 className="block font-bold  text-xs mb-2"
               >
-                Special Subject
+                Class teacher of
               </label>
               <input
                 type="text"
                 id="special_sub"
                 name="special_sub"
-                value={formData.special_sub}
+                value={formData.class_teacher_of}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
@@ -1057,7 +1070,7 @@ function EditStaff() {
               style={{ backgroundColor: "#2196F3" }}
               className=" text-white font-bold py-1 border-1 border-blue-500 px-4 rounded"
             >
-              Submit
+              Update
             </button>
           </div>
         </form>

@@ -23,14 +23,19 @@ function FeePendingList() {
           throw new Error("No authentication token or academic year found");
         }
 
-        const response = await axios.get(`${API_URL}/api/staffbirthdaylist`, {
+        const response = await axios.get(`${API_URL}/api/fee_collection_list`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "X-Academic-Year": academicYr,
           },
         });
         console.log("resposne of the birthday list is", response);
-        setStaffBirthday(response.data);
+        if (response.data && Array.isArray(response.data.staffBirthday)) {
+          setStaffBirthday(response.data.staffBirthday);
+        } else {
+          throw new Error("Unexpected response data format");
+        }
+        // setStaffBirthday(response.data);
       } catch (error) {
         setError(error.message);
       } finally {

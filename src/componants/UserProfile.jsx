@@ -47,6 +47,7 @@ function UserProfile() {
       if (!token) {
         throw new Error("No authentication token is found");
       }
+      console.log("jfdshfoisafhaios");
       try {
         const response = await axios.get(`${API_URL}/api/editprofile`, {
           headers: {
@@ -54,6 +55,7 @@ function UserProfile() {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("the userporfile__________", response.data);
         const staff = response.data.user;
         console.log("the userupdate profile", staff);
         setFormData({
@@ -90,6 +92,7 @@ function UserProfile() {
           );
         }
       } catch (error) {
+        toast.error(error.response.data.message);
         console.error("Error fetching profile data:", error);
       }
     };

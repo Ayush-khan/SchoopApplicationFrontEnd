@@ -134,10 +134,10 @@ function CreateStaff() {
         // navigate("/StaffList");
       }
     } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
+      console.error("Error:", error.message);
       toast.error("An error occurred while creating the teacher.");
       console.log("the error is", error.response?.data || error.message);
-      toast.error("Error message is", error.response?.data || error.message);
+      toast.error(error.response?.data || error.message);
     }
     // // Format dates before submitting
     // const formattedFormData = {
@@ -382,7 +382,7 @@ function CreateStaff() {
                 htmlFor="experience"
                 className="block font-bold  text-xs mb-2"
               >
-                experience
+                experience <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -391,6 +391,7 @@ function CreateStaff() {
                 value={formData.experience}
                 placeholder="In year"
                 onChange={handleChange}
+                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>

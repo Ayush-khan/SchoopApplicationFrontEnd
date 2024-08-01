@@ -491,8 +491,8 @@
 // }
 
 // export default NavBar;
-
-// Tryup
+//
+// //  Finallly working navbar dynamically
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, NavDropdown, NavItem } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -509,6 +509,7 @@ import Sidebar from "./Sidebar";
 import RecursiveDropdown from "./RecursiveDropdown";
 import { Translate } from "react-bootstrap-icons";
 import { IoIosHelpCircleOutline } from "react-icons/io";
+import AdminNavBar from "./AdminNavBar";
 
 function NavBar() {
   const API_URL = import.meta.env.VITE_API_URL; //thsis is test url
@@ -524,7 +525,7 @@ function NavBar() {
   const [sessionData, setSessionData] = useState({});
 
   const [navItems, setNavItems] = useState([]);
-
+  const [roleId, setRoleId] = useState(""); // Add roleId state
   function getCurrentDate() {
     const months = [
       "January",
@@ -640,7 +641,8 @@ function NavBar() {
           },
         });
         setSessionData(sessionResponse.data);
-
+        setRoleId(sessionResponse.data.user.role_id); // Store role_id
+        // setRoleId("A"); // Store role_id
         // Fetch academic year data
         const academicYearResponse = await axios.get(
           `${API_URL}/api/getAcademicYear`,
@@ -701,70 +703,77 @@ function NavBar() {
       [menu]: !prev[menu],
     }));
   };
-
-  const renderDropdownItemsis = (items) => {
-    return items.map((item) =>
-      item.sub_menus && item.sub_menus.length > 0 ? (
-        <NavDropdown
-          key={item.menu_id}
-          title={item.name}
-          className="text-[.9em] font-bold"
-        >
-          {item.sub_menus.map((subItem) =>
-            subItem.sub_menus && subItem.sub_menus.length > 0 ? (
-              <NavDropdown
-                key={subItem.menu_id}
-                title={subItem.name}
-                id="sub-view-dropdown"
-                className=" font-bold dropend"
-              >
-                {subItem.sub_menus.map((childItem) =>
-                  childItem.sub_menus && childItem.sub_menus.length > 0 ? (
-                    <NavDropdown
-                      key={childItem.menu_id}
-                      id="sub-view-dropdown"
-                      title={childItem.name}
-                      className=" font-bold dropend"
-                    >
-                      {childItem.sub_menus.map((grandChildItem) => (
-                        <NavDropdown.Item
-                          key={grandChildItem.menu_id}
-                          onClick={() => navigate(grandChildItem.url)}
-                        >
-                          {grandChildItem.name}
-                        </NavDropdown.Item>
-                      ))}
-                    </NavDropdown>
-                  ) : (
-                    <NavDropdown.Item
-                      key={childItem.menu_id}
-                      onClick={() => navigate(childItem.url)}
-                    >
-                      {childItem.name}
-                    </NavDropdown.Item>
-                  )
-                )}
-              </NavDropdown>
-            ) : (
-              <NavDropdown.Item
-                key={subItem.menu_id}
-                onClick={() => navigate(subItem.url)}
-              >
-                {subItem.name}
-              </NavDropdown.Item>
-            )
-          )}
-        </NavDropdown>
-      ) : (
-        <Nav.Link
-          key={item.menu_id}
-          onClick={() => item.url && navigate(item.url)}
-          style={{ fontWeight: "700" }}
-        >
-          {item.name}
-        </Nav.Link>
-      )
-    );
+  // Static navbar for admin
+  const renderStaticMenu = () => {
+    // Define your static menu items here
+    return <AdminNavBar />;
+  };
+  const renderDynamicMenu = () => {
+    const renderDropdownItemsis = (items) => {
+      return items.map((item) =>
+        item.sub_menus && item.sub_menus.length > 0 ? (
+          <NavDropdown
+            key={item.menu_id}
+            title={item.name}
+            className="text-[.9em] font-bold"
+          >
+            {item.sub_menus.map((subItem) =>
+              subItem.sub_menus && subItem.sub_menus.length > 0 ? (
+                <NavDropdown
+                  key={subItem.menu_id}
+                  title={subItem.name}
+                  id="sub-view-dropdown"
+                  className=" font-bold dropend"
+                >
+                  {subItem.sub_menus.map((childItem) =>
+                    childItem.sub_menus && childItem.sub_menus.length > 0 ? (
+                      <NavDropdown
+                        key={childItem.menu_id}
+                        id="sub-view-dropdown"
+                        title={childItem.name}
+                        className=" font-bold dropend"
+                      >
+                        {childItem.sub_menus.map((grandChildItem) => (
+                          <NavDropdown.Item
+                            key={grandChildItem.menu_id}
+                            onClick={() => navigate(grandChildItem.url)}
+                          >
+                            {grandChildItem.name}
+                          </NavDropdown.Item>
+                        ))}
+                      </NavDropdown>
+                    ) : (
+                      <NavDropdown.Item
+                        key={childItem.menu_id}
+                        onClick={() => navigate(childItem.url)}
+                      >
+                        {childItem.name}
+                      </NavDropdown.Item>
+                    )
+                  )}
+                </NavDropdown>
+              ) : (
+                <NavDropdown.Item
+                  key={subItem.menu_id}
+                  onClick={() => navigate(subItem.url)}
+                >
+                  {subItem.name}
+                </NavDropdown.Item>
+              )
+            )}
+          </NavDropdown>
+        ) : (
+          <Nav.Link
+            key={item.menu_id}
+            onClick={() => item.url && navigate(item.url)}
+            style={{ fontWeight: "700" }}
+          >
+            {item.name}
+          </Nav.Link>
+        )
+      );
+    };
+    return renderDropdownItemsis(navItems);
   };
   return (
     <>
@@ -904,8 +913,9 @@ function NavBar() {
                       Dashboard
                     </div>
 
-                    {/* <Nav className="mr-auto text-xs lg:text-sm"> */}
-                    {renderDropdownItemsis(navItems)}
+                    {console.log("the Role id", roleId)}
+                    {roleId === "A" ? renderStaticMenu() : renderDynamicMenu()}
+                    {/* {renderDropdownItemsis(navItems)} */}
                     {/* Resysuib function  */}
                     {/* <RecursiveDropdown items={navItems} /> */}
                   </Nav>
@@ -983,3 +993,298 @@ function NavBar() {
 }
 
 export default NavBar;
+
+// for css and mobile view wihtout bootstrap
+// import React, { useEffect, useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import { FaHome, FaUserCircle } from "react-icons/fa";
+// import { CiLogout } from "react-icons/ci";
+// import { LiaEdit } from "react-icons/lia";
+// import "./Navbar.css"; // Import your custom CSS
+// import authManage from "../utils/PrivateRoute";
+// import Sidebar from "./Sidebar";
+// import AdminNavBar from "./AdminNavBar";
+// import { LuSchool } from "react-icons/lu";
+// import { RxHamburgerMenu } from "react-icons/rx";
+
+// function NavBar() {
+//   const API_URL = import.meta.env.VITE_API_URL;
+//   const navigate = useNavigate();
+//   const [isSidebar, setIsSidebar] = useState(false);
+//   const [sessionData, setSessionData] = useState({});
+//   const [academicYear, setAcademicYear] = useState([]);
+//   const [selectedYear, setSelectedYear] = useState("");
+//   const [navItems, setNavItems] = useState([]);
+//   const [roleId, setRoleId] = useState("");
+//   const [openDropdown, setOpenDropdown] = useState(null); // Track which dropdown is open
+//   const [openSubDropdown, setOpenSubDropdown] = useState({}); // Track which sub-dropdown is open
+
+//   const getCurrentDate = () => {
+//     const months = [
+//       "January",
+//       "February",
+//       "March",
+//       "April",
+//       "May",
+//       "June",
+//       "July",
+//       "August",
+//       "September",
+//       "October",
+//       "November",
+//       "December",
+//     ];
+//     const today = new Date();
+//     const day = String(today.getDate()).padStart(2, "0");
+//     const monthName = months[today.getMonth()];
+//     const year = today.getFullYear();
+//     return `${day} ${monthName} ${year}`;
+//   };
+
+//   const handleSelect = async (eventKey) => {
+//     setSelectedYear(eventKey);
+//     const token = localStorage.getItem("authToken");
+//     if (!token) {
+//       console.error("No authentication token found");
+//       return;
+//     }
+//     try {
+//       const response = await axios.post(
+//         `${API_URL}/api/update_academic_year`,
+//         { academic_year: eventKey },
+//         { headers: { Authorization: `Bearer ${token}` } }
+//       );
+//       localStorage.setItem("authToken", response.data.token);
+//       window.location.reload();
+//     } catch (error) {
+//       console.error("Error updating academic year:", error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const token = localStorage.getItem("authToken");
+//       if (!token) {
+//         console.error("No authentication token found");
+//         return;
+//       }
+//       try {
+//         const sessionResponse = await axios.get(`${API_URL}/api/sessionData`, {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
+//         setSessionData(sessionResponse.data);
+//         setRoleId(sessionResponse.data.user.role_id);
+
+//         const academicYearResponse = await axios.get(
+//           `${API_URL}/api/getAcademicYear`,
+//           {
+//             headers: { Authorization: `Bearer ${token}` },
+//           }
+//         );
+//         setAcademicYear(academicYearResponse.data.academic_years);
+
+//         const navResponse = await axios.get(`${API_URL}/api/navmenulist`, {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
+//         setNavItems(navResponse.data);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       }
+//     };
+//     fetchData();
+//   }, []);
+
+//   const handleLogout = async () => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+//       await axios.post(
+//         `${API_URL}/api/logout`,
+//         {},
+//         {
+//           headers: { Authorization: `Bearer ${token}` },
+//         }
+//       );
+//       localStorage.clear();
+//       navigate("/");
+//     } catch (error) {
+//       console.error("Logout error:", error);
+//     }
+//   };
+
+//   const handleDropdownClick = (menuId) => {
+//     setOpenDropdown(openDropdown === menuId ? null : menuId);
+//     setOpenSubDropdown({});
+//   };
+
+//   const handleSubDropdownClick = (menuId) => {
+//     setOpenSubDropdown((prev) => ({
+//       ...prev,
+//       [menuId]: prev[menuId] ? null : menuId,
+//     }));
+//   };
+
+//   const renderStaticMenu = () => <AdminNavBar />;
+
+//   const renderDropdownItems = (items) => {
+//     return items.map((item) =>
+//       item.sub_menus && item.sub_menus.length > 0 ? (
+//         <div key={item.menu_id} className="dropdown">
+//           <button
+//             className="dropdown-toggle"
+//             onClick={() => handleDropdownClick(item.menu_id)}
+//           >
+//             {item.name}
+//           </button>
+//           <div
+//             className={`dropdown-menu ${
+//               openDropdown === item.menu_id ? "open" : ""
+//             }`}
+//           >
+//             {item.sub_menus.map((subItem) =>
+//               subItem.sub_menus && subItem.sub_menus.length > 0 ? (
+//                 <div key={subItem.menu_id} className="dropdown-submenu">
+//                   <button
+//                     className="dropdown-toggle"
+//                     onClick={() => handleSubDropdownClick(subItem.menu_id)}
+//                   >
+//                     {subItem.name}
+//                   </button>
+//                   <div
+//                     className={`dropdown-menu ${
+//                       openSubDropdown[subItem.menu_id] ? "open" : ""
+//                     }`}
+//                   >
+//                     {subItem.sub_menus.map((childItem) =>
+//                       childItem.sub_menus && childItem.sub_menus.length > 0 ? (
+//                         <div
+//                           key={childItem.menu_id}
+//                           className="dropdown-submenu"
+//                         >
+//                           <button
+//                             className="dropdown-toggle"
+//                             onClick={() =>
+//                               handleSubDropdownClick(childItem.menu_id)
+//                             }
+//                           >
+//                             {childItem.name}
+//                           </button>
+//                           <div
+//                             className={`dropdown-menu ${
+//                               openSubDropdown[childItem.menu_id] ? "open" : ""
+//                             }`}
+//                           >
+//                             {childItem.sub_menus.map((grandChildItem) => (
+//                               <button
+//                                 key={grandChildItem.menu_id}
+//                                 onClick={() => navigate(grandChildItem.url)}
+//                                 className="dropdown-item"
+//                               >
+//                                 {grandChildItem.name}
+//                               </button>
+//                             ))}
+//                           </div>
+//                         </div>
+//                       ) : (
+//                         <button
+//                           key={childItem.menu_id}
+//                           onClick={() => navigate(childItem.url)}
+//                           className="dropdown-item"
+//                         >
+//                           {childItem.name}
+//                         </button>
+//                       )
+//                     )}
+//                   </div>
+//                 </div>
+//               ) : (
+//                 <button
+//                   key={subItem.menu_id}
+//                   onClick={() => navigate(subItem.url)}
+//                   className="dropdown-item"
+//                 >
+//                   {subItem.name}
+//                 </button>
+//               )
+//             )}
+//           </div>
+//         </div>
+//       ) : (
+//         <button
+//           key={item.menu_id}
+//           onClick={() => item.url && navigate(item.url)}
+//           className="nav-link"
+//         >
+//           {item.name}
+//         </button>
+//       )
+//     );
+//   };
+
+//   return (
+//     <>
+//       <div className="navbar-container">
+//         <div className="navbar-header">
+//           <LuSchool className="school-icon" />
+//           <h1 className="school-name">
+//             St. Arnolds Central School (
+//             {sessionData.custom_claims?.academic_year})
+//           </h1>
+//           <h1 className="current-date">{getCurrentDate()}</h1>
+//           <div className="user-menu">
+//             <div className="user-icon">
+//               <FaUserCircle className="user-icon" />
+//             </div>
+//             <div className="dropdown-menu">
+//               <button onClick={() => navigate("/myprofile")}>
+//                 <FaUserCircle /> {sessionData.user?.name}
+//               </button>
+//               <button onClick={() => navigate("/changepassword")}>
+//                 <LiaEdit /> Change Password
+//               </button>
+//               <button onClick={handleLogout}>
+//                 <CiLogout /> Logout
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="navbar-menu">
+//           <RxHamburgerMenu
+//             onClick={() => setIsSidebar(true)}
+//             className="menu-toggle"
+//           />
+//           <div className="nav-bar">
+//             <Link to="/dashboard" className="dashboard-link">
+//               <FaHome /> Dashboard
+//             </Link>
+//             {roleId === "A"
+//               ? renderStaticMenu()
+//               : renderDropdownItems(navItems)}
+//             {/* <input
+//               type="text"
+//               placeholder="GR NO"
+//               value={inputValueGR}
+//               onChange={(e) => setInputValueGR(e.target.value)}
+//               className="search-input"
+//             /> */}
+//             <div className="academic-year-dropdown">
+//               <button onClick={() => handleSelect(selectedYear)}>
+//                 {selectedYear ? selectedYear : "Academic Year"}
+//               </button>
+//               <div className="dropdown-menu">
+//                 {academicYear.map((year) => (
+//                   <button key={year} onClick={() => handleSelect(year)}>
+//                     {year}
+//                   </button>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       <Sidebar isSidebar={isSidebar} setIsSidebar={setIsSidebar} />
+//     </>
+//   );
+// }
+
+// export default NavBar;

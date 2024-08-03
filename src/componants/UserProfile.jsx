@@ -59,36 +59,36 @@ function UserProfile() {
         const staff = response.data.user;
         console.log("the userupdate profile", staff);
         setFormData({
-          employee_id: staff.get_teacher.employee_id || "",
-          name: staff.get_teacher.name || "",
-          class_teacher_of: staff.get_teacher.class_teacher_of || "",
-          birthday: staff.get_teacher.birthday || "",
-          date_of_joining: staff.get_teacher.date_of_joining || "",
-          sex: staff.get_teacher.sex || "",
-          religion: staff.get_teacher.religion || "",
-          blood_group: staff.get_teacher.blood_group || "",
-          address: staff.get_teacher.address || "",
-          phone: staff.get_teacher.phone || "",
-          email: staff.get_teacher.email || "",
-          designation: staff.get_teacher.designation || "",
-          academic_qual: staff.get_teacher.academic_qual
-            ? staff.get_teacher.academic_qual.split(",")
+          employee_id: staff.employee_id || "",
+          name: staff.name || "",
+          class_teacher_of: staff.class_teacher_of || "",
+          birthday: staff.birthday || "",
+          date_of_joining: staff.date_of_joining || "",
+          sex: staff.sex || "",
+          religion: staff.religion || "",
+          blood_group: staff.blood_group || "",
+          address: staff.address || "",
+          phone: staff.phone || "",
+          email: staff.email || "",
+          designation: staff.designation || "",
+          academic_qual: staff.academic_qual
+            ? staff.academic_qual.split(",")
             : [],
-          professional_qual: staff.get_teacher.professional_qual || "",
-          special_sub: staff.get_teacher.special_sub || "",
-          trained: staff.get_teacher.trained || "",
-          experience: staff.get_teacher.experience || "",
-          aadhar_card_no: staff.get_teacher.aadhar_card_no || "",
-          teacher_image_name: staff.get_teacher.teacher_image_name || null,
-          class_id: staff.get_teacher.class_id || "",
-          section_id: staff.get_teacher.section_id || "",
-          isDelete: staff.get_teacher.isDelete || "N",
+          professional_qual: staff.professional_qual || "",
+          special_sub: staff.special_sub || "",
+          trained: staff.trained || "",
+          experience: staff.experience || "",
+          aadhar_card_no: staff.aadhar_card_no || "",
+          teacher_image_name: staff.teacher_image_name || null,
+          class_id: staff.class_id || "",
+          section_id: staff.section_id || "",
+          isDelete: staff.isDelete || "N",
           role_id: staff.role_id || "",
         });
 
-        if (staff.get_teacher.teacher_image_name) {
+        if (staff.teacher_image_name) {
           setPhotoPreview(
-            `${API_URL}/path/to/images/${staff.get_teacher.teacher_image_name}`
+            `${API_URL}/path/to/images/${staff.teacher_image_name}`
           );
         }
       } catch (error) {
@@ -325,9 +325,11 @@ function UserProfile() {
                 type="text"
                 id="name"
                 name="name"
+                pattern="^[^\d].*"
+                title="Name should not start with a number"
+                required
                 value={formData.name}
                 onChange={handleChange}
-                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.name && (
@@ -347,6 +349,7 @@ function UserProfile() {
                 value={formData.trained}
                 onChange={handleChange}
                 required
+                title="Please enter Training Status "
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option className="bg-gray-300" value="">
@@ -415,12 +418,14 @@ function UserProfile() {
                 Experience <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="number"
+                maxLength={3}
                 id="experience"
                 name="experience"
                 value={formData.experience}
                 onChange={handleChange}
                 required
+                title="Only enter digits in year like 1 or 5"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
@@ -493,6 +498,7 @@ function UserProfile() {
               <input
                 type="text"
                 id="class_teacher_of"
+                readOnly
                 name="class_teacher_of"
                 value={formData.class_teacher_of}
                 onChange={handleChange}
@@ -590,7 +596,7 @@ function UserProfile() {
                 name="aadhar_card_no"
                 value={formData.aadhar_card_no}
                 pattern="\d{12}"
-                title="Aadhaar Card Number must be exactly 12 digits"
+                title="Aadhaar Card Number must be exactly 12 digits number"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
@@ -647,7 +653,8 @@ function UserProfile() {
                 Employee ID <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="tel"
+                maxLength={5}
                 id="employee_id"
                 name="employee_id"
                 value={formData.employee_id}

@@ -170,9 +170,10 @@ function StaffList() {
   //   };
 
   const handleSubmitEdit = (staffItem) => {
+    console.log("this is the )))))))))", staffItem.get_teacher);
     // navigate(`/editStaff/${staffItem.user_id}`
     navigate(
-      `/staff/edit/${staffItem.get_teacher.teacher_id}`,
+      `/staff/edit/${staffItem.teacher_id}`,
 
       {
         state: { staff: staffItem },
@@ -217,16 +218,17 @@ function StaffList() {
   //   }
   // };
 
-  const handleDelete = (id) => {
-    const staffToDelete = staffs.find((staff) => staff.user_id === id);
-    console.log("this is staffUersid", id);
-    setCurrentStaff(staffToDelete);
+  const handleDelete = (teacher_id) => {
+    console.log("insise detelt");
+    // const staffToDelete = staffs.find((staff) => staff.user_id === id);
+    console.log("this is staffUersid", teacher_id);
+    setCurrentStaff(teacher_id);
     setShowDeleteModal(true);
   };
   const handleView = async (staffItem) => {
     console.log("handleview is running on");
     navigate(
-      `/staff/view/${staffItem.get_teacher.teacher_id}`,
+      `/staff/view/${staffItem.teacher_id}`,
 
       {
         state: { staff: staffItem },
@@ -238,12 +240,12 @@ function StaffList() {
     try {
       const token = localStorage.getItem("authToken");
 
-      if (!token || !currentStaff || !currentStaff.get_teacher.teacher_id) {
+      if (!token || !currentStaff) {
         throw new Error("Teacher ID is missing");
       }
 
       const response = await axios.delete(
-        `${API_URL}/api/teachers/${currentStaff.get_teacher.teacher_id}`,
+        `${API_URL}/api/teachers/${currentStaff}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -351,6 +353,10 @@ function StaffList() {
                           index % 2 === 0 ? "bg-white" : "bg-gray-100"
                         } hover:bg-gray-50`}
                       >
+                        {console.log(
+                          "this is inside the staflist component in the table",
+                          staffItem
+                        )}
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
                             {index + 1}
@@ -359,42 +365,37 @@ function StaffList() {
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm py-1">
                           <img
                             src={
-                              staffItem.get_teacher.teacher_image_name
-                                ? `${API_URL}/uploads/${staffItem.get_teacher.teacher_image_name}`
+                              staffItem?.teacher_image_name
+                                ? `${API_URL}/uploads/${staffItem?.teacher_image_name}`
                                 : "https://via.placeholder.com/50"
                             }
-                            alt={staffItem.get_teacher.name}
+                            alt={staffItem?.name}
                             className="rounded-full w-8 h-8 lg:w-10 lg:h-10 object-cover"
                           />
-                          {/* {console.log(
-                            "this is staffitems",
-                            staffItem.get_teacher.employee_id
-                          )} */}
-                          {/* {console.log("this is staffitems", staffItem)} */}
                         </td>
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
-                            {staffItem.get_teacher?.employee_id}
+                            {staffItem?.employee_id}
                           </p>
                         </td>
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
-                            {staffItem.get_teacher.name}
+                            {staffItem?.name}
                           </p>
                         </td>
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
-                            {staffItem.get_teacher.email}
+                            {staffItem?.email}
                           </p>
                         </td>
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
-                            {staffItem.get_teacher.phone}
+                            {staffItem?.phone}
                           </p>
                         </td>
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
-                            {staffItem.get_teacher.designation}
+                            {staffItem?.designation}
                           </p>
                         </td>
 
@@ -409,7 +410,7 @@ function StaffList() {
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <button
                             className="text-red-600 hover:text-red-800 hover:bg-transparent "
-                            onClick={() => handleDelete(staffItem.user_id)}
+                            onClick={() => handleDelete(staffItem.teacher_id)}
                           >
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
@@ -640,7 +641,7 @@ function StaffList() {
                   <p>
                     Are you sure you want to delete{" "}
                     <span className="font-md text-red-500">
-                      {currentStaff && currentStaff.get_teacher.name}?
+                      {currentStaff && currentStaff?.name}?
                     </span>
                   </p>
                 </div>

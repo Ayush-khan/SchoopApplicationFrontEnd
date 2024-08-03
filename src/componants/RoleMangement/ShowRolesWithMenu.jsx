@@ -61,7 +61,7 @@ function ShowRolesWithMenu() {
   };
 
   const handleManage = (role) => {
-    navigate(`/manage-role-access/${role.id}`);
+    navigate(`/manage-role-access/${role.role_id}`);
   };
 
   const filteredRoles = roles.filter((role) =>

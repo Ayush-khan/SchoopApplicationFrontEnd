@@ -47,6 +47,9 @@ function CreateStaff() {
       newErrors.email = "Email address is invalid";
     if (!formData.role) newErrors.role = "Role is required";
     if (!formData.employeeId) newErrors.employeeId = "Employee ID is required";
+    if (formData.academic_qual.length === 0)
+      newErrors.academic_qual =
+        "Please select at least one academic qualification";
     return newErrors;
   };
 
@@ -91,6 +94,62 @@ function CreateStaff() {
     const [year, month, day] = dateString.split("-");
     return `${year}-${month}-${day}`;
   };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const validationErrors = validate();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     Object.values(validationErrors).forEach((error) => {
+  //       toast.error(error);
+  //     });
+  //     return;
+  //   }
+  //   const formattedFormData = {
+  //     ...formData,
+  //     birthday: formatDateString(formData.birthday),
+  //     date_of_joining: formatDateString(formData.date_of_joining),
+  //   };
+  //   // api calling
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     if (!token) {
+  //       throw new Error("No authentication token is found");
+  //     }
+  //     console.log("formata", formattedFormData);
+  //     const response = await axios.post(
+  //       `${API_URL}/api/store_staff`,
+  //       formattedFormData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     console.log("Response:", response.data);
+
+  //     if (response.status === 201) {
+  //       toast.success("Teacher created successfully!");
+  //       setTimeout(() => {
+  //         navigate("/StaffList");
+  //       }, 3000); // 3000 milliseconds = 3 seconds
+  //       // navigate("/StaffList");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error.message);
+  //     toast.error("An error occurred while creating the teacher.");
+  //     console.log("the erro", error.response.data);
+  //     toast.error(error.response?.data || error.message);
+  //   }
+  //   // // Format dates before submitting
+  //   // const formattedFormData = {
+  //   //   ...formData,
+  //   //   birthday: formatDateString(formData.birthday),
+  //   //   date_of_joining: formatDateString(formData.date_of_joining),
+  //   // };
+  //   // console.log(formattedFormData);
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validate();
@@ -106,13 +165,11 @@ function CreateStaff() {
       birthday: formatDateString(formData.birthday),
       date_of_joining: formatDateString(formData.date_of_joining),
     };
-    // api calling
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
         throw new Error("No authentication token is found");
       }
-      console.log("formata", formattedFormData);
       const response = await axios.post(
         `${API_URL}/api/store_staff`,
         formattedFormData,
@@ -130,22 +187,19 @@ function CreateStaff() {
         toast.success("Teacher created successfully!");
         setTimeout(() => {
           navigate("/StaffList");
-        }, 3000); // 3000 milliseconds = 3 seconds
-        // navigate("/StaffList");
+        }, 3000);
       }
     } catch (error) {
       console.error("Error:", error.message);
       toast.error("An error occurred while creating the teacher.");
-      console.log("the error is", error.response?.data || error.message);
-      toast.error(error.response?.data || error.message);
+
+      if (error.response && error.response.data && error.response.data.errors) {
+        // setErrors(error.response.data.errors);
+        setErrors(error.response.data.errors || {});
+      } else {
+        toast.error(error.message);
+      }
     }
-    // // Format dates before submitting
-    // const formattedFormData = {
-    //   ...formData,
-    //   birthday: formatDateString(formData.birthday),
-    //   date_of_joining: formatDateString(formData.date_of_joining),
-    // };
-    // console.log(formattedFormData);
   };
 
   return (
@@ -199,7 +253,7 @@ function CreateStaff() {
                 htmlFor="academic_qual"
                 className="block font-bold  text-xs mb-2"
               >
-                Academic Qualification
+                Academic Qualification <span className="text-red-500">*</span>
               </label>
               <div className="flex flex-wrap ">
                 {[
@@ -240,6 +294,9 @@ function CreateStaff() {
                   </label>
                 ))}
               </div>
+              {errors.academic_qual && (
+                <p className="text-red-500 text-xs">{errors.academic_qual}</p>
+              )}
             </div>
 
             <div>
@@ -271,11 +328,13 @@ function CreateStaff() {
                 type="text"
                 id="staffName"
                 name="name"
+                pattern="^[^\d].*"
+                title="Name should not start with a number"
+                required
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
                 className="block  border w-full border-gray-300 rounded-md py-1 px-3  bg-white shadow-inner"
-                required
               />
             </div>
 
@@ -284,13 +343,15 @@ function CreateStaff() {
                 htmlFor="trained"
                 className="block font-bold  text-xs mb-2"
               >
-                Training Status
+                Training Status <span className="text-red-500">*</span>
               </label>
               <select
                 id="trained"
                 name="trained"
                 value={formData.trained}
                 onChange={handleChange}
+                required
+                title="Please enter Training Status "
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option className="bg-gray-300" value="">
@@ -326,6 +387,9 @@ function CreateStaff() {
                   className="input-field block w-full border border-gray-300 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
                   required
                 />
+                {errors.phone && (
+                  <span className="error">{errors.phone[0]}</span>
+                )}
                 {errors.phone && (
                   <p className="text-red-500 text-xs">{errors.phone}</p>
                 )}
@@ -385,13 +449,15 @@ function CreateStaff() {
                 experience <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="number"
+                maxLength={3}
                 id="experience"
                 name="experience"
                 value={formData.experience}
                 placeholder="In year"
                 onChange={handleChange}
                 required
+                title="Only enter digits in year like 1 or 5"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
@@ -407,9 +473,12 @@ function CreateStaff() {
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
                 required
+                placeholder="example@email.com"
+                title="Please enter a valid email address that ends with @gmail.com"
               />
+
               {errors.email && (
-                <p className="text-red-500 text-xs">{errors.email}</p>
+                <span className="error text-red-500">{errors.email[0]}</span>
               )}
             </div>
             <div>
@@ -434,7 +503,7 @@ function CreateStaff() {
             </div>
             <div className="">
               <label htmlFor="sex" className="block font-bold  text-xs mb-2">
-                sex <span className="text-red-500">*</span>
+                Gender <span className="text-red-500">*</span>
               </label>
               <select
                 id="sex"
@@ -463,22 +532,26 @@ function CreateStaff() {
                 Aadhaar Card No.
               </label>
               <input
-                type="text"
+                type="tel"
+                maxLength={12}
                 id="aadhar_card_no"
                 name="aadhar_card_no"
                 value={formData.aadhar_card_no}
                 pattern="\d{12}"
-                title="Aadhaar Card Number must be exactly 12 digits"
+                title="Aadhaar Card Number must be exactly 12 digits Number"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
+            {errors.aadhar_card_no && (
+              <p className="text-red-500 text-xs">{errors.aadhar_card_no[0]}</p>
+            )}
             <div>
               <label
                 htmlFor="designation"
                 className="block font-bold  text-xs mb-2"
               >
-                designation <span className="text-red-500">*</span>
+                designation
               </label>
               <input
                 type="text"
@@ -486,7 +559,7 @@ function CreateStaff() {
                 name="designation"
                 value={formData.designation}
                 onChange={handleChange}
-                required
+                // required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
@@ -589,6 +662,10 @@ function CreateStaff() {
                 type="text"
                 id="religion"
                 name="religion"
+                pattern="^[^\d].*"
+                title="Religion should not start with a number"
+                required
+                placeholder="Christian"
                 value={formData.religion}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
@@ -602,7 +679,8 @@ function CreateStaff() {
                 Employee ID <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="tel"
+                maxLength={5}
                 id="employeeId"
                 name="employeeId"
                 value={formData.employeeId}

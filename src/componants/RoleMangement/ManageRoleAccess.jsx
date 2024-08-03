@@ -33,6 +33,7 @@ function ManageRoleAccess() {
             withCredentials: true,
           }
         );
+        console.log("roleid in the access role", roleId);
 
         setRole(response.data.role);
         setMenuList(response.data.menuList);

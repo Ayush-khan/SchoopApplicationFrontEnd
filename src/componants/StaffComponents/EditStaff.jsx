@@ -418,7 +418,7 @@ function EditStaff() {
   const navigate = useNavigate();
   const location = useLocation();
   const { staff } = location.state || {};
-  console.log("Staff is in edit form", staff);
+  console.log("Staff is in edit form***", staff);
 
   const [formData, setFormData] = useState({
     employee_id: "",
@@ -452,35 +452,35 @@ function EditStaff() {
   useEffect(() => {
     if (staff) {
       setFormData({
-        employee_id: staff.get_teacher.employee_id || "",
-        name: staff.get_teacher.name || "",
-        father_spouse_name: staff.get_teacher.father_spouse_name || "",
-        birthday: staff.get_teacher.birthday || "",
-        date_of_joining: staff.get_teacher.date_of_joining || "",
-        sex: staff.get_teacher.sex || "",
-        religion: staff.get_teacher.religion || "",
-        blood_group: staff.get_teacher.blood_group || "",
-        address: staff.get_teacher.address || "",
-        phone: staff.get_teacher.phone || "",
-        email: staff.get_teacher.email || "",
-        designation: staff.get_teacher.designation || "",
-        academic_qual: staff.get_teacher.academic_qual
-          ? staff.get_teacher.academic_qual.split(",")
+        employee_id: staff.employee_id || "NA",
+        name: staff.name || "",
+        father_spouse_name: staff.father_spouse_name || "",
+        birthday: staff.birthday || "",
+        date_of_joining: staff.date_of_joining || "",
+        sex: staff.sex || "",
+        religion: staff.religion || "",
+        blood_group: staff.blood_group || "",
+        address: staff.address || "",
+        phone: staff.phone || "",
+        email: staff.email || "",
+        designation: staff.designation || "",
+        academic_qual: staff.academic_qual
+          ? staff.academic_qual.split(",")
           : [],
-        professional_qual: staff.get_teacher.professional_qual || "",
-        special_sub: staff.get_teacher.special_sub || "",
-        trained: staff.get_teacher.trained || "",
-        experience: staff.get_teacher.experience || "",
-        aadhar_card_no: staff.get_teacher.aadhar_card_no || "",
-        teacher_image_name: staff.get_teacher.teacher_image_name || null,
-        class_id: staff.get_teacher.class_id || "",
-        section_id: staff.get_teacher.section_id || "",
-        isDelete: staff.get_teacher.isDelete || "N",
-        role_id: staff.get_teacher.role_id || "", // Ensure it's a string or empty
+        professional_qual: staff.professional_qual || "",
+        special_sub: staff.special_sub || "",
+        trained: staff.trained || "",
+        experience: staff.experience || "",
+        aadhar_card_no: staff.aadhar_card_no || "",
+        teacher_image_name: staff.teacher_image_name || null,
+        class_id: staff.class_id || "",
+        section_id: staff.section_id || "",
+        isDelete: staff.isDelete || "N",
+        role_id: staff.role_id || "", // Ensure it's a string or empty
       });
-      if (staff.get_teacher.teacher_image_name) {
+      if (staff.teacher_image_name) {
         setPhotoPreview(
-          `${API_URL}/path/to/images/${staff.get_teacher.teacher_image_name}`
+          `${API_URL}/path/to/images/${staff.teacher_image_name}`
         );
       }
     }
@@ -536,12 +536,22 @@ function EditStaff() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setFormData((prevState) => ({
-      ...prevState,
-      teacher_image_name: file,
-    }));
-    setPhotoPreview(URL.createObjectURL(file));
+    if (file) {
+      setFormData((prevState) => ({
+        ...prevState,
+        teacher_image_name: file,
+      }));
+      setPhotoPreview(URL.createObjectURL(file));
+    }
   };
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     teacher_image_name: file,
+  //   }));
+  //   setPhotoPreview(URL.createObjectURL(file));
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -565,7 +575,7 @@ function EditStaff() {
       }
 
       const response = await axios.put(
-        `${API_URL}/api/teachers/${staff.get_teacher.teacher_id}`,
+        `${API_URL}/api/teachers/${staff.teacher_id}`,
         formattedFormData,
         {
           headers: {
@@ -616,7 +626,7 @@ function EditStaff() {
                 htmlFor="teacher_image_name"
                 className="block font-bold  text-xs mb-2"
               >
-                Photo
+                Photo{" "}
                 {photoPreview ? (
                   <img
                     src={photoPreview}
@@ -712,9 +722,11 @@ function EditStaff() {
                 type="text"
                 id="name"
                 name="name"
+                pattern="^[^\d].*"
+                title="Name should not start with a number"
+                required
                 value={formData.name}
                 onChange={handleChange}
-                required
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.name && (
@@ -734,6 +746,7 @@ function EditStaff() {
                 value={formData.trained}
                 onChange={handleChange}
                 required
+                title="Please enter Training Status "
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               >
                 <option className="bg-gray-300" value="">
@@ -802,18 +815,20 @@ function EditStaff() {
                 Experience <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="number"
+                maxLength={3}
                 id="experience"
                 name="experience"
                 value={formData.experience}
                 onChange={handleChange}
                 required
+                title="Only enter digits in year like 1 or 5"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
             <div className="col-span-1">
               <label htmlFor="email" className="block font-bold  text-xs mb-2">
-                Email
+                Email <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -821,6 +836,8 @@ function EditStaff() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                required
+                title="Please enter a valid email address that ends with @gmail.com"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.email && (
@@ -881,6 +898,7 @@ function EditStaff() {
                 type="text"
                 id="class_teacher_of"
                 name="class_teacher_of"
+                readOnly
                 value={formData.class_teacher_of}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
@@ -972,12 +990,13 @@ function EditStaff() {
                 Aadhaar Card No.
               </label>
               <input
-                type="text"
+                type="tel"
+                maxLength={12}
                 id="aadhar_card_no"
                 name="aadhar_card_no"
                 value={formData.aadhar_card_no}
                 pattern="\d{12}"
-                title="Aadhaar Card Number must be exactly 12 digits"
+                title="Aadhaar Card Number must be exactly 12 digits number "
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
@@ -1021,6 +1040,7 @@ function EditStaff() {
                 type="text"
                 id="religion"
                 name="religion"
+                placeholder="Christian"
                 value={formData.religion}
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
@@ -1035,7 +1055,8 @@ function EditStaff() {
                 Employee ID <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="tel"
+                maxLength={5}
                 id="employee_id"
                 name="employee_id"
                 value={formData.employee_id}
@@ -1047,19 +1068,20 @@ function EditStaff() {
                 <div className="text-red-500 text-xs">{errors.employee_id}</div>
               )}
             </div>
-            <div className="col-span-1">
+            <div>
               <label
                 htmlFor="special_sub"
                 className="block font-bold  text-xs mb-2"
               >
-                Class teacher of
+                Special Subject
               </label>
               <input
                 type="text"
                 id="special_sub"
                 name="special_sub"
-                value={formData.class_teacher_of}
+                // value={formData.special_sub}
                 onChange={handleChange}
+                placeholder="Special Subject for D.Ed/B.Ed"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>

@@ -427,6 +427,8 @@ function Sections() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const [fieldErrors, setFieldErrors] = useState({}); // For field-specific errors
+
   const pageSize = 10;
 
   const fetchSections = async () => {
@@ -459,6 +461,17 @@ function Sections() {
     fetchSections();
   }, []);
 
+  const validateSectionName = (name) => {
+    const regex = /^[a-zA-Z]+$/;
+    let errors = {};
+    if (!name) errors.name = "The name field is required.";
+    if (name.length > 255)
+      errors.name = "The name field must not exceed 255 characters.";
+    if (!regex.test(name))
+      errors.name =
+        "The name field must contain only alphabetic characters without spaces.";
+    return errors;
+  };
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
@@ -482,6 +495,11 @@ function Sections() {
   };
 
   const handleSubmitAdd = async () => {
+    const validationErrors = validateSectionName(newSectionName);
+    if (Object.keys(validationErrors).length) {
+      setFieldErrors(validationErrors);
+      return;
+    }
     try {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
@@ -507,10 +525,23 @@ function Sections() {
       toast.success("Section added successfully!");
     } catch (error) {
       console.error("Error adding section:", error);
+      if (error.response && error.response.data && error.response.data.errors) {
+        Object.values(error.response.data.errors).forEach((err) =>
+          toast.error(err)
+        );
+      } else {
+        toast.error("Server error. Please try again later.");
+      }
     }
   };
 
   const handleSubmitEdit = async () => {
+    const validationErrors = validateSectionName(newSectionName);
+    if (Object.keys(validationErrors).length) {
+      setFieldErrors(validationErrors);
+      return;
+    }
+
     try {
       const token = localStorage.getItem("authToken");
       const academicYr = localStorage.getItem("academicYear");
@@ -536,6 +567,13 @@ function Sections() {
       toast.success("Section Updated successfully!");
     } catch (error) {
       console.error("Error editing section:", error);
+      if (error.response && error.response.data && error.response.data.errors) {
+        Object.values(error.response.data.errors).forEach((err) =>
+          toast.error(err)
+        );
+      } else {
+        toast.error("Server error. Please try again later.");
+      }
     }
   };
 
@@ -554,7 +592,7 @@ function Sections() {
         throw new Error("Section ID is missing");
       }
 
-      await axios.delete(
+      const response = await axios.delete(
         `${API_URL}/api/sections/${currentSection.department_id}`,
         {
           headers: {
@@ -564,14 +602,25 @@ function Sections() {
           withCredentials: true,
         }
       );
-
-      fetchSections();
-      setShowDeleteModal(false);
-      setCurrentSection(null);
-      toast.success("Section deleted successfully!");
+      if (response.data.success) {
+        fetchSections();
+        setShowDeleteModal(false);
+        setCurrentSection(null);
+        toast.success("Section deleted successfully!");
+      } else {
+        toast.error(response.data.message || "Failed to delete section");
+      }
     } catch (error) {
       console.error("Error deleting section:", error);
-      setError(error.message);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Server error. Please try again later.");
+      }
     }
   };
 
@@ -653,6 +702,7 @@ function Sections() {
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
                         Section name
                       </th>
+
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
                         Edit
                       </th>
@@ -757,6 +807,9 @@ function Sections() {
                       value={newSectionName}
                       onChange={(e) => setNewSectionName(e.target.value)}
                     />
+                    {fieldErrors.name && (
+                      <small className="text-danger">{fieldErrors.name}</small>
+                    )}
                   </div>
                 </div>
                 <div className="modal-footer d-flex justify-content-end">
@@ -804,6 +857,9 @@ function Sections() {
                     value={newSectionName}
                     onChange={(e) => setNewSectionName(e.target.value)}
                   />
+                  {fieldErrors.name && (
+                    <small className="text-danger">{fieldErrors.name}</small>
+                  )}
                 </div>
               </div>
               <div className="modal-footer">

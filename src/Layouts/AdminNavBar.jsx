@@ -657,6 +657,9 @@ const AdminNavBar = () => {
         <NavDropdown.Item as={Link} to="/roles">
           Manage Role
         </NavDropdown.Item>
+        <NavDropdown.Item as={Link} to="/menus">
+          Manage Menu
+        </NavDropdown.Item>
         <NavDropdown.Item as={Link} to="/show_roles">
           Manage Access
         </NavDropdown.Item>

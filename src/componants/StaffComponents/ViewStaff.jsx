@@ -35,31 +35,31 @@
 //   useEffect(() => {
 //     if (staff) {
 //       setFormData({
-//         employee_id: staff.get_teacher.employee_id || "",
-//         name: staff.get_teacher.name || "",
-//         father_spouse_name: staff.get_teacher.father_spouse_name || "",
-//         birthday: staff.get_teacher.birthday || "",
-//         date_of_joining: staff.get_teacher.date_of_joining || "",
-//         sex: staff.get_teacher.sex || "",
-//         religion: staff.get_teacher.religion || "",
-//         blood_group: staff.get_teacher.blood_group || "",
-//         address: staff.get_teacher.address || "",
-//         phone: staff.get_teacher.phone || "",
-//         email: staff.get_teacher.email || "",
-//         designation: staff.get_teacher.designation || "",
-//         academic_qual: staff.get_teacher.academic_qual
-//           ? staff.get_teacher.academic_qual.split(",")
+//         employee_id: staff.employee_id || "",
+//         name: staff.name || "",
+//         father_spouse_name: staff.father_spouse_name || "",
+//         birthday: staff.birthday || "",
+//         date_of_joining: staff.date_of_joining || "",
+//         sex: staff.sex || "",
+//         religion: staff.religion || "",
+//         blood_group: staff.blood_group || "",
+//         address: staff.address || "",
+//         phone: staff.phone || "",
+//         email: staff.email || "",
+//         designation: staff.designation || "",
+//         academic_qual: staff.academic_qual
+//           ? staff.academic_qual.split(",")
 //           : [],
-//         professional_qual: staff.get_teacher.professional_qual || "",
-//         special_sub: staff.get_teacher.special_sub || "",
-//         trained: staff.get_teacher.trained || "",
-//         experience: staff.get_teacher.experience || "",
-//         aadhar_card_no: staff.get_teacher.aadhar_card_no || "",
-//         teacher_image_name: staff.get_teacher.teacher_image_name || null,
+//         professional_qual: staff.professional_qual || "",
+//         special_sub: staff.special_sub || "",
+//         trained: staff.trained || "",
+//         experience: staff.experience || "",
+//         aadhar_card_no: staff.aadhar_card_no || "",
+//         teacher_image_name: staff.teacher_image_name || null,
 //       });
-//       if (staff.get_teacher.teacher_image_name) {
+//       if (staff.teacher_image_name) {
 //         setPhotoPreview(
-//           `${API_URL}/path/to/images/${staff.get_teacher.teacher_image_name}`
+//           `${API_URL}/path/to/images/${staff.teacher_image_name}`
 //         );
 //       }
 //     }
@@ -235,34 +235,34 @@ function ViewStaff() {
       };
 
       setFormData({
-        employee_id: staff.get_teacher.employee_id || "",
-        name: staff.get_teacher.name || "",
-        father_spouse_name: staff.get_teacher.father_spouse_name || "",
-        birthday: formatDate(staff.get_teacher.birthday),
-        date_of_joining: formatDate(staff.get_teacher.date_of_joining),
-        sex: staff.get_teacher.sex || "",
-        religion: staff.get_teacher.religion || "",
-        blood_group: staff.get_teacher.blood_group || "",
-        address: staff.get_teacher.address || "",
-        phone: staff.get_teacher.phone || "",
-        email: staff.get_teacher.email || "",
-        designation: staff.get_teacher.designation || "",
-        academic_qual: staff.get_teacher.academic_qual
-          ? staff.get_teacher.academic_qual.split(",")
+        employee_id: staff.employee_id || "",
+        name: staff.name || "",
+        father_spouse_name: staff.father_spouse_name || "",
+        birthday: formatDate(staff.birthday),
+        date_of_joining: formatDate(staff.date_of_joining),
+        sex: staff.sex || "",
+        religion: staff.religion || "",
+        blood_group: staff.blood_group || "",
+        address: staff.address || "",
+        phone: staff.phone || "",
+        email: staff.email || "",
+        designation: staff.designation || "",
+        academic_qual: staff.academic_qual
+          ? staff.academic_qual.split(",")
           : [],
-        professional_qual: staff.get_teacher.professional_qual || "",
-        special_sub: staff.get_teacher.special_sub || "",
-        trained: staff.get_teacher.trained || "",
-        experience: staff.get_teacher.experience || "",
-        aadhar_card_no: staff.get_teacher.aadhar_card_no || "",
-        teacher_image_name: staff.get_teacher.teacher_image_name || null,
+        professional_qual: staff.professional_qual || "",
+        special_sub: staff.special_sub || "",
+        trained: staff.trained || "",
+        experience: staff.experience || "",
+        aadhar_card_no: staff.aadhar_card_no || "",
+        teacher_image_name: staff.teacher_image_name || null,
         role_id: staff.role_id || null,
         user_id: staff.user_id || null,
       });
       console.log("fromdroleid", formData.role_id);
-      if (staff.get_teacher.teacher_image_name) {
+      if (staff.teacher_image_name) {
         setPhotoPreview(
-          `${API_URL}/path/to/images/${staff.get_teacher.teacher_image_name}`
+          `${API_URL}/path/to/images/${staff.teacher_image_name}`
         );
       }
     }

@@ -119,6 +119,8 @@ import ViewStaff from "../componants/StaffComponents/ViewStaff.jsx";
 import ShowRolesWithMenu from "../componants/RoleMangement/ShowRolesWithMenu.jsx";
 import Roles from "../componants/RoleMangement/Roles.jsx";
 import ManageRoleAccess from "../componants/RoleMangement/ManageRoleAccess.jsx";
+import Menus from "../componants/RoleMangement/Menus.jsx";
+// import Menus from "../c";
 function Index() {
   return (
     <Routes>
@@ -127,6 +129,7 @@ function Index() {
       <Route path="/notification" element={<NotificationPage />} />
       <Route path="/" element={<MainLayout />}>
         {/* Role Management */}
+        <Route path="/menus" element={<PrivateRoute element={Menus} />} />
         <Route path="/roles" element={<PrivateRoute element={Roles} />} />
         <Route
           path="/show_roles"

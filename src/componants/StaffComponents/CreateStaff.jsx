@@ -481,7 +481,9 @@ function CreateStaff() {
               />
 
               {errors.email && (
-                <span className="error text-red-500">{errors.email[0]}</span>
+                <span className="error text-red-500 text-xs">
+                  {errors.email[0]}
+                </span>
               )}
             </div>
             <div>

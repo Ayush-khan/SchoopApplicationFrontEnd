@@ -597,6 +597,12 @@ function EditStaff() {
     } catch (error) {
       toast.error("An error occurred while updating the teacher.");
       console.error("Error:", error.response?.data || error.message);
+      if (error.response && error.response.data && error.response.data.errors) {
+        // setErrors(error.response.data.errors);
+        setErrors(error.response.data.errors || {});
+      } else {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -791,7 +797,10 @@ function EditStaff() {
                   required
                 />
                 {errors.phone && (
-                  <p className="text-red-500 text-xs">{errors.phone}</p>
+                  <span className="error">{errors.phone[0]}</span>
+                )}
+                {errors.phone && (
+                  <span className="text-red-500 text-xs">{errors.phone}</span>
                 )}
               </div>
             </div>
@@ -850,7 +859,9 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.email && (
-                <span className="text-red-500 text-xs">{errors.email}</span>
+                <span className="error text-red-500 text-xs">
+                  {errors.email[0]}
+                </span>
               )}
             </div>
             <div className="col-span-1">
@@ -1011,6 +1022,11 @@ function EditStaff() {
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
+              {errors.aadhar_card_no && (
+                <span className="text-red-500 text-xs">
+                  {errors.aadhar_card_no[0]}
+                </span>
+              )}
             </div>
             <div>
               <div>

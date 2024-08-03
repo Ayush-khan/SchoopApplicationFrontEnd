@@ -672,7 +672,7 @@ function CreateStaff() {
                 name="religion"
                 pattern="^[^\d].*"
                 title="Religion should not start with a number"
-                required
+                // required
                 placeholder="Christian"
                 value={formData.religion}
                 onChange={handleChange}

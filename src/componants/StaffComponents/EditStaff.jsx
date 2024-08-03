@@ -504,6 +504,9 @@ function EditStaff() {
       newErrors.designation = "Designation is required";
     if (!formData.employee_id)
       newErrors.employee_id = "Employee ID is required";
+    if (formData.academic_qual.length === 0)
+      newErrors.academic_qual =
+        "Please select at least one academic qualification";
     return newErrors;
   };
 
@@ -687,13 +690,17 @@ function EditStaff() {
                       checked={formData.academic_qual.includes(qualification)}
                       onChange={handleChange}
                       className="mr-2"
-                      // required
                       title="please check atleast one box to move futher"
                     />
                     {qualification}
                   </label>
                 ))}
               </div>
+              {errors.academic_qual && (
+                <span className="text-red-500 text-xs">
+                  {errors.academic_qual}
+                </span>
+              )}
             </div>
             <div className="col-span-1">
               <label
@@ -711,7 +718,7 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.address && (
-                <div className="text-red-500 text-xs">{errors.address}</div>
+                <span className="text-red-500 text-xs">{errors.address}</span>
               )}
             </div>
             <div className="col-span-1">
@@ -726,11 +733,12 @@ function EditStaff() {
                 title="Name should not start with a number"
                 required
                 value={formData.name}
+                placeholder="Name"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.name && (
-                <div className="text-red-500 text-xs">{errors.name}</div>
+                <span className="text-red-500 text-xs">{errors.name}</span>
               )}
             </div>
             <div>
@@ -804,7 +812,7 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.birthday && (
-                <div className="text-red-500 text-xs">{errors.birthday}</div>
+                <span className="text-red-500 text-xs">{errors.birthday}</span>
               )}
             </div>
             <div className="col-span-1">
@@ -820,6 +828,7 @@ function EditStaff() {
                 id="experience"
                 name="experience"
                 value={formData.experience}
+                placeholder="in year"
                 onChange={handleChange}
                 required
                 title="Only enter digits in year like 1 or 5"
@@ -841,7 +850,7 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.email && (
-                <div className="text-red-500 text-xs">{errors.email}</div>
+                <span className="text-red-500 text-xs">{errors.email}</span>
               )}
             </div>
             <div className="col-span-1">
@@ -861,9 +870,9 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.date_of_joining && (
-                <div className="text-red-500 text-xs">
+                <span className="text-red-500 text-xs">
                   {errors.date_of_joining}
-                </div>
+                </span>
               )}
             </div>
             <div className="col-span-1">
@@ -884,7 +893,7 @@ function EditStaff() {
                 <option value="O">Other</option>
               </select>
               {errors.sex && (
-                <div className="text-red-500 text-xs">{errors.sex}</div>
+                <span className="text-red-500 text-xs">{errors.sex}</span>
               )}
             </div>
             <div className="col-span-1">
@@ -952,7 +961,9 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.designation && (
-                <div className="text-red-500 text-xs">{errors.designation}</div>
+                <span className="text-red-500 text-xs">
+                  {errors.designation}
+                </span>
               )}
             </div>
             <div>
@@ -1065,7 +1076,9 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
               {errors.employee_id && (
-                <div className="text-red-500 text-xs">{errors.employee_id}</div>
+                <span className="text-red-500 text-xs">
+                  {errors.employee_id}
+                </span>
               )}
             </div>
             <div>

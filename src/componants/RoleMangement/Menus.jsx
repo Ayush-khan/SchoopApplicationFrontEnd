@@ -2145,6 +2145,7 @@ function Menus() {
     setShowEditModal(false);
     setShowDeleteModal(false);
     setCurrentMenu(null);
+    setErrors({});
   };
 
   const handleSubmitAdd = async () => {

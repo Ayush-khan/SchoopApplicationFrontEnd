@@ -118,6 +118,9 @@ function UserProfile() {
       newErrors.designation = "Designation is required";
     if (!formData.employee_id)
       newErrors.employee_id = "Employee ID is required";
+    if (formData.academic_qual.length === 0)
+      newErrors.academic_qual =
+        "Please select at least one academic qualification";
     return newErrors;
   };
 
@@ -297,6 +300,11 @@ function UserProfile() {
                   </label>
                 ))}
               </div>
+              {errors.academic_qual && (
+                <span className="text-red-500 text-xs">
+                  {errors.academic_qual}
+                </span>
+              )}
             </div>
             <div className="col-span-1">
               <label
@@ -329,6 +337,8 @@ function UserProfile() {
                 title="Name should not start with a number"
                 required
                 value={formData.name}
+                
+                placeholder="Name"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
@@ -425,6 +435,7 @@ function UserProfile() {
                 value={formData.experience}
                 onChange={handleChange}
                 required
+                placeholder="in year"
                 title="Only enter digits in year like 1 or 5"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
@@ -641,6 +652,7 @@ function UserProfile() {
                 id="religion"
                 name="religion"
                 value={formData.religion}
+                placeholder="Christian"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
@@ -678,6 +690,7 @@ function UserProfile() {
                 id="special_sub"
                 name="special_sub"
                 value={formData.special_sub}
+                placeholder="Special subject for D.Ed/B.Ed"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />

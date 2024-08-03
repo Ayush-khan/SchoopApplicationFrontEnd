@@ -3808,6 +3808,7 @@ function ClassList() {
     setNewClassName("");
     setNewDepartmentId("");
     setCurrentClass(null);
+    setValidationErrors({});
   };
 
   const handleSubmitAdd = async () => {
@@ -4104,7 +4105,7 @@ function ClassList() {
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add Class</h5>
+                  <h5 className="modal-title">Create New Class</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -4113,10 +4114,13 @@ function ClassList() {
                 </div>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label htmlFor="newClassName">Class Name</label>
+                    <label htmlFor="newClassName">
+                      Class Name <span className="text-red-500">*</span>{" "}
+                    </label>
                     <input
                       type="text"
                       className="form-control"
+                      placeholder="e.g 1,2"
                       id="newClassName"
                       value={newClassName}
                       onChange={(e) => setNewClassName(e.target.value)}
@@ -4126,14 +4130,16 @@ function ClassList() {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="newDepartmentId">Department</label>
+                    <label htmlFor="newDepartmentId">
+                      Section <span className="text-red-500">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="newDepartmentId"
                       value={newDepartmentId}
                       onChange={(e) => setNewDepartmentId(e.target.value)}
                     >
-                      <option value="">Select Department</option>
+                      <option value="">Select</option>
                       {departments.map((department) => (
                         <option
                           key={department.department_id}
@@ -4181,12 +4187,15 @@ function ClassList() {
                 </div>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label htmlFor="newClassName">Class Name</label>
+                    <label htmlFor="newClassName">
+                      Class Name <span className="text-red-500">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
                       id="newClassName"
                       value={newClassName}
+                      placeholder="e.g 1,2"
                       onChange={(e) => setNewClassName(e.target.value)}
                     />
                     {validationErrors.name && (
@@ -4194,14 +4203,16 @@ function ClassList() {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="newDepartmentId">Department</label>
+                    <label htmlFor="newDepartmentId">
+                      Section <span className="text-red-500">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="newDepartmentId"
                       value={newDepartmentId}
                       onChange={(e) => setNewDepartmentId(e.target.value)}
                     >
-                      <option value="">Select Department</option>
+                      <option value="">Select </option>
                       {departments.map((department) => (
                         <option
                           key={department.department_id}

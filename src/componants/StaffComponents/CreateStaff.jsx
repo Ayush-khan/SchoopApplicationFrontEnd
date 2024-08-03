@@ -214,6 +214,7 @@ function CreateStaff() {
           <RxCross1
             className="float-end relative right-2 text-xl text-red-600 hover:cursor-pointer hover:bg-red-100"
             onClick={() => {
+              setErrors({});
               navigate("/StaffList");
             }}
           />
@@ -295,7 +296,9 @@ function CreateStaff() {
                 ))}
               </div>
               {errors.academic_qual && (
-                <p className="text-red-500 text-xs">{errors.academic_qual}</p>
+                <span className="text-red-500 text-xs">
+                  {errors.academic_qual}
+                </span>
               )}
             </div>
 
@@ -391,7 +394,7 @@ function CreateStaff() {
                   <span className="error">{errors.phone[0]}</span>
                 )}
                 {errors.phone && (
-                  <p className="text-red-500 text-xs">{errors.phone}</p>
+                  <span className="text-red-500 text-xs">{errors.phone}</span>
                 )}
               </div>
             </div>
@@ -438,7 +441,7 @@ function CreateStaff() {
                 // required
               />
               {errors.birthday && (
-                <p className="text-red-500 text-xs">{errors.birthday}</p>
+                <span className="text-red-500 text-xs">{errors.birthday}</span>
               )}
             </div> */}
             <div>
@@ -498,7 +501,9 @@ function CreateStaff() {
                 required
               />
               {errors.date_of_joining && (
-                <p className="text-red-500 text-xs">{errors.date_of_joining}</p>
+                <span className="text-red-500 text-xs">
+                  {errors.date_of_joining}
+                </span>
               )}
             </div>
             <div className="">
@@ -521,7 +526,7 @@ function CreateStaff() {
                 <option value="other">Other</option>
               </select>
               {errors.sex && (
-                <p className="text-red-500 text-xs">{errors.sex}</p>
+                <span className="text-red-500 text-xs">{errors.sex}</span>
               )}
             </div>
             <div>
@@ -541,11 +546,14 @@ function CreateStaff() {
                 title="Aadhaar Card Number must be exactly 12 digits Number"
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
-              />
+              />{" "}
+              {errors.aadhar_card_no && (
+                <span className="text-red-500 text-xs">
+                  {errors.aadhar_card_no[0]}
+                </span>
+              )}
             </div>
-            {errors.aadhar_card_no && (
-              <p className="text-red-500 text-xs">{errors.aadhar_card_no[0]}</p>
-            )}
+
             <div>
               <label
                 htmlFor="designation"
@@ -619,7 +627,7 @@ function CreateStaff() {
                 <option value="Y">Security</option>
               </select>
               {errors.role && (
-                <p className="text-red-500 text-xs">{errors.role}</p>
+                <span className="text-red-500 text-xs">{errors.role}</span>
               )}
             </div>
             <div>
@@ -689,7 +697,9 @@ function CreateStaff() {
                 required
               />
               {errors.employeeId && (
-                <p className="text-red-500 text-xs">{errors.employeeId}</p>
+                <span className="text-red-500 text-xs">
+                  {errors.employeeId}
+                </span>
               )}
             </div>
 

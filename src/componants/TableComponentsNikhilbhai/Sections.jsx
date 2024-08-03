@@ -492,6 +492,7 @@ function Sections() {
     setShowDeleteModal(false);
     setNewSectionName("");
     setCurrentSection(null);
+    setFieldErrors({}); // Clear field-specific errors when closing the modal
   };
 
   const handleSubmitAdd = async () => {
@@ -788,7 +789,7 @@ function Sections() {
             <div className="modal-dialog modal-dialog-centered ">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Section</h5>
+                  <h5 className="modal-title">Create New Section</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -798,7 +799,7 @@ function Sections() {
                 <div className="modal-body">
                   <div className="mb-3">
                     <label htmlFor="sectionName" className="form-label">
-                      Section Name
+                      Section Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -848,7 +849,7 @@ function Sections() {
               <div className="modal-body">
                 <div className="mb-3">
                   <label htmlFor="editSectionName" className="form-label">
-                    New Section Name
+                    New Section Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"

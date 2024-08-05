@@ -55,8 +55,8 @@ function UserProfile() {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("the userporfile__________", response.data);
-        const staff = response.data.user;
+        // console.log("the userporfile__________", response.data);
+        const staff = response.data.user?.get_teacher;
         console.log("the userupdate profile", staff);
         setFormData({
           employee_id: staff.employee_id || "",

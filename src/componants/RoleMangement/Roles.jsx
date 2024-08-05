@@ -223,6 +223,9 @@ function Roles() {
                         Name
                       </th>
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Role Id
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
                         Status
                       </th>
                       <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
@@ -249,6 +252,11 @@ function Roles() {
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
                           <p className="text-gray-900 whitespace-no-wrap relative top-2">
                             {role.rolename}
+                          </p>
+                        </td>
+                        <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                            {role.role_id}
                           </p>
                         </td>
                         <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">

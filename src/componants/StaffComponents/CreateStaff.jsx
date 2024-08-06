@@ -4,6 +4,8 @@ import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import ImageUploadAndCrop from "../common/ImageUploadAndCrop.jsx";
+import ImageCropper from "../common/ImageUploadAndCrop.jsx";
 function CreateStaff() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
@@ -24,7 +26,8 @@ function CreateStaff() {
     aadhar_card_no: "",
     role: "",
     employeeId: "",
-    photo: null,
+    teacher_image_name: null,
+
     special_sub: "",
   });
   const [errors, setErrors] = useState({});
@@ -84,7 +87,7 @@ function CreateStaff() {
     const file = event.target.files[0];
     setFormData((prevState) => ({
       ...prevState,
-      photo: file,
+      teacher_image_name: file,
     }));
     setPhotoPreview(URL.createObjectURL(file));
   };
@@ -94,6 +97,15 @@ function CreateStaff() {
     const [year, month, day] = dateString.split("-");
     return `${year}-${month}-${day}`;
   };
+
+  // Image Croping funtionlity
+  const handleImageCropped = (croppedImageData) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      teacher_image_name: croppedImageData,
+    }));
+  };
+
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
   //   const validationErrors = validate();
@@ -165,6 +177,8 @@ function CreateStaff() {
       birthday: formatDateString(formData.birthday),
       date_of_joining: formatDateString(formData.date_of_joining),
     };
+    console.log("Response of create staff form:", formattedFormData);
+
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
@@ -181,7 +195,7 @@ function CreateStaff() {
         }
       );
 
-      console.log("Response:", response.data);
+      console.log("Response of create staff form:", formattedFormData);
 
       if (response.status === 201) {
         toast.success("Teacher created successfully!");
@@ -228,7 +242,9 @@ function CreateStaff() {
         >
           <div className=" flex flex-col gap-4 md:grid  md:grid-cols-3 md:gap-x-14 md:mx-10 gap-y-1">
             <div className=" mx-auto      ">
-              <label htmlFor="photo" className="block font-bold  text-xs mb-2">
+              <ImageCropper onImageCropped={handleImageCropped} />
+
+              {/* <label htmlFor="photo" className="block font-bold  text-xs mb-2">
                 Photo
                 {photoPreview ? (
                   <img
@@ -239,15 +255,16 @@ function CreateStaff() {
                 ) : (
                   <FaUserCircle className="mt-2 h-20 w-20 object-cover mx-auto text-gray-300" />
                 )}
-              </label>
-              <input
+                <ImageCropper onImageCropped={handleImageCropped} />
+              </label> */}
+              {/* <input
                 type="file"
                 id="photo"
                 name="photo"
                 accept="image/*"
                 onChange={handleFileChange}
                 className="input-field text-xs box-border mt-2 bg-black text-white  "
-              />
+              /> */}
             </div>
             <div className="col-span-1">
               <label
@@ -668,6 +685,33 @@ function CreateStaff() {
               >
                 Religion
               </label>
+              <select
+                id="religion"
+                name="religion"
+                value={formData.religion}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              >
+                <option className="bg-gray-300" value="">
+                  Select
+                </option>{" "}
+                <option value="Hindu">Hindu</option>
+                <option value="Christian">Christian</option>{" "}
+                <option value="Muslim">Muslim</option>
+                <option value="Sikh">Sikh</option>
+                <option value="Jain">Jain</option>
+                <option value="Buddhist">Buddhist</option>
+                <option value="NA">NA</option>
+                {/* Add training status options here */}
+              </select>
+            </div>
+            {/* <div>
+              <label
+                htmlFor="religion"
+                className="block font-bold  text-xs mb-2"
+              >
+                Religion
+              </label>
               <input
                 type="text"
                 id="religion"
@@ -680,7 +724,7 @@ function CreateStaff() {
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-            </div>
+            </div> */}
             <div>
               <label
                 htmlFor="employeeId"

@@ -510,6 +510,7 @@ import RecursiveDropdown from "./RecursiveDropdown";
 import { Translate } from "react-bootstrap-icons";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import AdminNavBar from "./AdminNavBar";
+import { toast } from "react-toastify";
 
 function NavBar() {
   const API_URL = import.meta.env.VITE_API_URL; //thsis is test url
@@ -523,6 +524,7 @@ function NavBar() {
   const [selectedYear, setSelectedYear] = useState("");
   // const [sessionData, setsessionData] = useState({});
   const [sessionData, setSessionData] = useState({});
+  const [userProfileName, setuserProfilName] = useState("");
 
   const [navItems, setNavItems] = useState([]);
   const [roleId, setRoleId] = useState(""); // Add roleId state
@@ -623,7 +625,39 @@ function NavBar() {
       console.error("Error updating academic year:", error);
     }
   };
+  // Take user name so call user prpofile api
+  useEffect(() => {
+    const fetcUSerProfilehData = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("No authentication token is found");
+      }
+      // console.log("jfdshfoisafhaios");
+      try {
+        const response = await axios.get(`${API_URL}/api/editprofile`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        // console.log("the userporfile__________", response.data);
+        const staff = response.data.user?.get_teacher;
+        setuserProfilName(staff?.name);
+        console.log(
+          "the userupdate profile inside the navbar compoenent",
+          staff
+        );
+      } catch (error) {
+        toast.error(error.response.data.message);
+        console.error(
+          "Error fetching profile data inside navbar component:",
+          error
+        );
+      }
+    };
 
+    fetcUSerProfilehData();
+  }, [API_URL]);
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("authToken");
@@ -837,7 +871,8 @@ function NavBar() {
                 >
                   <FaUserCircle style={{ fontSize: "1.5rem" }} />
                   <span style={{ fontSize: ".8em" }}>
-                    {sessionData.user?.name}
+                    {/* {sessionData.user?.name} */}
+                    {userProfileName}
                   </span>
                 </div>
               </NavDropdown.Item>

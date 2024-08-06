@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ImageCropper from "./common/ImageUploadAndCrop";
 
 function UserProfile() {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -151,6 +152,13 @@ function UserProfile() {
     }
   };
 
+  // Image Croping funtionlity
+  const handleImageCropped = (croppedImageData) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      teacher_image_name: croppedImageData,
+    }));
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFormData((prevState) => ({
@@ -173,7 +181,9 @@ function UserProfile() {
       ...formData,
       academic_qual: formData.academic_qual,
       experience: String(formData.experience),
+      teacher_image_name: String(formData.teacher_image_name),
     };
+    console.log("the formated data", formattedFormData);
 
     try {
       const token = localStorage.getItem("authToken");
@@ -234,7 +244,8 @@ function UserProfile() {
           className="  md:mx-5 overflow-x-hidden shadow-md p-2 bg-gray-50"
         >
           <div className=" flex flex-col gap-4 md:grid  md:grid-cols-3 md:gap-x-14 md:mx-10 gap-y-1">
-            <div className=" mx-auto      ">
+            {/* privious code */}
+            {/* <div className=" mx-auto      ">
               <label
                 htmlFor="teacher_image_name"
                 className="block font-bold  text-xs mb-2"
@@ -258,6 +269,35 @@ function UserProfile() {
                 onChange={handleFileChange}
                 className="input-field text-xs box-border mt-2 bg-black text-white  "
               />
+            </div> */}
+            <div className=" mx-auto      ">
+              {/* {console.log("imagepreview",photoPreview)} */}
+              <ImageCropper
+                photoPreview={photoPreview}
+                onImageCropped={handleImageCropped}
+              />
+
+              {/* <label htmlFor="photo" className="block font-bold  text-xs mb-2">
+                Photo
+                {photoPreview ? (
+                  <img
+                    src={photoPreview}
+                    alt="Photo Preview"
+                    className="   h-20 w-20 rounded-[50%] mx-auto border-1  border-black object-cover"
+                  />
+                ) : (
+                  <FaUserCircle className="mt-2 h-20 w-20 object-cover mx-auto text-gray-300" />
+                )}
+                <ImageCropper onImageCropped={handleImageCropped} />
+              </label> */}
+              {/* <input
+                type="file"
+                id="photo"
+                name="photo"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="input-field text-xs box-border mt-2 bg-black text-white  "
+              /> */}
             </div>
             <div className="col-span-1">
               <label
@@ -655,7 +695,34 @@ function UserProfile() {
                 </select>
               </div>
             </div>
-            <div className="col-span-1">
+            <div>
+              <label
+                htmlFor="religion"
+                className="block font-bold  text-xs mb-2"
+              >
+                Religion
+              </label>
+              <select
+                id="religion"
+                name="religion"
+                value={formData.religion}
+                onChange={handleChange}
+                className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
+              >
+                <option className="bg-gray-300" value="">
+                  Select
+                </option>{" "}
+                <option value="Hindu">Hindu</option>
+                <option value="Christian">Christian</option>{" "}
+                <option value="Muslim">Muslim</option>
+                <option value="Sikh">Sikh</option>
+                <option value="Jain">Jain</option>
+                <option value="Buddhist">Buddhist</option>
+                <option value="NA">NA</option>
+                {/* Add training status options here */}
+              </select>
+            </div>
+            {/* <div className="col-span-1">
               <label
                 htmlFor="religion"
                 className="block font-bold  text-xs mb-2"
@@ -671,7 +738,7 @@ function UserProfile() {
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-            </div>
+            </div> */}
             <div className="col-span-1">
               <label
                 htmlFor="employee_id"

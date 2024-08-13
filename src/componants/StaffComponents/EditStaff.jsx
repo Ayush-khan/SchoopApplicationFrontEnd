@@ -1,409 +1,3 @@
-// // fINAL TRY UP
-// import React, { useState, useEffect } from "react";
-// import { FaUserCircle } from "react-icons/fa";
-// import { RxCross1 } from "react-icons/rx";
-// import { useNavigate, useLocation } from "react-router-dom";
-// import axios from "axios";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-
-// function EditStaff() {
-//   const API_URL = import.meta.env.VITE_API_URL;
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const { staff } = location.state || {};
-//   console.log("Staff is in edit form", staff);
-//   const [formData, setFormData] = useState({
-//     employee_id: "",
-//     name: "",
-//     father_spouse_name: "",
-//     birthday: "",
-//     date_of_joining: "",
-//     sex: "",
-//     religion: "",
-//     blood_group: "",
-//     address: "",
-//     phone: "",
-//     email: "",
-//     designation: "",
-//     academic_qual: [],
-//     professional_qual: "",
-//     special_sub: "",
-//     trained: "",
-//     experience: "",
-//     aadhar_card_no: "",
-//     teacher_image_name: null,
-//   });
-//   const [errors, setErrors] = useState({});
-//   const [photoPreview, setPhotoPreview] = useState(null);
-
-//   const staffi = staff.get_teacher;
-//   console.log("staff is in edit form_____", staffi);
-//   useEffect(() => {
-//     if (staff) {
-//       setFormData({
-//         employee_id: staff.get_teacher.employee_id || "",
-//         name: staff.get_teacher.name || "",
-//         father_spouse_name: staff.get_teacher.father_spouse_name || "",
-//         birthday: staff.get_teacher.birthday || "",
-//         date_of_joining: staff.get_teacher.date_of_joining || "",
-//         sex: staff.get_teacher.sex || "",
-//         religion: staff.get_teacher.religion || "",
-//         blood_group: staff.get_teacher.blood_group || "",
-//         address: staff.get_teacher.address || "",
-//         phone: staff.get_teacher.phone || "",
-//         email: staff.get_teacher.email || "",
-//         designation: staff.get_teacher.designation || "",
-//         academic_qual: staff.get_teacher.academic_qual
-//           ? staff.get_teacher.academic_qual.split(",")
-//           : [],
-//         professional_qual: staff.get_teacher.professional_qual || "",
-//         special_sub: staff.get_teacher.special_sub || "",
-//         trained: staff.get_teacher.trained || "",
-//         experience: staff.get_teacher.experience || "",
-//         aadhar_card_no: staff.get_teacher.aadhar_card_no || "",
-//         teacher_image_name: staff.get_teacher.teacher_image_name || null,
-//       });
-//       if (staff.get_teacher.teacher_image_name) {
-//         setPhotoPreview(
-//           `${API_URL}/path/to/images/${staff.get_teacher.teacher_image_name}`
-//         );
-//       }
-//     }
-//   }, [staff, API_URL]);
-
-//   const validate = () => {
-//     const newErrors = {};
-//     if (!formData.name) newErrors.name = "Name is required";
-//     if (!formData.birthday) newErrors.birthday = "Date of Birth is required";
-//     if (!formData.date_of_joining)
-//       newErrors.date_of_joining = "Date of Joining is required";
-//     if (!formData.sex) newErrors.sex = "Gender is required";
-//     if (!formData.address) newErrors.address = "Address is required";
-//     if (!formData.phone) newErrors.phone = "Phone number is required";
-//     if (!/^\d{10}$/.test(formData.phone))
-//       newErrors.phone = "Phone number must be 10 digits";
-//     if (!formData.email) newErrors.email = "Email is required";
-//     if (!/\S+@\S+\.\S+/.test(formData.email))
-//       newErrors.email = "Email address is invalid";
-//     if (!formData.designation)
-//       newErrors.designation = "Designation is required";
-//     if (!formData.employee_id)
-//       newErrors.employee_id = "Employee ID is required";
-//     return newErrors;
-//   };
-
-//   const handleChange = (event) => {
-//     const { name, value, checked } = event.target;
-
-//     if (name === "academic_qual") {
-//       setFormData((prevData) => {
-//         if (checked) {
-//           return {
-//             ...prevData,
-//             academic_qual: [...prevData.academic_qual, value],
-//           };
-//         } else {
-//           return {
-//             ...prevData,
-//             academic_qual: prevData.academic_qual.filter(
-//               (qualification) => qualification !== value
-//             ),
-//           };
-//         }
-//       });
-//     } else {
-//       setFormData((prevData) => ({
-//         ...prevData,
-//         [name]: value,
-//       }));
-//     }
-//   };
-
-//   const handleFileChange = (event) => {
-//     const file = event.target.files[0];
-//     setFormData((prevState) => ({
-//       ...prevState,
-//       teacher_image_name: file,
-//     }));
-//     setPhotoPreview(URL.createObjectURL(file));
-//   };
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-//     const validationErrors = validate();
-//     if (Object.keys(validationErrors).length > 0) {
-//       setErrors(validationErrors);
-//       return;
-//     }
-
-//     const formattedFormData = new FormData();
-//     Object.keys(formData).forEach((key) => {
-//       if (key === "academic_qual") {
-//         formattedFormData.append(key, formData[key].join(","));
-//       } else {
-//         formattedFormData.append(key, formData[key]);
-//       }
-//     });
-
-//     try {
-//       const token = localStorage.getItem("authToken");
-//       if (!token) {
-//         throw new Error("No authentication token is found");
-//       }
-//       const response = await axios.put(
-//         `${API_URL}/api/teachers/${staff.get_teacher.teacher_id}`,
-//         formattedFormData,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       if (response.status === 200) {
-//         toast.success("Teacher updated successfully!");
-//         navigate("/StaffList");
-//       }
-//     } catch (error) {
-//       toast.error("An error occurred while updating the teacher.");
-//       console.error("Error:", error.response?.data || error.message);
-//     }
-//   };
-
-//   return (
-//     <div className="container mx-auto p-4 ">
-//       <ToastContainer />
-//       <div className="card p-4 rounded-md ">
-//         <div className=" card-header mb-4 flex justify-between items-center ">
-//           <h5 className="text-gray-700 mt-1 text-md lg:text-lg">
-//             Edit Staff Form
-//           </h5>
-
-//           <RxCross1
-//             className="float-end relative right-2 text-xl text-red-600 hover:cursor-pointer hover:bg-red-100"
-//             onClick={() => {
-//               navigate("/StaffList");
-//             }}
-//           />
-//         </div>
-//         <form
-//           onSubmit={handleSubmit}
-//           className="  md:mx-5 overflow-x-hidden shadow-md p-2 bg-gray-50"
-//         >
-//           <div className=" flex flex-col gap-4 md:grid  md:grid-cols-3 md:gap-x-14 md:mx-10 gap-y-1">
-//             <div className=" mx-auto      ">
-//               <label
-//                 htmlFor="teacher_image_name"
-//                 className="block font-bold  text-xs mb-2"
-//               >
-//                 Photo
-//                 {photoPreview ? (
-//                   <img
-//                     src={photoPreview}
-//                     alt="Photo Preview"
-//                     className="   h-20 w-20 rounded-[50%] mx-auto border-1  border-black object-cover"
-//                   />
-//                 ) : (
-//                   <FaUserCircle className="mt-2 h-20 w-20 object-cover mx-auto text-gray-300" />
-//                 )}
-//               </label>
-//               <input
-//                 type="file"
-//                 id="teacher_image_name"
-//                 name="teacher_image_name"
-//                 accept="image/*"
-//                 onChange={handleFileChange}
-//                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner text-xs box-border mt-2 bg-black text-white  "
-//               />
-//             </div>
-//             <div className="col-span-1">
-//               <label
-//                 htmlFor="academic_qual"
-//                 className="block font-bold  text-xs mb-2"
-//               >
-//                 Academic Qualification
-//               </label>
-//               <div className="flex flex-wrap ">
-//                 {[
-//                   "Hsc",
-//                   "DCE",
-//                   "B.A",
-//                   "B.Com",
-//                   "B.Sc",
-//                   "BCS",
-//                   "BCA",
-//                   "B.LIS",
-//                   "BPharm",
-//                   "BE",
-//                   "B.Music n Dance",
-//                   "M.A",
-//                   "MSE",
-//                   "M.Com",
-//                   "M.Sc",
-//                   "MCA",
-//                   "M.LIS",
-//                   "M.Phil",
-//                   "MBA",
-//                   "PGDBM",
-//                 ].map((qualification) => (
-//                   <label
-//                     key={qualification}
-//                     className="flex items-center mr-4 text-sm font-md"
-//                   >
-//                     <input
-//                       type="checkbox"
-//                       name="academic_qual"
-//                       value={qualification}
-//                       checked={formData.academic_qual.includes(qualification)}
-//                       onChange={handleChange}
-//                       className="mr-1 "
-//                     />
-//                     {qualification}
-//                   </label>
-//                 ))}
-//               </div>
-//             </div>
-
-//             <div>
-//               <label
-//                 htmlFor="address"
-//                 className="block font-bold  text-xs mb-2"
-//               >
-//                 Address <span className="text-red-500">*</span>
-//               </label>
-//               <textarea
-//                 id="address"
-//                 name="address"
-//                 value={formData.address}
-//                 onChange={handleChange}
-//                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner resize block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
-//                 rows="4"
-//                 required
-//               />
-//               {errors.address && (
-//                 <p className="text-red-500 text-xs ">{errors.address}</p>
-//               )}
-//             </div>
-//           </div>
-
-//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-//             {[
-//               { label: "Employee ID", name: "employee_id", type: "text" },
-//               { label: "Name", name: "name", type: "text" },
-//               {
-//                 label: "Father/Spouse Name",
-//                 name: "father_spouse_name",
-//                 type: "text",
-//               },
-//               { label: "Date of Birth", name: "birthday", type: "date" },
-//               {
-//                 label: "Date of Joining",
-//                 name: "date_of_joining",
-//                 type: "date",
-//               },
-//               {
-//                 label: "Gender",
-//                 name: "sex",
-//                 type: "select",
-//                 options: ["", "Male", "Female", "Other"],
-//               },
-//               { label: "Religion", name: "religion", type: "text" },
-//               { label: "Blood Group", name: "blood_group", type: "text" },
-//               { label: "Phone", name: "phone", type: "text" },
-//               { label: "Email", name: "email", type: "email" },
-//               { label: "Designation", name: "designation", type: "text" },
-//               {
-//                 label: "Professional Qualification",
-//                 name: "professional_qual",
-//                 type: "text",
-//               },
-//               { label: "Special Subject", name: "special_sub", type: "text" },
-//               { label: "Trained", name: "trained", type: "text" },
-//               { label: "Experience", name: "experience", type: "text" },
-//               {
-//                 label: "Aadhar Card Number",
-//                 name: "aadhar_card_no",
-//                 type: "text",
-//               },
-//             ].map((field) => (
-//               <div key={field.name}>
-//                 <label
-//                   htmlFor={field.name}
-//                   className="block font-bold  text-xs mb-2"
-//                 >
-//                   {field.label}{" "}
-//                   {field.label !== "Gender" &&
-//                   field.label !== "Father/Spouse Name" &&
-//                   field.label !== "Religion" &&
-//                   field.label !== "Blood Group" &&
-//                   field.label !== "Professional Qualification" &&
-//                   field.label !== "Special Subject" &&
-//                   field.label !== "Trained" &&
-//                   field.label !== "Experience" &&
-//                   field.label !== "Aadhar Card Number" ? (
-//                     <span className="text-red-500">*</span>
-//                   ) : null}
-//                 </label>
-//                 {field.type === "select" ? (
-//                   <select
-//                     id={field.name}
-//                     name={field.name}
-//                     value={formData[field.name]}
-//                     onChange={handleChange}
-//                     className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner  w-full"
-//                     required
-//                   >
-//                     {field.options.map((option) => (
-//                       <option key={option} value={option}>
-//                         {option}
-//                       </option>
-//                     ))}
-//                   </select>
-//                 ) : (
-//                   <input
-//                     type={field.type}
-//                     id={field.name}
-//                     name={field.name}
-//                     value={formData[field.name]}
-//                     onChange={handleChange}
-//                     className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner  w-full"
-//                     required={
-//                       field.label !== "Father/Spouse Name" &&
-//                       field.label !== "Religion" &&
-//                       field.label !== "Blood Group" &&
-//                       field.label !== "Professional Qualification" &&
-//                       field.label !== "Special Subject" &&
-//                       field.label !== "Trained" &&
-//                       field.label !== "Experience" &&
-//                       field.label !== "Aadhar Card Number"
-//                     }
-//                   />
-//                 )}
-//                 {errors[field.name] && (
-//                   <p className="text-red-500 text-xs ">{errors[field.name]}</p>
-//                 )}
-//               </div>
-//             ))}
-//           </div>
-//           <div className="col-span-3  text-right">
-//             <button
-//               type="submit"
-//               style={{ backgroundColor: "#2196F3" }}
-//               className=" text-white font-bold py-1 border-1 border-blue-500 px-4 rounded"
-//             >
-//               Update
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default EditStaff;
-
 // second try up
 import React, { useState, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
@@ -449,6 +43,8 @@ function EditStaff() {
   // console.log("the formdata set", formData);
   const [errors, setErrors] = useState({});
   const [photoPreview, setPhotoPreview] = useState(null);
+  const [backendErrors, setBackendErrors] = useState({});
+
   console.log("employeeID", staff.employeeId);
   useEffect(() => {
     if (staff) {
@@ -486,21 +82,58 @@ function EditStaff() {
       }
     }
   }, [staff, API_URL]);
+  // Validation functions
+  const validatePhone = (phone) => {
+    if (!phone) return "Phone number is required";
+    if (!/^\d{10}$/.test(phone)) return "Phone number must be 10 digits";
+    return null;
+  };
 
+  const validateAadhar = (aadhar) => {
+    if (!aadhar) return "Aadhar card number is required";
+    if (!/^\d{12}$/.test(aadhar.replace(/\s+/g, "")))
+      return "Aadhar card number must be 12 digits";
+    return null;
+  };
+
+  const validateEmail = (email) => {
+    if (!email) return "Email is required";
+    if (!/\S+@\S+\.\S+/.test(email)) return "Email address is invalid";
+    return null;
+  };
+
+  const validateExperience = (experience) => {
+    if (!experience) return "Experience is required";
+    if (!/^\d+$/.test(experience)) return "Experience must be a whole number";
+    return null;
+  };
   const validate = () => {
     const newErrors = {};
+    // Validate name
     if (!formData.name) newErrors.name = "Name is required";
+    else if (!/^[^\d].*/.test(formData.name))
+      newErrors.name = "Name should not start with a number";
     if (!formData.birthday) newErrors.birthday = "Date of Birth is required";
     if (!formData.date_of_joining)
       newErrors.date_of_joining = "Date of Joining is required";
     if (!formData.sex) newErrors.sex = "Gender is required";
     if (!formData.address) newErrors.address = "Address is required";
-    if (!formData.phone) newErrors.phone = "Phone number is required";
-    if (!/^\d{10}$/.test(formData.phone))
-      newErrors.phone = "Phone number must be 10 digits";
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Email address is invalid";
+    // / Validate phone number
+    const phoneError = validatePhone(formData.phone);
+    if (phoneError) newErrors.phone = phoneError;
+
+    // Validate email
+    const emailError = validateEmail(formData.email);
+    if (emailError) newErrors.email = emailError;
+
+    // Validate experience
+    const experienceError = validateExperience(formData.experience);
+    if (experienceError) newErrors.experience = experienceError;
+
+    // Validate aadhar card number
+    const aadharError = validateAadhar(formData.aadhar_card_no);
+    if (aadharError) newErrors.aadhar_card_no = aadharError;
+
     if (!formData.designation)
       newErrors.designation = "Designation is required";
     if (!formData.employee_id)
@@ -511,33 +144,80 @@ function EditStaff() {
     return newErrors;
   };
 
+  // const handleChange = (event) => {
+  //   const { name, value, checked } = event.target;
+  //   let newValue = value;
+
+  //   if (name === "experience") {
+  //     newValue = newValue.replace(/[^0-9]/g, "");
+  //   } else if (name === "aadhar_card_no") {
+  //     newValue = newValue.replace(/\s+/g, "");
+  //   }
+  //   if (name === "phone" || name === "aadhar_card_no") {
+  //     newValue = newValue.replace(/[^\d]/g, "");
+  //   }
+  //   if (name === "academic_qual") {
+  //     setFormData((prevData) => {
+  //       const newAcademicQual = checked
+  //         ? [...prevData.academic_qual, value]
+  //         : prevData.academic_qual.filter(
+  //             (qualification) => qualification !== value
+  //           );
+  //       return { ...prevData, academic_qual: newAcademicQual };
+  //     });
+  //   } else {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [name]: newValue,
+  //     }));
+  //   }
+  //   validate(); // Call validate on each change to show real-time errors
+  // };
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
+    let newValue = value;
 
+    if (name === "experience") {
+      newValue = newValue.replace(/[^0-9]/g, "");
+    } else if (name === "aadhar_card_no") {
+      newValue = newValue.replace(/\s+/g, "");
+    }
+    if (name === "phone" || name === "aadhar_card_no") {
+      newValue = newValue.replace(/[^\d]/g, "");
+    }
     if (name === "academic_qual") {
       setFormData((prevData) => {
-        if (checked) {
-          return {
-            ...prevData,
-            academic_qual: [...prevData.academic_qual, value],
-          };
-        } else {
-          return {
-            ...prevData,
-            academic_qual: prevData.academic_qual.filter(
+        const newAcademicQual = checked
+          ? [...prevData.academic_qual, value]
+          : prevData.academic_qual.filter(
               (qualification) => qualification !== value
-            ),
-          };
-        }
+            );
+        return { ...prevData, academic_qual: newAcademicQual };
       });
     } else {
       setFormData((prevData) => ({
         ...prevData,
-        [name]: value,
+        [name]: newValue,
       }));
     }
-  };
+    // Validate field based on name
+    let fieldErrors = {};
+    if (name === "phone") {
+      fieldErrors.phone = validatePhone(newValue);
+    } else if (name === "aadhar_card_no") {
+      fieldErrors.aadhar_card_no = validateAadhar(newValue);
+    } else if (name === "email") {
+      fieldErrors.email = validateEmail(newValue);
+    } else if (name === "experience") {
+      fieldErrors.experience = validateExperience(newValue);
+    }
 
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      ...fieldErrors,
+    }));
+    // validate(); // Call validate on each change to show real-time errors
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -568,8 +248,14 @@ function EditStaff() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    const errorsToCheck = validationErrors || {};
+    // Check if there are any errors
+
+    if (Object.keys(errorsToCheck).length > 0) {
+      setErrors(errorsToCheck);
+      Object.values(errorsToCheck).forEach((error) => {
+        toast.error(error);
+      });
       return;
     }
 
@@ -609,7 +295,7 @@ function EditStaff() {
       console.error("Error:", error.response?.data || error.message);
       if (error.response && error.response.data && error.response.data.errors) {
         // setErrors(error.response.data.errors);
-        setErrors(error.response.data.errors || {});
+        setBackendErrors(error.response.data.errors || {});
       } else {
         toast.error(error.message);
       }
@@ -756,6 +442,8 @@ function EditStaff() {
                 Address <span className="text-red-500">*</span>
               </label>
               <textarea
+                type="text"
+                maxLength={240}
                 id="address"
                 name="address"
                 value={formData.address}
@@ -773,6 +461,7 @@ function EditStaff() {
               </label>
               <input
                 type="text"
+                maxLength={60}
                 id="name"
                 name="name"
                 pattern="^[^\d].*"
@@ -836,13 +525,13 @@ function EditStaff() {
                   className="input-field block w-full border border-gray-300 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
                   required
                 />
-                {errors.phone && (
-                  <span className="error">{errors.phone[0]}</span>
-                )}
-                {errors.phone && (
-                  <span className="text-red-500 text-xs">{errors.phone}</span>
-                )}
               </div>
+              {backendErrors.phone && (
+                <span className="error">{backendErrors.phone[0]}</span>
+              )}
+              {errors.phone && (
+                <span className="text-red-500 text-xs">{errors.phone}</span>
+              )}
             </div>
             <div className="col-span-1">
               <label
@@ -873,7 +562,7 @@ function EditStaff() {
               </label>
               <input
                 type="number"
-                maxLength={3}
+                maxLength={2}
                 id="experience"
                 name="experience"
                 value={formData.experience}
@@ -890,6 +579,7 @@ function EditStaff() {
               </label>
               <input
                 type="email"
+                maxLength={51}
                 id="email"
                 name="email"
                 value={formData.email}
@@ -898,9 +588,14 @@ function EditStaff() {
                 title="Please enter a valid email address that ends with @gmail.com"
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
+              {backendErrors.email && (
+                <span className="error text-red-500 text-xs">
+                  {backendErrors.email[0]}
+                </span>
+              )}
               {errors.email && (
                 <span className="error text-red-500 text-xs">
-                  {errors.email[0]}
+                  {errors.email}
                 </span>
               )}
             </div>
@@ -976,6 +671,7 @@ function EditStaff() {
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
                 required
               >
+              
                 <option className="bg-gray-300" value="">
                   Select
                 </option>
@@ -1005,6 +701,7 @@ function EditStaff() {
               </label>
               <input
                 type="text"
+                maxLength={30}
                 id="designation"
                 name="designation"
                 value={formData.designation}
@@ -1049,7 +746,7 @@ function EditStaff() {
                 htmlFor="aadhar_card_no"
                 className="block font-bold  text-xs mb-2"
               >
-                Aadhaar Card No.
+                Aadhaar Card No. <span className="text-red-500">*</span>
               </label>
               <input
                 type="tel"
@@ -1062,9 +759,14 @@ function EditStaff() {
                 onChange={handleChange}
                 className="input-field block w-full border border-gray-300 rounded-md py-1 px-3 bg-white shadow-inner"
               />
+              {backendErrors.aadhar_card_no && (
+                <span className="text-red-500 text-xs">
+                  {backendErrors.aadhar_card_no[0]}
+                </span>
+              )}
               {errors.aadhar_card_no && (
                 <span className="text-red-500 text-xs">
-                  {errors.aadhar_card_no[0]}
+                  {errors.aadhar_card_no}
                 </span>
               )}
             </div>
@@ -1173,6 +875,7 @@ function EditStaff() {
               </label>
               <input
                 type="text"
+                maxLength={30}
                 id="special_sub"
                 name="special_sub"
                 // value={formData.special_sub}

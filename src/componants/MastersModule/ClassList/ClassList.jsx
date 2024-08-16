@@ -3718,7 +3718,9 @@ function ClassList() {
   const [pageCount, setPageCount] = useState(0);
   const pageSize = 10;
   const [validationErrors, setValidationErrors] = useState({});
-
+  // validations state for unique name
+  const [nameAvailable, setNameAvailable] = useState(true);
+  const [nameError, setNameError] = useState("");
   const fetchClasses = async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -3782,7 +3784,7 @@ function ClassList() {
     if (!name || name.trim() === "") {
       errors.name = "The name field is required.";
     } else if (name.length > 30) {
-      errors.name = "The name field must not exceed 255 characters.";
+      errors.name = "The name field must not exceed 30 characters.";
     }
     if (!departmentId || isNaN(departmentId)) {
       errors.department_id = "The department ID is required.";
@@ -3790,11 +3792,51 @@ function ClassList() {
     return errors;
   };
 
-  const handleInputChange = (setter, validator) => (e) => {
+  // const handleInputChange = (setter, validator) => (e) => {
+  //   const { value } = e.target;
+  //   setter(value);
+  //   // Perform validation based on the field that triggered the change
+  //   const errors = validateClassData(newClassName, newDepartmentId);
+  //   setValidationErrors(errors);
+  // };
+  const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
     setter(value);
     const errors = validateClassData(newClassName, newDepartmentId);
     setValidationErrors(errors);
+  };
+
+  // APi calling for check unique name
+  const handleBlur = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      console.log("the response of the namechack api____");
+
+      if (!token) {
+        throw new Error("No authentication token found");
+      }
+
+      const response = await axios.post(
+        `${API_URL}/api/check_class_name`,
+        { name: newClassName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("the response of the namechack api", response.data);
+      if (response.data?.exists === true) {
+        setNameError("Name is already taken. Please select another name.");
+        setNameAvailable(false);
+      } else {
+        setNameError("");
+        setNameAvailable(true);
+      }
+    } catch (error) {
+      console.error("Error checking class name:", error);
+    }
   };
 
   const handleEdit = (classItem) => {
@@ -3816,19 +3858,25 @@ function ClassList() {
     setNewDepartmentId("");
     setCurrentClass(null);
     setValidationErrors({});
+    setNameError("");
   };
 
   const handleSubmitAdd = async () => {
     const errors = validateClassData(newClassName, newDepartmentId);
     setValidationErrors(errors);
+    console.log("inside the add funciton of the classlist", !nameAvailable);
+    if (Object.keys(errors).length > 0 || !nameAvailable) {
+      console.log(
+        "-------inside the add funciton of the classlist",
+        nameAvailable
+      );
 
-    if (Object.keys(errors).length > 0) {
       return; // Don't submit if there are validation errors
     }
 
     try {
       const token = localStorage.getItem("authToken");
-      const academicYr = localStorage.getItem("academicYear");
+      // const academicYr = localStorage.getItem("academicYear");
 
       if (!token) {
         throw new Error("No authentication token found");
@@ -3840,7 +3888,6 @@ function ClassList() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "X-Academic-Year": academicYr,
           },
           withCredentials: true,
         }
@@ -3862,13 +3909,12 @@ function ClassList() {
   const handleSubmitEdit = async () => {
     const errors = validateClassData(newClassName, newDepartmentId);
     setValidationErrors(errors);
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors).length > 0 || !nameAvailable) {
       return; // Don't submit if there are validation errors
     }
 
     try {
       const token = localStorage.getItem("authToken");
-      const academicYr = localStorage.getItem("academicYear");
 
       if (!token || !currentClass || !currentClass.class_id) {
         throw new Error("Class ID is missing");
@@ -3880,7 +3926,6 @@ function ClassList() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "X-Academic-Year": academicYr,
           },
           withCredentials: true,
         }
@@ -3936,6 +3981,7 @@ function ClassList() {
       // setError(error.message);
     }
   };
+  // Handle focus event
 
   const filteredClasses = classes.filter((cls) =>
     cls.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -4131,10 +4177,20 @@ function ClassList() {
                       placeholder="e.g 1,2"
                       id="newClassName"
                       value={newClassName}
-                      onChange={(e) => setNewClassName(e.target.value)}
+                      onChange={handleInputChange(setNewClassName)}
+                      onBlur={handleBlur}
+
+                      // onChange={(e) => setNewClassName(e.target.value)}
                     />{" "}
+                    {!nameAvailable && (
+                      <span className="block text-red-500 text-xs">
+                        {nameError}
+                      </span>
+                    )}
                     {validationErrors.name && (
-                      <div className="text-danger">{validationErrors.name}</div>
+                      <span className="text-red-500 text-xs">
+                        {validationErrors.name}
+                      </span>
                     )}
                   </div>
                   <div className="form-group">
@@ -4145,6 +4201,8 @@ function ClassList() {
                       className="form-control"
                       id="newDepartmentId"
                       value={newDepartmentId}
+                      // onChange={handleInputChange(setNewDepartmentId)}
+
                       onChange={(e) => setNewDepartmentId(e.target.value)}
                     >
                       <option value="">Select</option>
@@ -4158,9 +4216,9 @@ function ClassList() {
                       ))}
                     </select>
                     {validationErrors.department_id && (
-                      <div className="text-danger">
+                      <span className="text-danger text-xs">
                         {validationErrors.department_id}
-                      </div>
+                      </span>
                     )}
                   </div>
                 </div>
@@ -4205,10 +4263,25 @@ function ClassList() {
                       id="newClassName"
                       value={newClassName}
                       placeholder="e.g 1,2"
-                      onChange={(e) => setNewClassName(e.target.value)}
+                      onChange={handleInputChange(setNewClassName)}
+                      onBlur={handleBlur}
+
+                      // onChange={(e) => setNewClassName(e.target.value)}
                     />
+                    {!nameAvailable && (
+                      <span className=" block text-red-500 text-xs">
+                        {nameError}
+                      </span>
+                    )}
+                    {/* {nameError && (
+                      <span className="text-xs" style={{ color: "red" }}>
+                        {nameError}
+                      </span>
+                    )} */}
                     {validationErrors.name && (
-                      <div className="text-danger">{validationErrors.name}</div>
+                      <span className="text-danger text-xs">
+                        {validationErrors.name}
+                      </span>
                     )}
                   </div>
                   <div className="form-group">
@@ -4232,9 +4305,9 @@ function ClassList() {
                       ))}
                     </select>
                     {validationErrors.department_id && (
-                      <div className="text-danger">
+                      <span className="text-danger text-xs">
                         {validationErrors.department_id}
-                      </div>
+                      </span>
                     )}
                   </div>
                 </div>
@@ -4307,3 +4380,7 @@ function ClassList() {
 }
 
 export default ClassList;
+
+// For correct seaching
+
+//

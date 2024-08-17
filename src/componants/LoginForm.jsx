@@ -30,6 +30,7 @@ const LoginForm = () => {
         }
       );
       console.log("the message of the response of the login", response);
+
       //  {"message": "Login successfully",
       //     "token": "390|8ICSKML4LjrZ7lv0AgPZArTRuBzVzUZKnsEWxld0302755c6",
       //     "success": true,
@@ -54,11 +55,10 @@ const LoginForm = () => {
         } else if (error.response.status === 401) {
           newErrors.password = "Invalid password";
         } else {
-          newErrors.api =
-            "An unexpected error occurred. Please try again later.";
+          newErrors.api = "An unexpected error. Please try again later.";
         }
       } else {
-        newErrors.api = "An unexpected error occurred. Please try again later.";
+        newErrors.api = "An unexpected error. Please try again later.";
       }
       setErrors(newErrors);
     } finally {
@@ -107,7 +107,15 @@ const LoginForm = () => {
             <span className={styles.error}>{errors.password}</span>
           )}
         </div>
-        {errors.api && <span className={styles.error}>{errors.api}</span>}
+
+        {errors.api && (
+          <span
+            className={`${styles.error} text-center relative -left-3  text-nowrap text-xs`}
+          >
+            {errors.api}
+          </span>
+        )}
+
         <button
           type="submit"
           className={`${styles.loginButton} flex place-items-center justify-center`}

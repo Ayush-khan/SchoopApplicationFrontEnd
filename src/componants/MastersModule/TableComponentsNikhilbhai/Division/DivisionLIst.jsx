@@ -1187,7 +1187,7 @@ function DivisionList() {
     <>
       <ToastContainer />
 
-      <div className="container mt-4">
+      <div className="container  mt-4">
         <div className="card mx-auto lg:w-3/4 shadow-lg">
           <div className="card-header flex justify-between items-center">
             <h3 className="text-gray-700 mt-1 text-[1.2em] lg:text-xl text-nowrap">

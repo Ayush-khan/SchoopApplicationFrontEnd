@@ -23,7 +23,7 @@ const AllotSubjectTab = ({
           {/* Optional header content */}
         </div>
         <div className="w-full mx-auto">
-          <div className="form-group flex justify-center gap-x-1 md:gap-x-6">
+          <div className="form-group  flex justify-center gap-x-1 md:gap-x-6">
             <label
               htmlFor="classSection"
               className="w-1/4 pt-2 items-center text-center"
@@ -32,7 +32,7 @@ const AllotSubjectTab = ({
             </label>
             <select
               id="classSection"
-              className="border w-[50%] h-10 md:h-auto rounded-md px-3 py-2 md:w-full mr-2"
+              className="border w-full md:w-[30%] h-10 md:h-auto rounded-md px-3 py-2  mr-2"
               value={ClassNameDropdown}
               onChange={handleChangeClassSectionForAllotSubjectTab}
             >
@@ -75,8 +75,10 @@ const AllotSubjectTab = ({
                                 <input
                                   type="checkbox"
                                   className="mr-0.5 shadow-lg"
-                                  value={division.section_id}
-                                  checked={selectedDivisions.includes(division)}
+                                  value={division.id}
+                                  checked={selectedDivisions.includes(
+                                    division.name
+                                  )}
                                   onChange={handleDivisionChange}
                                 />
                                 <span className="font-semibold text-gray-600">
@@ -99,8 +101,8 @@ const AllotSubjectTab = ({
                               <input
                                 type="checkbox"
                                 className="mr-0.5 shadow-lg"
-                                value={subject.subject_id}
-                                checked={selectedSubjects.includes(subject)}
+                                value={subject.id}
+                                checked={selectedSubjects.includes(subject.id)}
                                 onChange={handleSubjectChange}
                               />
                               <span className="font-semibold text-gray-600">

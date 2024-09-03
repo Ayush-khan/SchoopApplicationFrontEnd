@@ -370,7 +370,7 @@ function StaffList() {
                           <img
                             src={
                               staffItem?.teacher_image_name
-                                ? `${staffItem?.teacher_image_name}`
+                                ? `${API_URL}${staffItem?.teacher_image_name}`
                                 : "https://via.placeholder.com/50"
                             }
                             alt={staffItem?.name}

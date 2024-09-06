@@ -276,7 +276,6 @@ function SubjectList() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "X-Academic-Year": academicYr,
           },
           withCredentials: true,
         }
@@ -448,8 +447,8 @@ function SubjectList() {
                 nextLabel={"Next"}
                 breakLabel={"..."}
                 pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={1}
                 onPageChange={handlePageClick}
                 containerClassName={"pagination justify-content-center"}
                 pageClassName={"page-item"}

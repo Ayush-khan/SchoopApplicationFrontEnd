@@ -531,7 +531,7 @@ function ViewStudent() {
   return (
     <div className=" w-[95%] mx-auto p-4">
       <ToastContainer />
-      <h1>Coming soon...</h1>
+      <h2 className="text-white text-center mt-5">coming soon...</h2>
     </div>
   );
 }

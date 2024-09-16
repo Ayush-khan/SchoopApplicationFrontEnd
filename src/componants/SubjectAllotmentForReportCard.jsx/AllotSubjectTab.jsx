@@ -453,6 +453,7 @@ const AllotSubjectTab = () => {
   };
 
   const handleCheckboxChange = (subjectId) => {
+    setSubjectError("");
     if (preCheckedSubjects.includes(subjectId)) {
       setPreCheckedSubjects(
         preCheckedSubjects.filter((id) => id !== subjectId)

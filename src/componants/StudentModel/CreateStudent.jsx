@@ -4172,10 +4172,10 @@ function Form() {
                 <input
                   type="radio"
                   name="receiveSms"
-                  value="FatherMob"
+                  value="Father"
                   id="receiveSmsmob"
-                  checked={formData.SetToReceiveSMS === "FatherMob"}
-                  onChange={() => handleReceiveSmsSelection("FatherMob")}
+                  checked={formData.SetToReceiveSMS === "Father"}
+                  onChange={() => handleReceiveSmsSelection("Father")}
                 />
                 <label htmlFor="receiveSmsmob">
                   Set to receive SMS at this no.
@@ -4415,10 +4415,10 @@ function Form() {
                 <input
                   type="radio"
                   name="receiveSms"
-                  value="MotherMob"
+                  value="Mother"
                   id="receiveSmsmobMother"
-                  checked={formData.SetToReceiveSMS === "MotherMob"}
-                  onChange={() => handleReceiveSmsSelection("MotherMob")}
+                  checked={formData.SetToReceiveSMS === "Mother"}
+                  onChange={() => handleReceiveSmsSelection("Mother")}
                 />
                 <label htmlFor="receiveSmsmobMother">
                   Set to receive SMS at this no.

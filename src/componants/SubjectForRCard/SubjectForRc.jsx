@@ -312,7 +312,7 @@ function SubjectForRc() {
     <>
       {/* <NavBar /> */}
       <ToastContainer />
-      <h1>commign soon..</h1>
+      <h1>coming soon...</h1>
     </>
   );
 }

@@ -73,7 +73,63 @@
 //     setFormData((prev) => ({ ...prev, section_id: selectedDivisionId }));
 //   };
 
+//   // const [formData, setFormData] = useState({
+//   //   first_name: "",
+//   //   mid_name: "",
+//   //   last_name: "",
+//   //   house: "",
+//   //   student_name: "",
+//   //   dob: "",
+//   //   admission_date: "",
+//   //   stud_id_no: "",
+//   //   stu_aadhaar_no: "",
+//   //   gender: "",
+//   //   mother_tongue: "",
+//   //   birth_place: "",
+//   //   admission_class: " ",
+//   //   city: " ",
+//   //   state: "",
+//   //   roll_no: "",
+//   //   class_id: "",
+//   //   section_id: "",
+//   //   religion: "",
+//   //   caste: "",
+//   //   subcaste: "",
+//   //   vehicle_no: "",
+//   //   emergency_name: " ",
+//   //   emergency_contact: "",
+//   //   emergency_add: "",
+//   //   height: "",
+//   //   weight: "",
+//   //   allergies: "",
+//   //   nationality: "",
+//   //   pincode: "",
+//   //   image_name: "",
+//   //   // Parent information
+//   //   father_name: "  .",
+//   //   father_occupation: "",
+//   //   f_office_add: "  ",
+//   //   f_office_tel: "",
+//   //   f_mobile: "",
+//   //   f_email: "",
+//   //   father_adhar_card: "",
+//   //   mother_name: " ",
+//   //   mother_occupation: "",
+//   //   m_office_add: " ",
+//   //   m_office_tel: "",
+//   //   m_mobile: "",
+//   //   m_emailid: "",
+//   //   mother_adhar_card: "",
+
+//   //   // Preferences
+//   //   SetToReceiveSMS: "",
+//   //   SetEmailIDAsUsername: "",
+
+//   //   // Base64 Image (optional)
+//   //   student_image: "",
+//   // });
 //   const [formData, setFormData] = useState({
+//     // Student fields
 //     first_name: "",
 //     mid_name: "",
 //     last_name: "",
@@ -84,10 +140,13 @@
 //     stud_id_no: "",
 //     stu_aadhaar_no: "",
 //     gender: "",
+//     category: " ",
+//     blood_group: " ",
 //     mother_tongue: "",
+//     permant_add: " ",
 //     birth_place: "",
-//     admission_class: " ",
-//     city: " ",
+//     admission_class: "",
+//     city: "",
 //     state: "",
 //     roll_no: "",
 //     class_id: "",
@@ -96,39 +155,38 @@
 //     caste: "",
 //     subcaste: "",
 //     vehicle_no: "",
-//     emergency_name: " ",
+//     emergency_name: "",
 //     emergency_contact: "",
 //     emergency_add: "",
+//     transport_mode: " ",
 //     height: "",
 //     weight: "",
 //     allergies: "",
 //     nationality: "",
 //     pincode: "",
 //     image_name: "",
-//     // Parent information
-//     father_name: "  .",
+//     student_id: "",
+//     reg_id: " ",
+//     // Parent fields
+//     father_name: "",
 //     father_occupation: "",
-//     f_office_add: "  ",
+//     f_office_add: "",
 //     f_office_tel: "",
 //     f_mobile: "",
 //     f_email: "",
 //     father_adhar_card: "",
-//     mother_name: " ",
+//     mother_name: "",
 //     mother_occupation: "",
-//     m_office_add: " ",
+//     m_office_add: "",
 //     m_office_tel: "",
 //     m_mobile: "",
 //     m_emailid: "",
 //     mother_adhar_card: "",
-
+//     udise_pen_no: "",
 //     // Preferences
 //     SetToReceiveSMS: "",
 //     SetEmailIDAsUsername: "",
-
-//     // Base64 Image (optional)
-//     student_image: "",
 //   });
-
 //   const [errors, setErrors] = useState({});
 //   const [photoPreview, setPhotoPreview] = useState(null);
 //   const [backendErrors, setBackendErrors] = useState({});
@@ -156,7 +214,7 @@
 //   const [motherEmailSelected, setMotherEmailSelected] = useState({
 //     setUsername: false, // If mother's email is set as username
 //   });
-
+//   console.log("student", student);
 //   useEffect(() => {
 //     if (student) {
 //       setFormData({
@@ -170,17 +228,23 @@
 //         stud_id_no: student.stud_id_no || "",
 //         stu_aadhaar_no: student.stu_aadhaar_no || "",
 //         gender: student.gender || "",
+//         permant_add: student.permant_add || " ",
 //         mother_tongue: student.mother_tongue || "",
 //         birth_place: student.birth_place || "",
 //         admission_class: student.admission_class || " ",
 //         city: student.city || " ",
 //         state: student.state || "",
 //         roll_no: student.roll_no || "",
+//         student_id: student.student_id || " ",
+//         reg_id: student.reg_id || " ",
+//         blood_group: student.blood_group || " ",
+//         category: student.category || " ",
 //         class_id: student.class_id || "",
 //         section_id: student.section_id || "",
 //         religion: student.religion || "",
 //         caste: student.caste || "",
 //         subcaste: student.subcaste || "",
+//         transport_mode: student.transport_mode || " ",
 //         vehicle_no: student.vehicle_no || "",
 //         emergency_name: student.emergency_name || " ",
 //         emergency_contact: student.emergency_contact || "",
@@ -192,21 +256,21 @@
 //         pincode: student.pincode || "",
 //         image_name: student.image_name || "",
 //         // Parent information
-//         father_name: student.father_name || " ",
-//         father_occupation: student.father_occupation || "",
-//         f_office_add: student.f_office_add || "  ",
-//         f_office_tel: student.f_office_tel || "",
-//         f_mobile: student.f_mobile || "",
-//         f_email: student.f_email || "",
-//         father_adhar_card: student.father_adhar_card || "",
-//         mother_name: student.mother_name || " ",
-//         mother_occupation: student.mother_occupation || "",
-//         m_office_add: student.m_office_add || " ",
-//         m_office_tel: student.m_office_tel || "",
-//         m_mobile: student.m_mobile || "",
-//         m_emailid: student.m_emailid || "",
-//         mother_adhar_card: student.mother_adhar_card || "",
-
+//         father_name: student?.parents?.father_name || " ",
+//         father_occupation: student?.parents?.father_occupation || "",
+//         f_office_add: student?.parents?.f_office_add || "  ",
+//         f_office_tel: student?.parents?.f_office_tel || "",
+//         f_mobile: student?.parents?.f_mobile || "",
+//         f_email: student?.parents?.f_email || "",
+//         father_adhar_card: student?.parents?.father_adhar_card || "",
+//         mother_name: student?.parents?.mother_name || " ",
+//         mother_occupation: student?.parents?.mother_occupation || "",
+//         m_office_add: student?.parents?.m_office_add || " ",
+//         m_office_tel: student?.parents?.m_office_tel || "",
+//         m_mobile: student?.parents?.m_mobile || "",
+//         m_emailid: student?.parents?.m_emailid || "",
+//         mother_adhar_card: student?.parents?.mother_adhar_card || "",
+//         udise_pen_no: student.udise_pen_no || " ",
 //         // Preferences
 //         SetToReceiveSMS: student.SetToReceiveSMS || "",
 //         SetEmailIDAsUsername: student.SetEmailIDAsUsername || "",
@@ -265,26 +329,115 @@
 //     }
 //   }, [selectedClass, API_URL]);
 
-//   // for togle radio button and logic
-//   // Handle selection for "Set as Username"
-//   const handleSetUsernameSelection = (value) => {
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       SetEmailIDAsUsername: value, // One of 'FatherMob', 'MotherMob', 'Father', 'Mother'
-//     }));
+//   // Function to check username uniqueness
+//   // Function to check username uniqueness
+//   // const studentId=student.student_id
+//   // console.log("studentId",studentId)
+//   // const checkUserId = async (studentId, userId) => {
+//   //   try {
+//   //     const token = localStorage.getItem("authToken");
 
-//     // Reset all username selections and set the selected one
-//     setFatherMobileSelected((prev) => ({
-//       ...prev,
-//       setUsername: value === "FatherMob",
-//     }));
-//     setMotherMobileSelected((prev) => ({
-//       ...prev,
-//       setUsername: value === "MotherMob",
-//     }));
-//     setFatherEmailSelected((prev) => ({ setUsername: value === "Father" }));
-//     setMotherEmailSelected((prev) => ({ setUsername: value === "Mother" }));
+//   //     const response = await axios.get(
+//   //       `${API_URL}/api/check-user-id/${studentId}/${userId}`,
+//   //       {
+//   //         headers: { Authorization: `Bearer ${token}` },
+//   //       }
+//   //     );
+//   //     return response.data; // API returns true or false
+//   //   } catch (error) {
+//   //     console.error("Error checking username uniqueness:", error);
+//   //     return false;
+//   //   }
+//   // };
+//   // const handleSetUsernameSelection = async (value, userId) => {
+//   //   const isUnique = await checkUserId(student.student_id, userId); // Check if username is unique
+
+//   //   if (!isUnique) {
+//   //     setUsernameError(`Username "${userId}" is already taken.`);
+//   //   } else {
+//   //     setUsernameError(""); // Clear error if the username is unique
+//   //     setFormData((prevData) => ({
+//   //       ...prevData,
+//   //       SetEmailIDAsUsername: value, // Set the selected username in formData
+//   //     }));
+//   //   }
+//   // };
+//   const checkUserId = async (studentId, userId) => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+
+//       const response = await axios.get(
+//         `${API_URL}/api/check-user-id/${studentId}/${userId}`,
+//         {
+//           headers: { Authorization: `Bearer ${token}` },
+//         }
+//       );
+
+//       // Return the 'exists' property from the response
+//       return response.data.exists;
+//     } catch (error) {
+//       console.error("Error checking username uniqueness:", error);
+//       return false; // Default to false if there's an error
+//     }
 //   };
+
+//   const handleSetUsernameSelection = async (value, userId) => {
+//     const usernameExists = await checkUserId(student.student_id, userId); // Check if username exists
+
+//     if (usernameExists) {
+//       // If the response is true, username already exists
+//       setUsernameError(`Username "${userId}" is already taken.`);
+//       console.log("userName exit", userId);
+//     } else {
+//       // If the response is false, the username does not exist (is unique)
+//       setUsernameError(""); // Clear any previous error message
+//       console.log("userName not exit", userId);
+
+//       // Update form data to set the username
+//       setFormData((prevData) => ({
+//         ...prevData,
+//         SetEmailIDAsUsername: value, // Set the selected username in formData
+//       }));
+//     }
+//   };
+
+//   // Father's Mobile Selection for Username
+//   const handleFatherMobileSelection = async () => {
+//     await handleSetUsernameSelection("FatherMob", formData.f_mobile); // Father's mobile
+//     if (!usernameError) {
+//       setFatherMobileSelected({ setUsername: true });
+//       setMotherMobileSelected({ setUsername: false });
+//     }
+//   };
+
+//   // Mother's Mobile Selection for Username
+//   const handleMotherMobileSelection = async () => {
+//     await handleSetUsernameSelection("MotherMob", formData.m_mobile); // Mother's mobile
+//     if (!usernameError) {
+//       setMotherMobileSelected({ setUsername: true });
+//       setFatherMobileSelected({ setUsername: false });
+//     }
+//   };
+
+//   // Father's Email Selection for Username
+//   const handleFatherEmailSelection = async () => {
+//     await handleSetUsernameSelection("Father", formData.f_email); // Father's email
+//     if (!usernameError) {
+//       setFatherMobileSelected({ setUsername: false });
+//       setMotherMobileSelected({ setUsername: false });
+//     }
+//   };
+
+//   // Mother's Email Selection for Username
+//   const handleMotherEmailSelection = async () => {
+//     await handleSetUsernameSelection("Mother", formData.m_emailid); // Mother's email
+//     if (!usernameError) {
+//       setFatherMobileSelected({ setUsername: false });
+//       setMotherMobileSelected({ setUsername: false });
+//     }
+//   };
+
+//   // for togle radio button and logic
 
 //   // Handle selection for "Receive SMS"
 //   const handleReceiveSmsSelection = (value) => {
@@ -329,30 +482,85 @@
 
 //     // Validate required fields
 //     if (!formData.first_name) newErrors.first_name = "First name is required";
-//     if (!formData.gender) newErrors.gender = "Gender selection is required";
+//     // if (!formData.gender) newErrors.gender = "Gender selection is required";
 //     if (!formData.dob) newErrors.dob = "Date of Birth is required";
+//     if (!formData.nationality)
+//       newErrors.nationality = "Nationality is required";
+//     if (!formData.mother_tongue)
+//       newErrors.mother_tongue = "MotherTongue is required";
+//     if (!formData.student_name)
+//       newErrors.student_name = "Student name is required";
+//     if (!formData.reg_id) {
+//       newErrors.reg_id = "GR number is required";
+//     } else if (!/^\d+$/.test(formData.reg_id)) {
+//       newErrors.reg_id = "GR number must be number without spaces";
+//     }
+
+//     if (!formData.admission_date)
+//       newErrors.admission_date = "Date of admission is required";
+//     if (!formData.admission_date)
+//       newErrors.admission_date = "Date of admission is required";
+//     // Adrees validations
+//     if (!formData.permant_add) newErrors.permant_add = "Address is required";
+//     if (!formData.city) newErrors.city = "City is required";
+//     if (!formData.state) newErrors.state = "State is required";
+//     // Correct validation for gender selection
+//     if (!formData.gender || formData.gender === "Select") {
+//       newErrors.gender = "Gender selection is required";
+//     }
+//     if (!formData.religion || formData.religion === "Select") {
+//       newErrors.religion = "Religion selection is required";
+//     }
+//     if (!formData.category || formData.category === "Select") {
+//       newErrors.category = "Category selection is required";
+//     }
+//     if (!formData.class_id || formData.class_id === "Select") {
+//       newErrors.class_id = "Class selection is required";
+//     }
+//     if (!formData.section_id || formData.section_id === "Select") {
+//       newErrors.section_id = "Division selection is required";
+//     }
+//     if (!formData.admission_class || formData.admission_class === "Select") {
+//       newErrors.admission_class = "Admission class selection is required";
+//     }
+
+//     // newErrors.gender = "Gender selection is required";
 
 //     // Phone, Aadhar and Email validations
 //     const phoneError = validatePhone(formData.f_mobile);
 //     if (phoneError) newErrors.f_mobile = phoneError;
+//     // mother phone error
+//     const m_mobile = validatePhone(formData.m_mobile);
+//     if (m_mobile) newErrors.m_mobile = m_mobile;
 
+//     const stu_aadhaar_no = validateAadhar(formData.stu_aadhaar_no);
+//     if (stu_aadhaar_no) newErrors.stu_aadhaar_no = stu_aadhaar_no;
+//     // mother adhar card validatoins
+//     const mother_adhar_card = validateAadhar(formData.mother_adhar_card);
+//     if (mother_adhar_card) newErrors.mother_adhar_card = mother_adhar_card;
+//     // Father adhar validations
 //     const aadharError = validateAadhar(formData.father_adhar_card);
 //     if (aadharError) newErrors.father_adhar_card = aadharError;
 
-//     const emailErrorFather = validateEmail(formData.f_email);
-//     if (emailErrorFather) newErrors.f_email = emailErrorFather;
+//     const f_email = validateEmail(formData.f_email);
+//     if (f_email) newErrors.f_email = f_email;
 
-//     const emailErrorMother = validateEmail(formData.m_emailid);
-//     if (emailErrorMother) newErrors.m_emailid = emailErrorMother;
+//     const m_emailid = validateEmail(formData.m_emailid);
+//     if (m_emailid) newErrors.m_emailid = m_emailid;
 //     // Validate required fields
 //     if (!formData.father_name.trim())
 //       newErrors.father_name = "Father Name is required";
+//     // mother
+//     if (!formData.mother_adhar_card.trim())
+//       newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
+//     if (!formData.stu_aadhaar_no.trim())
+//       newErrors.stu_aadhaar_no = "Student Aadhaar Card No. is required";
 //     if (!formData.father_adhar_card.trim())
 //       newErrors.father_adhar_card = "Father Aadhaar Card No. is required";
 //     if (!formData.mother_name.trim())
 //       newErrors.mother_name = "Mother Name is required";
-//     if (!formData.mother_adhar_card.trim())
-//       newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
+//     // if (!formData.mother_adhar_card.trim())
+//     //   newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
 //     // Add more validations as needed
 
 //     return newErrors;
@@ -376,8 +584,14 @@
 //     let fieldErrors = {};
 //     if (name === "f_mobile") {
 //       fieldErrors.f_mobile = validatePhone(newValue);
+//     } else if (name === "m_mobile") {
+//       fieldErrors.m_mobile = validatePhone(newValue);
 //     } else if (name === "father_adhar_card") {
 //       fieldErrors.father_adhar_card = validateAadhar(newValue);
+//     } else if (name === "stu_aadhaar_no") {
+//       fieldErrors.stu_aadhaar_no = validateAadhar(newValue);
+//     } else if (name === "mother_adhar_card") {
+//       fieldErrors.mother_adhar_card = validateAadhar(newValue);
 //     } else if (name === "f_email" || name === "m_emailid") {
 //       fieldErrors[name] = validateEmail(newValue);
 //     }
@@ -467,6 +681,62 @@
 //     }));
 //   };
 
+//   // const handleSubmit = async (event) => {
+//   //   event.preventDefault();
+//   //   const validationErrors = validate();
+
+//   //   if (Object.keys(validationErrors).length > 0) {
+//   //     setErrors(validationErrors);
+//   //     Object.values(validationErrors).forEach((error) => {
+//   //       toast.error(error);
+//   //     });
+//   //     return;
+//   //   }
+
+//   //   // Prepare the data for API submission
+//   //   const formattedFormData = new FormData();
+//   //   Object.keys(formData).forEach((key) => {
+//   //     if (formData[key] instanceof File) {
+//   //       formattedFormData.append(key, formData[key]);
+//   //     } else {
+//   //       formattedFormData.append(key, formData[key]);
+//   //     }
+//   //   });
+//   //   console.log(" formattedFormData is,", formData);
+
+//   //   try {
+//   //     const token = localStorage.getItem("authToken");
+//   //     if (!token) {
+//   //       throw new Error("No authentication token is found");
+//   //     }
+//   //     console.log(" formattedFormData,", formattedFormData);
+//   //     const response = await axios.put(
+//   //       `${API_URL}/api/students/${student.student_id}`,
+//   //       formData,
+//   //       {
+//   //         headers: {
+//   //           "Content-Type": "multipart/form-data",
+//   //           Authorization: `Bearer ${token}`,
+//   //         },
+//   //       }
+//   //     );
+
+//   //     if (response.status === 200) {
+//   //       toast.success("Student updated successfully!");
+//   //       setTimeout(() => {
+//   //         navigate("/StudentList");
+//   //       }, 3000);
+//   //     }
+//   //   } catch (error) {
+//   //     toast.error("An error occurred while updating the student.");
+//   //     console.error("Error:", error.response?.data || error.message);
+//   //     if (error.response && error.response.data && error.response.data.errors) {
+//   //       setBackendErrors(error.response.data.errors || {});
+//   //     } else {
+//   //       toast.error(error.message);
+//   //     }
+//   //   }
+//   // };
 //   const handleSubmit = async (event) => {
 //     event.preventDefault();
 //     const validationErrors = validate();
@@ -479,26 +749,22 @@
 //       return;
 //     }
 
-//     // Prepare the data for API submission
+//     // Create FormData object
 //     const formattedFormData = new FormData();
 //     Object.keys(formData).forEach((key) => {
-//       if (formData[key] instanceof File) {
-//         formattedFormData.append(key, formData[key]);
-//       } else {
-//         formattedFormData.append(key, formData[key]);
-//       }
+//       formattedFormData.append(key, formData[key]);
 //     });
-//     console.log(" formattedFormData,", formData);
 
 //     try {
 //       const token = localStorage.getItem("authToken");
 //       if (!token) {
-//         throw new Error("No authentication token is found");
+//         throw new Error("No authentication token found");
 //       }
-//       console.log(" formattedFormData,", formattedFormData);
+//       console.log("formattedFormData", formattedFormData);
+//       console.log("formData", formData);
 //       const response = await axios.put(
 //         `${API_URL}/api/students/${student.student_id}`,
-//         formData,
+//         formData, // Send the FormData object
 //         {
 //           headers: {
 //             "Content-Type": "multipart/form-data",
@@ -510,7 +776,7 @@
 //       if (response.status === 200) {
 //         toast.success("Student updated successfully!");
 //         setTimeout(() => {
-//           navigate("/StudentList");
+//           navigate("/manageStudent");
 //         }, 3000);
 //       }
 //     } catch (error) {
@@ -660,9 +926,9 @@
 //                 // onBlur={handleBlur}
 //               >
 //                 <option>Select</option>
-//                 <option defaultValue="Male">Male</option>
-//                 <option value="Female">Female</option>
-//                 <option value="Other">Other</option>
+//                 <option value="M">Male</option>
+//                 <option value="F">Female</option>
+//                 <option value="O">Other</option>
 //               </select>
 //               {errors.gender && (
 //                 <p className="text-[12px] text-red-500 mb-1">{errors.gender}</p>
@@ -677,8 +943,8 @@
 //               </label>
 //               <select
 //                 id="bloodGroup"
-//                 name="bloodGroup"
-//                 value={formData.bloodGroup}
+//                 name="blood_group"
+//                 value={formData.blood_group}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -779,9 +1045,9 @@
 //               <input
 //                 type="text"
 //                 id="birthPlace"
-//                 name="birthPlace"
+//                 name="birth_place"
 //                 maxLength={50}
-//                 value={formData.birthPlace}
+//                 value={formData.birth_place}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -820,16 +1086,16 @@
 //               <input
 //                 type="text"
 //                 id="motherTongue"
-//                 name="motherTongue"
+//                 name="mother_tongue"
 //                 maxLength={20}
-//                 value={formData.motherTongue}
+//                 value={formData.mother_tongue}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
 //               />
-//               {errors.motherTongue && (
+//               {errors.mother_tongue && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.motherTongue}
+//                   {errors.mother_tongue}
 //                 </p>
 //               )}
 //             </div>
@@ -883,9 +1149,9 @@
 //                   </option>
 //                 ))}
 //               </select>
-//               {errors.studentClass && (
+//               {errors.class_id && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.studentClass}
+//                   {errors.class_id}
 //                 </p>
 //               )}
 //             </div>
@@ -912,9 +1178,9 @@
 //                   </option>
 //                 ))}
 //               </select>
-//               {errors.division && (
+//               {errors.section_id && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.division}
+//                   {errors.section_id}
 //                 </p>
 //               )}
 //             </div>
@@ -946,17 +1212,15 @@
 //               <input
 //                 type="text"
 //                 id="grnNumber"
-//                 name="gr_no"
+//                 name="reg_id"
 //                 maxLength={10}
-//                 value={formData.gr_no}
+//                 value={formData.reg_id}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
 //               />
-//               {errors.grnNumber && (
-//                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.grnNumber}
-//                 </p>
+//               {errors.reg_id && (
+//                 <p className="text-[12px] text-red-500 mb-1">{errors.reg_id}</p>
 //               )}
 //             </div>{" "}
 //             <div className="mt-2">
@@ -972,10 +1236,10 @@
 //                 // onBlur={handleBlur}
 //               >
 //                 <option>Select</option>
-//                 <option value="Diamond">Diamond</option>
-//                 <option value="Emerald">Emerald</option>
-//                 <option value="Ruby">Ruby</option>
-//                 <option value="Sapphire">Sapphire</option>
+//                 <option value="D">Diamond</option>
+//                 <option value="E">Emerald</option>
+//                 <option value="R">Ruby</option>
+//                 <option value="S">Sapphire</option>
 //               </select>
 //             </div>
 //             <div className="mt-2">
@@ -987,7 +1251,7 @@
 //               </label>
 //               <select
 //                 id="admittedInClass"
-//                 name="admittedInClass"
+//                 name="admission_class"
 //                 value={formData.admission_class}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
@@ -1010,9 +1274,9 @@
 //                 <option value="11">11</option>
 //                 <option value="12">12</option>
 //               </select>
-//               {errors.admittedInClass && (
+//               {errors.admission_class && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.admittedInClass}
+//                   {errors.admission_class}
 //                 </p>
 //               )}
 //             </div>
@@ -1032,9 +1296,9 @@
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
 //               />
-//               {errors.dataOfAdmission && (
+//               {errors.admission_date && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.dataOfAdmission}
+//                   {errors.admission_date}
 //                 </p>
 //               )}
 //             </div>
@@ -1048,9 +1312,9 @@
 //               <input
 //                 type="text"
 //                 id="studentIdNumber"
-//                 name="stud_id_no"
+//                 name="student_id"
 //                 maxLength={25}
-//                 value={formData.stud_id_no}
+//                 value={formData.student_id}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -1067,15 +1331,16 @@
 //                 type="text"
 //                 id="studentAadharNumber"
 //                 name="stu_aadhaar_no"
-//                 maxLength={14}
+//                 maxLength={12}
 //                 value={formData.stu_aadhaar_no}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
 //               />
-//               {errors.studentAadharNumber && (
+
+//               {errors.stu_aadhaar_no && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.studentAadharNumber}
+//                   {errors.stu_aadhaar_no}
 //                 </p>
 //               )}
 //             </div>{" "}
@@ -1090,9 +1355,9 @@
 //                 <input
 //                   type="text"
 //                   id="Udise_no"
-//                   name="Udise_no"
+//                   name="udise_pen_no"
 //                   maxLength={14}
-//                   value={formData.Udise_no}
+//                   value={formData.udise_pen_no}
 //                   className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                   onChange={handleChange}
 //                   // onBlur={handleBlur}
@@ -1113,17 +1378,17 @@
 //               </label>
 //               <textarea
 //                 id="address"
-//                 name="address"
+//                 name="permant_add"
 //                 maxLength={200}
 //                 rows={2}
-//                 value={formData.address}
+//                 value={formData.permant_add}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
 //               />
-//               {errors.address && (
+//               {errors.permant_add && (
 //                 <p className="text-[12px] text-red-500 mb-1">
-//                   {errors.address}
+//                   {errors.permant_add}
 //                 </p>
 //               )}
 //             </div>
@@ -1200,14 +1465,14 @@
 //                 type="text"
 //                 id="emergencyName"
 //                 maxLength={100}
-//                 name="emergencyName"
-//                 value={formData.emergencyName}
+//                 name="emergency_name"
+//                 value={formData.emergency_name}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
 //               />
 //             </div>
-//             <div className="mt-2">
+//             {/* <div className="mt-2">
 //               <label
 //                 htmlFor="emergencyAddress"
 //                 className="block font-bold text-xs mb-0.5"
@@ -1216,10 +1481,10 @@
 //               </label>
 //               <textarea
 //                 id="emergencyAddress"
-//                 name="emergencyAddress"
+//                 name="emergency_add"
 //                 rows={2}
 //                 maxLength={200}
-//                 value={formData.emergencyAddress}
+//                 value={formData.emergency_add}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -1243,8 +1508,49 @@
 //                   Same as permanent address
 //                 </label>
 //               </div>
-//             </div>
+//             </div> */}
 //             <div className="mt-2">
+//               <label
+//                 htmlFor="emergencyAddress"
+//                 className="block font-bold text-xs mb-0.5"
+//               >
+//                 Emergency Address
+//               </label>
+//               <textarea
+//                 id="emergencyAddress"
+//                 name="emergency_add"
+//                 rows={2}
+//                 maxLength={200}
+//                 value={formData.emergency_add}
+//                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+//                 onChange={handleChange}
+//               />
+//               <div className="flex flex-row items-center gap-2 -mt-1 w-full">
+//                 <input
+//                   type="checkbox"
+//                   id="sameAs"
+//                   name="sameAs"
+//                   className="border h-[26px] border-[#ccc] px-3 py-[6px] text-[14px] leading-4 outline-none"
+//                   onChange={(event) => {
+//                     if (event.target.checked) {
+//                       setFormData((prevFormData) => ({
+//                         ...prevFormData,
+//                         emergency_add: prevFormData.permant_add,
+//                       }));
+//                     } else {
+//                       setFormData((prevFormData) => ({
+//                         ...prevFormData,
+//                         emergency_add: "",
+//                       }));
+//                     }
+//                   }}
+//                 />
+//                 <label htmlFor="sameAs" className="text-xs">
+//                   Same as permanent address
+//                 </label>
+//               </div>
+//             </div>
+//             {/* <div className="mt-2">
 //               <label
 //                 htmlFor="emergencyContact"
 //                 className="block font-bold text-xs mb-0.5"
@@ -1259,14 +1565,37 @@
 //                   type="text"
 //                   inputMode="numeric"
 //                   id="emergencyContact"
-//                   name="emergencyContact"
+//                   name="emergency_contact"
 //                   maxLength={10}
-//                   value={formData.emergencyContact}
+//                   value={formData.emergency_contact}
 //                   className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                   onChange={handleChange}
 //                   // onBlur={handleBlur}
 //                 />
 //               </div>
+//             </div> */}
+//             <div className="w-full flex flex-row items-center">
+//               <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
+//                 +91
+//               </span>
+//               <input
+//                 type="text"
+//                 inputMode="numeric"
+//                 id="emergencyContact"
+//                 name="emergency_contact"
+//                 maxLength={10}
+//                 value={formData.emergency_contact}
+//                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+//                 onChange={(e) => {
+//                   const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+//                   if (value.length <= 10) {
+//                     setFormData({
+//                       ...formData,
+//                       emergency_contact: value,
+//                     });
+//                   }
+//                 }}
+//               />
 //             </div>
 //             {/* Transport Information */}
 //             {/* <h5 className="col-span-4 text-gray-500 mt-2 relative top-2"> Transport Information</h5> */}
@@ -1279,8 +1608,8 @@
 //               </label>
 //               <select
 //                 id="transportMode"
-//                 name="transportMode"
-//                 value={formData.transportMode}
+//                 name="transport_mode"
+//                 value={formData.transport_mode}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -1293,10 +1622,10 @@
 //               <input
 //                 type="text"
 //                 id="vehicleNumber"
-//                 name="vehicleNumber"
+//                 name="vehicle_no"
 //                 maxLength={13}
 //                 placeholder="Vehicle No."
-//                 value={formData.vehicleNumber}
+//                 value={formData.vehicle_no}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -1457,8 +1786,8 @@
 //               </label>
 //               <select
 //                 id="bloodGroup"
-//                 name="bloodGroup"
-//                 value={formData.bloodGroup}
+//                 name="blood_group"
+//                 value={formData.blood_group}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //                 onChange={handleChange}
 //                 // onBlur={handleBlur}
@@ -1508,16 +1837,27 @@
 //               />
 //             </div>
 //             <div className="mt-2">
-//               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
+//               <label
+//                 htmlFor="telephone"
+//                 className="block font-bold text-xs mb-0.5"
+//               >
 //                 Telephone
 //               </label>
 //               <input
 //                 type="text"
 //                 maxLength={11}
-//                 id="email"
+//                 id="telephone"
 //                 name="f_office_tel"
 //                 value={formData.f_office_tel}
-//                 onChange={handleChange}
+//                 onChange={(e) => {
+//                   const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+//                   if (value.length <= 11) {
+//                     setFormData({
+//                       ...formData,
+//                       f_office_tel: value,
+//                     });
+//                   }
+//                 }}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //               />
 //             </div>
@@ -1538,7 +1878,7 @@
 //                   name="f_mobile"
 //                   pattern="\d{10}"
 //                   maxLength="10"
-//                   title="Please enter only 10 digit number "
+//                   // title="Please enter only 10 digit number "
 //                   value={formData.f_mobile}
 //                   onChange={handleChange}
 //                   className="input-field block w-full border-1 border-gray-400 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
@@ -1548,29 +1888,37 @@
 //               {backendErrors.phone && (
 //                 <span className="error">{backendErrors.phone[0]}</span>
 //               )}
-//               {errors.phone && (
-//                 <span className="text-red-500 text-xs">{errors.phone}</span>
+//               {errors.f_mobile && (
+//                 <span className="text-red-500 text-xs">{errors.f_mobile}</span>
 //               )}
-//               <div className="flex items-center">
+//               <div className="flex items-center gap-2">
 //                 <input
 //                   type="radio"
-//                   name="setUsername"
-//                   value="FatherMob"
-//                   checked={formData.SetEmailIDAsUsername === "FatherMob"}
-//                   onChange={() => handleSetUsernameSelection("FatherMob")}
+//                   id="setusernameFatherMob"
+//                   name="setUsernameFatherMob"
+//                   onChange={handleFatherMobileSelection} // Call the function on selection
+//                   checked={fatherMobileSelected.setUsername}
 //                 />
-//                 <label>Set this as username</label>
+//                 <label htmlFor="setusernameFatherMob">
+//                   Set this as username
+//                 </label>
+//                 {usernameError &&
+//                   formData.SetEmailIDAsUsername === "FatherMob" && (
+//                     <span className="error">{usernameError}</span>
+//                   )}
 //               </div>
-//               <div>
-//                 <label>
-//                   <input
-//                     type="radio"
-//                     name="receiveSms"
-//                     value="FatherMob"
-//                     checked={formData.SetToReceiveSMS === "FatherMob"}
-//                     onChange={() => handleReceiveSmsSelection("FatherMob")}
-//                   />
-//                   Set to receive SMS at this number
+//               <div className="flex items-center gap-2">
+//                 <input
+//                   type="radio"
+//                   name="receiveSms"
+//                   value="FatherMob"
+//                   id="receiveSmsmob"
+//                   checked={formData.SetToReceiveSMS === "FatherMob"}
+//                   onChange={() => handleReceiveSmsSelection("FatherMob")}
+//                 />
+//                 <label htmlFor="receiveSmsmob">
+//                   {" "}
+//                   Set to receive sms at this no.
 //                 </label>
 //               </div>
 //               {/* <div className="flex items-center">
@@ -1615,21 +1963,23 @@
 //                 onChange={handleChange}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //               />
-//               {errors.email && (
-//                 <span className="text-red-500 text-xs">{errors.email}</span>
+//               {errors.f_email && (
+//                 <span className="text-red-500 text-xs">{errors.f_email}</span>
 //               )}
 
-//               <div className="flex items-center">
+//               <div className="flex items-center gap-2">
 //                 <input
 //                   type="radio"
-//                   name="setUsername"
-//                   value="Father"
+//                   id="setUserNameFather"
+//                   name="setUsernameFatherEmail"
+//                   onChange={handleFatherEmailSelection}
 //                   checked={formData.SetEmailIDAsUsername === "Father"}
-//                   onChange={() => handleSetUsernameSelection("Father")}
 //                 />
-//                 <label htmlFor="fatherEmail" className="ml-2">
-//                   Set this as username.
-//                 </label>
+//                 <label htmlFor="setUserNameFather">Set this as username</label>
+//                 {usernameError &&
+//                   formData.SetEmailIDAsUsername === "Father" && (
+//                     <span className="error">{usernameError}</span>
+//                   )}
 //               </div>
 //             </div>
 //             <div className="mt-2">
@@ -1747,6 +2097,31 @@
 //               />
 //             </div>
 //             <div className="mt-2">
+//               <label
+//                 htmlFor="m_office_tel"
+//                 className="block font-bold text-xs mb-0.5"
+//               >
+//                 Telephone
+//               </label>
+//               <input
+//                 type="text"
+//                 maxLength={11}
+//                 id="m_office_tel"
+//                 name="m_office_tel"
+//                 value={formData.m_office_tel}
+//                 onChange={(e) => {
+//                   const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+//                   if (value.length <= 11) {
+//                     setFormData({
+//                       ...formData,
+//                       m_office_tel: value,
+//                     });
+//                   }
+//                 }}
+//                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+//               />
+//             </div>
+//             {/* <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
 //                 Telephone
 //               </label>
@@ -1759,7 +2134,7 @@
 //                 onChange={handleChange}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //               />
-//             </div>
+//             </div> */}
 //             <div>
 //               <label
 //                 htmlFor="phone"
@@ -1775,9 +2150,9 @@
 //                   type="tel"
 //                   id="phone"
 //                   name="m_mobile"
-//                   pattern="\d{10}"
+//                   // pattern="\d{10}"
 //                   maxLength="10"
-//                   title="Please enter only 10 digit number "
+//                   // title="Please enter only 10 digit number "
 //                   value={formData.m_mobile}
 //                   onChange={handleChange}
 //                   className="input-field block w-full border-1 border-gray-400 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
@@ -1787,29 +2162,37 @@
 //               {backendErrors.phone && (
 //                 <span className="error">{backendErrors.phone[0]}</span>
 //               )}
-//               {errors.phone && (
-//                 <span className="text-red-500 text-xs">{errors.phone}</span>
+//               {errors.m_mobile && (
+//                 <span className="text-red-500 text-xs">{errors.m_mobile}</span>
 //               )}
-//               <div className="flex items-center">
+//               <div className="flex items-center gap-2">
 //                 <input
 //                   type="radio"
-//                   name="setUsername"
-//                   value="MotherMob"
-//                   checked={formData.SetEmailIDAsUsername === "MotherMob"}
-//                   onChange={() => handleSetUsernameSelection("MotherMob")}
+//                   id="setUsernameMotherMob"
+//                   name="setUsernameMotherMob"
+//                   onChange={handleMotherMobileSelection}
+//                   checked={motherMobileSelected.setUsername}
 //                 />
-//                 <label>Set this as username</label>
+//                 <label htmlFor="setUsernameMotherMob">
+//                   {" "}
+//                   Set this as username
+//                 </label>
+//                 {usernameError &&
+//                   formData.SetEmailIDAsUsername === "MotherMob" && (
+//                     <span className="error">{usernameError}</span>
+//                   )}
 //               </div>
-//               <div>
-//                 <label>
-//                   <input
-//                     type="radio"
-//                     name="receiveSms"
-//                     value="MotherMob"
-//                     checked={formData.SetToReceiveSMS === "MotherMob"}
-//                     onChange={() => handleReceiveSmsSelection("MotherMob")}
-//                   />
-//                   Set to receive SMS at this number
+//               <div className="flex items-center gap-2">
+//                 <input
+//                   type="radio"
+//                   name="receiveSms"
+//                   id="receiveSms"
+//                   value="MotherMob"
+//                   checked={formData.SetToReceiveSMS === "MotherMob"}
+//                   onChange={() => handleReceiveSmsSelection("MotherMob")}
+//                 />{" "}
+//                 <label htmlFor="receiveSms">
+//                   Set to receive sms at this no.
 //                 </label>
 //               </div>
 //               {/* <div className="flex items-center">
@@ -1854,21 +2237,23 @@
 //                 onChange={handleChange}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //               />
-//               {errors.email && (
-//                 <span className="text-red-500 text-xs">{errors.email}</span>
+//               {errors.m_emailid && (
+//                 <span className="text-red-500 text-xs">{errors.m_emailid}</span>
 //               )}
 
-//               <div className="flex items-center">
+//               <div className="flex items-center gap-2">
 //                 <input
 //                   type="radio"
-//                   name="setUsername"
-//                   value="Mother"
+//                   id="emailuser"
+//                   name="setUsernameMotherEmail"
+//                   onChange={handleMotherEmailSelection}
 //                   checked={formData.SetEmailIDAsUsername === "Mother"}
-//                   onChange={() => handleSetUsernameSelection("Mother")}
 //                 />
-//                 <label htmlFor="motherEmail" className="ml-2">
-//                   Set this as username.
-//                 </label>
+//                 <label htmlFor="emailuser">Set this as username</label>
+//                 {usernameError &&
+//                   formData.SetEmailIDAsUsername === "Mother" && (
+//                     <span className="error">{usernameError}</span>
+//                   )}
 //               </div>
 //               {/* <div className="flex items-center">
 //                 <input
@@ -1946,6 +2331,14 @@ function Form() {
   const [selectedDivision, setSelectedDivision] = useState(null);
   const [classError, setClassError] = useState("");
   const [divisionError, setDivisionError] = useState("");
+  const [usernameErrors, setUsernameErrors] = useState({
+    fatherMobile: "",
+    motherMobile: "",
+    fatherEmail: "",
+    motherEmail: "",
+  });
+
+  const [selectedUsername, setSelectedUsername] = useState(null);
 
   // Fetch class names
   useEffect(() => {
@@ -1996,62 +2389,6 @@ function Form() {
     setSelectedDivision(selectedDivisionId);
     setFormData((prev) => ({ ...prev, section_id: selectedDivisionId }));
   };
-
-  // const [formData, setFormData] = useState({
-  //   first_name: "",
-  //   mid_name: "",
-  //   last_name: "",
-  //   house: "",
-  //   student_name: "",
-  //   dob: "",
-  //   admission_date: "",
-  //   stud_id_no: "",
-  //   stu_aadhaar_no: "",
-  //   gender: "",
-  //   mother_tongue: "",
-  //   birth_place: "",
-  //   admission_class: " ",
-  //   city: " ",
-  //   state: "",
-  //   roll_no: "",
-  //   class_id: "",
-  //   section_id: "",
-  //   religion: "",
-  //   caste: "",
-  //   subcaste: "",
-  //   vehicle_no: "",
-  //   emergency_name: " ",
-  //   emergency_contact: "",
-  //   emergency_add: "",
-  //   height: "",
-  //   weight: "",
-  //   allergies: "",
-  //   nationality: "",
-  //   pincode: "",
-  //   image_name: "",
-  //   // Parent information
-  //   father_name: "  .",
-  //   father_occupation: "",
-  //   f_office_add: "  ",
-  //   f_office_tel: "",
-  //   f_mobile: "",
-  //   f_email: "",
-  //   father_adhar_card: "",
-  //   mother_name: " ",
-  //   mother_occupation: "",
-  //   m_office_add: " ",
-  //   m_office_tel: "",
-  //   m_mobile: "",
-  //   m_emailid: "",
-  //   mother_adhar_card: "",
-
-  //   // Preferences
-  //   SetToReceiveSMS: "",
-  //   SetEmailIDAsUsername: "",
-
-  //   // Base64 Image (optional)
-  //   student_image: "",
-  // });
   const [formData, setFormData] = useState({
     // Student fields
     first_name: "",
@@ -2205,6 +2542,7 @@ function Form() {
 
       // Set the initial state for father's and mother's mobile preferences based on prefilled data
       // Update the state for username and SMS based on the prefilled data
+      // Set initial state for mobile and email preferences based on prefilled data
       setFatherMobileSelected({
         setUsername: student.SetEmailIDAsUsername === "FatherMob",
         receiveSms: student.SetToReceiveSMS === "FatherMob",
@@ -2257,6 +2595,35 @@ function Form() {
   // Function to check username uniqueness
   // const studentId=student.student_id
   // console.log("studentId",studentId)
+  // const checkUserId = async (studentId, userId) => {
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+
+  //     const response = await axios.get(
+  //       `${API_URL}/api/check-user-id/${studentId}/${userId}`,
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+  //     return response.data; // API returns true or false
+  //   } catch (error) {
+  //     console.error("Error checking username uniqueness:", error);
+  //     return false;
+  //   }
+  // };
+  // const handleSetUsernameSelection = async (value, userId) => {
+  //   const isUnique = await checkUserId(student.student_id, userId); // Check if username is unique
+
+  //   if (!isUnique) {
+  //     setUsernameError(`Username "${userId}" is already taken.`);
+  //   } else {
+  //     setUsernameError(""); // Clear error if the username is unique
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       SetEmailIDAsUsername: value, // Set the selected username in formData
+  //     }));
+  //   }
+  // };
   const checkUserId = async (studentId, userId) => {
     try {
       const token = localStorage.getItem("authToken");
@@ -2267,79 +2634,75 @@ function Form() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      return response.data; // API returns true or false
+
+      return response.data.exists;
     } catch (error) {
       console.error("Error checking username uniqueness:", error);
-      return false;
+      return false; // Default to false if there's an error
     }
   };
-  const handleSetUsernameSelection = async (value, userId) => {
-    const isUnique = await checkUserId(student.student_id, userId); // Check if username is unique
 
-    if (!isUnique) {
-      setUsernameError(`Username "${userId}" is already taken.`);
+  const handleSetUsernameSelection = async (value, userId, key) => {
+    const usernameExists = await checkUserId(student.student_id, userId);
+    setUsernameErrors("");
+    if (usernameExists) {
+      setUsernameErrors((prevErrors) => ({
+        ...prevErrors,
+        [key]: `Username is already taken.`,
+      }));
     } else {
-      setUsernameError(""); // Clear error if the username is unique
+      setUsernameErrors((prevErrors) => ({
+        ...prevErrors,
+        [key]: "", // Clear error if username is unique
+      }));
+
       setFormData((prevData) => ({
         ...prevData,
         SetEmailIDAsUsername: value, // Set the selected username in formData
       }));
     }
+
+    // Update selectedUsername state
+    setSelectedUsername(value);
   };
 
-  // Father's Mobile Selection for Username
   const handleFatherMobileSelection = async () => {
-    await handleSetUsernameSelection("FatherMob", formData.f_mobile); // Father's mobile
-    if (!usernameError) {
-      setFatherMobileSelected({ setUsername: true });
-      setMotherMobileSelected({ setUsername: false });
-    }
+    setUsernameErrors("");
+    await handleSetUsernameSelection(
+      "FatherMob",
+      formData.f_mobile,
+      "fatherMobile"
+    );
   };
 
-  // Mother's Mobile Selection for Username
   const handleMotherMobileSelection = async () => {
-    await handleSetUsernameSelection("MotherMob", formData.m_mobile); // Mother's mobile
-    if (!usernameError) {
-      setMotherMobileSelected({ setUsername: true });
-      setFatherMobileSelected({ setUsername: false });
-    }
+    setUsernameErrors("");
+    await handleSetUsernameSelection(
+      "MotherMob",
+      formData.m_mobile,
+      "motherMobile"
+    );
   };
 
-  // Father's Email Selection for Username
   const handleFatherEmailSelection = async () => {
-    await handleSetUsernameSelection("Father", formData.f_email); // Father's email
-    if (!usernameError) {
-      setFatherMobileSelected({ setUsername: false });
-      setMotherMobileSelected({ setUsername: false });
-    }
+    setUsernameErrors("");
+    await handleSetUsernameSelection("Father", formData.f_email, "fatherEmail");
   };
 
-  // Mother's Email Selection for Username
   const handleMotherEmailSelection = async () => {
-    await handleSetUsernameSelection("Mother", formData.m_emailid); // Mother's email
-    if (!usernameError) {
-      setFatherMobileSelected({ setUsername: false });
-      setMotherMobileSelected({ setUsername: false });
-    }
+    setUsernameErrors("");
+    await handleSetUsernameSelection(
+      "Mother",
+      formData.m_emailid,
+      "motherEmail"
+    );
   };
 
-  // for togle radio button and logic
-
-  // Handle selection for "Receive SMS"
+  // Handle SMS selection
   const handleReceiveSmsSelection = (value) => {
     setFormData((prevData) => ({
       ...prevData,
       SetToReceiveSMS: value, // One of 'FatherMob', 'MotherMob'
-    }));
-
-    // Reset SMS selections and set the selected one
-    setFatherMobileSelected((prev) => ({
-      ...prev,
-      receiveSms: value === "FatherMob",
-    }));
-    setMotherMobileSelected((prev) => ({
-      ...prev,
-      receiveSms: value === "MotherMob",
     }));
   };
 
@@ -2368,30 +2731,82 @@ function Form() {
 
     // Validate required fields
     if (!formData.first_name) newErrors.first_name = "First name is required";
-    if (!formData.gender) newErrors.gender = "Gender selection is required";
+    // if (!formData.gender) newErrors.gender = "Gender selection is required";
     if (!formData.dob) newErrors.dob = "Date of Birth is required";
+    if (!formData.nationality)
+      newErrors.nationality = "Nationality is required";
+    if (!formData.mother_tongue)
+      newErrors.mother_tongue = "MotherTongue is required";
+    if (!formData.student_name)
+      newErrors.student_name = "Student name is required";
+    if (!formData.reg_id) {
+      newErrors.reg_id = "GR number is required";
+    }
+    if (!formData.admission_date)
+      newErrors.admission_date = "Date of admission is required";
+    if (!formData.admission_date)
+      newErrors.admission_date = "Date of admission is required";
+    // Adrees validations
+    if (!formData.permant_add) newErrors.permant_add = "Address is required";
+    if (!formData.city) newErrors.city = "City is required";
+    if (!formData.state) newErrors.state = "State is required";
+    // Correct validation for gender selection
+    if (!formData.gender || formData.gender === "Select") {
+      newErrors.gender = "Gender selection is required";
+    }
+    if (!formData.religion || formData.religion === "Select") {
+      newErrors.religion = "Religion selection is required";
+    }
+    if (!formData.category || formData.category === "Select") {
+      newErrors.category = "Category selection is required";
+    }
+    if (!formData.class_id || formData.class_id === "Select") {
+      newErrors.class_id = "Class selection is required";
+    }
+    if (!formData.section_id || formData.section_id === "Select") {
+      newErrors.section_id = "Division selection is required";
+    }
+    if (!formData.admission_class || formData.admission_class === "Select") {
+      newErrors.admission_class = "Admission class selection is required";
+    }
+
+    // newErrors.gender = "Gender selection is required";
 
     // Phone, Aadhar and Email validations
     const phoneError = validatePhone(formData.f_mobile);
     if (phoneError) newErrors.f_mobile = phoneError;
+    // mother phone error
+    const m_mobile = validatePhone(formData.m_mobile);
+    if (m_mobile) newErrors.m_mobile = m_mobile;
 
+    const stu_aadhaar_no = validateAadhar(formData.stu_aadhaar_no);
+    if (stu_aadhaar_no) newErrors.stu_aadhaar_no = stu_aadhaar_no;
+    // mother adhar card validatoins
+    const mother_adhar_card = validateAadhar(formData.mother_adhar_card);
+    if (mother_adhar_card) newErrors.mother_adhar_card = mother_adhar_card;
+    // Father adhar validations
     const aadharError = validateAadhar(formData.father_adhar_card);
     if (aadharError) newErrors.father_adhar_card = aadharError;
 
-    const emailErrorFather = validateEmail(formData.f_email);
-    if (emailErrorFather) newErrors.f_email = emailErrorFather;
+    const f_email = validateEmail(formData.f_email);
+    if (f_email) newErrors.f_email = f_email;
 
-    const emailErrorMother = validateEmail(formData.m_emailid);
-    if (emailErrorMother) newErrors.m_emailid = emailErrorMother;
+    const m_emailid = validateEmail(formData.m_emailid);
+    if (m_emailid) newErrors.m_emailid = m_emailid;
     // Validate required fields
     if (!formData.father_name.trim())
       newErrors.father_name = "Father Name is required";
+    // mother
+    if (!formData.mother_adhar_card.trim())
+      newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
+    if (!formData.stu_aadhaar_no.trim())
+      newErrors.stu_aadhaar_no = "Student Aadhaar Card No. is required";
     if (!formData.father_adhar_card.trim())
       newErrors.father_adhar_card = "Father Aadhaar Card No. is required";
     if (!formData.mother_name.trim())
       newErrors.mother_name = "Mother Name is required";
-    if (!formData.mother_adhar_card.trim())
-      newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
+    // if (!formData.mother_adhar_card.trim())
+    //   newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
     // Add more validations as needed
 
     return newErrors;
@@ -2415,8 +2830,14 @@ function Form() {
     let fieldErrors = {};
     if (name === "f_mobile") {
       fieldErrors.f_mobile = validatePhone(newValue);
+    } else if (name === "m_mobile") {
+      fieldErrors.m_mobile = validatePhone(newValue);
     } else if (name === "father_adhar_card") {
       fieldErrors.father_adhar_card = validateAadhar(newValue);
+    } else if (name === "stu_aadhaar_no") {
+      fieldErrors.stu_aadhaar_no = validateAadhar(newValue);
+    } else if (name === "mother_adhar_card") {
+      fieldErrors.mother_adhar_card = validateAadhar(newValue);
     } else if (name === "f_email" || name === "m_emailid") {
       fieldErrors[name] = validateEmail(newValue);
     }
@@ -2569,30 +2990,48 @@ function Form() {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       Object.values(validationErrors).forEach((error) => {
-        toast.error(error);
+        console.log(error);
       });
+      console.log("error in feilds name");
+
       return;
     }
-
-    // Create FormData object
-    const formattedFormData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formattedFormData.append(key, formData[key]);
-    });
+    // Check for username-specific errors
+    const hasUsernameErrors = Object.values(usernameErrors).some(
+      (error) => error !== ""
+    );
+    if (hasUsernameErrors) {
+      // Set backend errors if any
+      if (hasUsernameErrors) {
+        Object.keys(usernameErrors).forEach((key) => {
+          if (usernameErrors[key]) {
+            console.log(usernameErrors[key]);
+          }
+        });
+      }
+      console.log("error in the uniquye name");
+      // Exit function if there are validation errors or username errors
+      return;
+    }
+    // // Create FormData object
+    // const formattedFormData = new FormData();
+    // Object.keys(formData).forEach((key) => {
+    //   formattedFormData.append(key, formData[key]);
+    // });
 
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
         throw new Error("No authentication token found");
       }
-      console.log("formattedFormData", formattedFormData);
+      // console.log("formattedFormData", formattedFormData);
       console.log("formData", formData);
       const response = await axios.put(
         `${API_URL}/api/students/${student.student_id}`,
         formData, // Send the FormData object
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
@@ -2601,7 +3040,7 @@ function Form() {
       if (response.status === 200) {
         toast.success("Student updated successfully!");
         setTimeout(() => {
-          navigate("/StudentList");
+          navigate("/manageStudent");
         }, 3000);
       }
     } catch (error) {
@@ -2918,9 +3357,9 @@ function Form() {
                 onChange={handleChange}
                 // onBlur={handleBlur}
               />
-              {errors.motherTongue && (
+              {errors.mother_tongue && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.motherTongue}
+                  {errors.mother_tongue}
                 </p>
               )}
             </div>
@@ -2974,9 +3413,9 @@ function Form() {
                   </option>
                 ))}
               </select>
-              {errors.studentClass && (
+              {errors.class_id && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.studentClass}
+                  {errors.class_id}
                 </p>
               )}
             </div>
@@ -3003,9 +3442,9 @@ function Form() {
                   </option>
                 ))}
               </select>
-              {errors.division && (
+              {errors.section_id && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.division}
+                  {errors.section_id}
                 </p>
               )}
             </div>
@@ -3044,10 +3483,8 @@ function Form() {
                 onChange={handleChange}
                 // onBlur={handleBlur}
               />
-              {errors.grnNumber && (
-                <p className="text-[12px] text-red-500 mb-1">
-                  {errors.grnNumber}
-                </p>
+              {errors.reg_id && (
+                <p className="text-[12px] text-red-500 mb-1">{errors.reg_id}</p>
               )}
             </div>{" "}
             <div className="mt-2">
@@ -3063,10 +3500,10 @@ function Form() {
                 // onBlur={handleBlur}
               >
                 <option>Select</option>
-                <option value="Diamond">Diamond</option>
-                <option value="Emerald">Emerald</option>
-                <option value="Ruby">Ruby</option>
-                <option value="Sapphire">Sapphire</option>
+                <option value="D">Diamond</option>
+                <option value="E">Emerald</option>
+                <option value="R">Ruby</option>
+                <option value="S">Sapphire</option>
               </select>
             </div>
             <div className="mt-2">
@@ -3078,7 +3515,7 @@ function Form() {
               </label>
               <select
                 id="admittedInClass"
-                name="admittedInClass"
+                name="admission_class"
                 value={formData.admission_class}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
                 onChange={handleChange}
@@ -3101,9 +3538,9 @@ function Form() {
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              {errors.admittedInClass && (
+              {errors.admission_class && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.admittedInClass}
+                  {errors.admission_class}
                 </p>
               )}
             </div>
@@ -3123,9 +3560,9 @@ function Form() {
                 onChange={handleChange}
                 // onBlur={handleBlur}
               />
-              {errors.dataOfAdmission && (
+              {errors.admission_date && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.dataOfAdmission}
+                  {errors.admission_date}
                 </p>
               )}
             </div>
@@ -3158,15 +3595,16 @@ function Form() {
                 type="text"
                 id="studentAadharNumber"
                 name="stu_aadhaar_no"
-                maxLength={14}
+                maxLength={12}
                 value={formData.stu_aadhaar_no}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
                 onChange={handleChange}
                 // onBlur={handleBlur}
               />
-              {errors.studentAadharNumber && (
+
+              {errors.stu_aadhaar_no && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.studentAadharNumber}
+                  {errors.stu_aadhaar_no}
                 </p>
               )}
             </div>{" "}
@@ -3212,9 +3650,9 @@ function Form() {
                 onChange={handleChange}
                 // onBlur={handleBlur}
               />
-              {errors.address && (
+              {errors.permant_add && (
                 <p className="text-[12px] text-red-500 mb-1">
-                  {errors.address}
+                  {errors.permant_add}
                 </p>
               )}
             </div>
@@ -3298,7 +3736,7 @@ function Form() {
                 // onBlur={handleBlur}
               />
             </div>
-            <div className="mt-2">
+            {/* <div className="mt-2">
               <label
                 htmlFor="emergencyAddress"
                 className="block font-bold text-xs mb-0.5"
@@ -3334,8 +3772,49 @@ function Form() {
                   Same as permanent address
                 </label>
               </div>
-            </div>
+            </div> */}
             <div className="mt-2">
+              <label
+                htmlFor="emergencyAddress"
+                className="block font-bold text-xs mb-0.5"
+              >
+                Emergency Address
+              </label>
+              <textarea
+                id="emergencyAddress"
+                name="emergency_add"
+                rows={2}
+                maxLength={200}
+                value={formData.emergency_add}
+                className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+                onChange={handleChange}
+              />
+              <div className="flex flex-row items-center gap-2 -mt-1 w-full">
+                <input
+                  type="checkbox"
+                  id="sameAs"
+                  name="sameAs"
+                  className="border h-[26px] border-[#ccc] px-3 py-[6px] text-[14px] leading-4 outline-none"
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        emergency_add: prevFormData.permant_add,
+                      }));
+                    } else {
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        emergency_add: "",
+                      }));
+                    }
+                  }}
+                />
+                <label htmlFor="sameAs" className="text-xs">
+                  Same as permanent address
+                </label>
+              </div>
+            </div>
+            {/* <div className="mt-2">
               <label
                 htmlFor="emergencyContact"
                 className="block font-bold text-xs mb-0.5"
@@ -3358,6 +3837,29 @@ function Form() {
                   // onBlur={handleBlur}
                 />
               </div>
+            </div> */}
+            <div className="w-full flex flex-row items-center">
+              <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
+                +91
+              </span>
+              <input
+                type="text"
+                inputMode="numeric"
+                id="emergencyContact"
+                name="emergency_contact"
+                maxLength={10}
+                value={formData.emergency_contact}
+                className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  if (value.length <= 10) {
+                    setFormData({
+                      ...formData,
+                      emergency_contact: value,
+                    });
+                  }
+                }}
+              />
             </div>
             {/* Transport Information */}
             {/* <h5 className="col-span-4 text-gray-500 mt-2 relative top-2"> Transport Information</h5> */}
@@ -3599,27 +4101,35 @@ function Form() {
               />
             </div>
             <div className="mt-2">
-              <label htmlFor="email" className="block font-bold text-xs mb-0.5">
+              <label
+                htmlFor="telephone"
+                className="block font-bold text-xs mb-0.5"
+              >
                 Telephone
               </label>
               <input
                 type="text"
                 maxLength={11}
-                id="email"
+                id="telephone"
                 name="f_office_tel"
                 value={formData.f_office_tel}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  if (value.length <= 11) {
+                    setFormData({
+                      ...formData,
+                      f_office_tel: value,
+                    });
+                  }
+                }}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
             <div>
-              <label
-                htmlFor="phone"
-                className="block font-bold  text-xs mb-0.5"
-              >
+              <label htmlFor="phone" className="block font-bold text-xs mb-0.5">
                 Mobile Number <span className="text-red-500">*</span>
               </label>
-              <div className="flex ">
+              <div className="flex">
                 <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
                   +91
                 </span>
@@ -3629,34 +4139,34 @@ function Form() {
                   name="f_mobile"
                   pattern="\d{10}"
                   maxLength="10"
-                  title="Please enter only 10 digit number "
                   value={formData.f_mobile}
                   onChange={handleChange}
-                  className="input-field block w-full border-1 border-gray-400 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
+                  className="input-field block w-full border-1 border-gray-400 outline-none rounded-r-md py-1 px-3 bg-white shadow-inner"
                   required
                 />
               </div>
               {backendErrors.phone && (
                 <span className="error">{backendErrors.phone[0]}</span>
               )}
-              {errors.phone && (
-                <span className="text-red-500 text-xs">{errors.phone}</span>
+              {errors.f_mobile && (
+                <span className=" text-red-500 text-xs">{errors.f_mobile}</span>
+              )}{" "}
+              {usernameErrors.fatherMobile && (
+                <span className="block text-red-500 text-xs">
+                  {usernameErrors.fatherMobile}
+                </span>
               )}
               <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="setusernameFatherMob"
-                  name="setUsernameFatherMob"
-                  onChange={handleFatherMobileSelection} // Call the function on selection
-                  checked={fatherMobileSelected.setUsername}
+                  name="setUsername"
+                  onChange={handleFatherMobileSelection}
+                  checked={selectedUsername === "FatherMob"}
                 />
                 <label htmlFor="setusernameFatherMob">
                   Set this as username
                 </label>
-                {usernameError &&
-                  formData.SetEmailIDAsUsername === "FatherMob" && (
-                    <span className="error">{usernameError}</span>
-                  )}
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -3668,38 +4178,9 @@ function Form() {
                   onChange={() => handleReceiveSmsSelection("FatherMob")}
                 />
                 <label htmlFor="receiveSmsmob">
-                  {" "}
-                  Set to receive sms at this no.
+                  Set to receive SMS at this no.
                 </label>
               </div>
-              {/* <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="yes"
-                  name="hasRecievedSms"
-                  checked={formData.hasRecievedSms === "Yes"}
-                  value="Yes"
-                  onChange={handleChange}
-                  // onBlur={handleBlur}
-                />
-                <label htmlFor="yes" className="ml-1 text-xs">
-                  Set to receive sms at this no.
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="yes"
-                  name="hasUserName"
-                  checked={formData.hasUserName === "Yes"}
-                  value="Yes"
-                  onChange={handleChange}
-                  // onBlur={handleBlur}
-                />
-                <label htmlFor="yes" className="ml-1 text-xs">
-                  Set this as username.
-                </label>
-              </div> */}
             </div>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
@@ -3714,23 +4195,24 @@ function Form() {
                 onChange={handleChange}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-              {errors.email && (
-                <span className="text-red-500 text-xs">{errors.email}</span>
+              {errors.f_email && (
+                <span className="text-red-500 text-xs">{errors.f_email}</span>
+              )}
+              {usernameErrors.fatherEmail && (
+                <span className="block text-red-500 text-xs">
+                  {usernameErrors.fatherEmail}
+                </span>
               )}
 
               <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="setUserNameFather"
-                  name="setUsernameFatherEmail"
+                  name="setUsername"
                   onChange={handleFatherEmailSelection}
-                  checked={formData.SetEmailIDAsUsername === "Father"}
+                  checked={selectedUsername === "Father"}
                 />
                 <label htmlFor="setUserNameFather">Set this as username</label>
-                {usernameError &&
-                  formData.SetEmailIDAsUsername === "Father" && (
-                    <span className="error">{usernameError}</span>
-                  )}
               </div>
             </div>
             <div className="mt-2">
@@ -3848,6 +4330,31 @@ function Form() {
               />
             </div>
             <div className="mt-2">
+              <label
+                htmlFor="m_office_tel"
+                className="block font-bold text-xs mb-0.5"
+              >
+                Telephone
+              </label>
+              <input
+                type="text"
+                maxLength={11}
+                id="m_office_tel"
+                name="m_office_tel"
+                value={formData.m_office_tel}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  if (value.length <= 11) {
+                    setFormData({
+                      ...formData,
+                      m_office_tel: value,
+                    });
+                  }
+                }}
+                className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+            </div>
+            {/* <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
                 Telephone
               </label>
@@ -3860,15 +4367,12 @@ function Form() {
                 onChange={handleChange}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-            </div>
+            </div> */}
             <div>
-              <label
-                htmlFor="phone"
-                className="block font-bold  text-xs mb-0.5"
-              >
+              <label htmlFor="phone" className="block font-bold text-xs mb-0.5">
                 Mobile Number <span className="text-red-500">*</span>
               </label>
-              <div className="flex ">
+              <div className="flex">
                 <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
                   +91
                 </span>
@@ -3878,77 +4382,48 @@ function Form() {
                   name="m_mobile"
                   pattern="\d{10}"
                   maxLength="10"
-                  title="Please enter only 10 digit number "
                   value={formData.m_mobile}
                   onChange={handleChange}
-                  className="input-field block w-full border-1 border-gray-400 outline-none  rounded-r-md py-1 px-3 bg-white shadow-inner "
+                  className="input-field block w-full border-1 border-gray-400 outline-none rounded-r-md py-1 px-3 bg-white shadow-inner"
                   required
                 />
               </div>
               {backendErrors.phone && (
                 <span className="error">{backendErrors.phone[0]}</span>
               )}
-              {errors.phone && (
-                <span className="text-red-500 text-xs">{errors.phone}</span>
+              {errors.m_mobile && (
+                <span className="text-red-500 text-xs">{errors.m_mobile}</span>
+              )}{" "}
+              {usernameErrors.motherMobile && (
+                <span className="block text-red-500 text-xs">
+                  {usernameErrors.motherMobile}
+                </span>
               )}
               <div className="flex items-center gap-2">
                 <input
                   type="radio"
-                  id="setUsernameMotherMob"
-                  name="setUsernameMotherMob"
+                  id="setusernameMotherMob"
+                  name="setUsername"
                   onChange={handleMotherMobileSelection}
-                  checked={motherMobileSelected.setUsername}
+                  checked={selectedUsername === "MotherMob"}
                 />
-                <label htmlFor="setUsernameMotherMob">
-                  {" "}
+                <label htmlFor="setusernameMotherMob">
                   Set this as username
                 </label>
-                {usernameError &&
-                  formData.SetEmailIDAsUsername === "MotherMob" && (
-                    <span className="error">{usernameError}</span>
-                  )}
               </div>
               <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   name="receiveSms"
-                  id="receiveSms"
                   value="MotherMob"
+                  id="receiveSmsmobMother"
                   checked={formData.SetToReceiveSMS === "MotherMob"}
                   onChange={() => handleReceiveSmsSelection("MotherMob")}
-                />{" "}
-                <label htmlFor="receiveSms">
-                  Set to receive sms at this no.
+                />
+                <label htmlFor="receiveSmsmobMother">
+                  Set to receive SMS at this no.
                 </label>
               </div>
-              {/* <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="yes"
-                  name="hasRecievedSmsForMother"
-                  checked={formData.hasRecievedSmsForMother === "Yes"}
-                  value="Yes"
-                  onChange={handleChange}
-                  // onBlur={handleBlur}
-                />
-                <label htmlFor="yes" className="ml-1 text-xs">
-                  Set to receive sms at this no.
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="yes"
-                  name="hasUserNameForMother"
-                  checked={formData.hasUserNameForMother === "Yes"}
-                  value="Yes"
-                  onChange={handleChange}
-                  // onBlur={handleBlur}
-                />
-                <label htmlFor="yes" className="ml-1 text-xs">
-                  Set this as username.
-                </label>
-              </div> */}
             </div>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
@@ -3963,38 +4438,24 @@ function Form() {
                 onChange={handleChange}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
-              {errors.email && (
-                <span className="text-red-500 text-xs">{errors.email}</span>
+              {errors.m_emailid && (
+                <span className="text-red-500 text-xs">{errors.m_emailid}</span>
+              )}{" "}
+              {usernameErrors.motherEmail && (
+                <span className="block text-red-500 text-xs">
+                  {usernameErrors.motherEmail}
+                </span>
               )}
-
               <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="emailuser"
-                  name="setUsernameMotherEmail"
+                  name="setUsername"
                   onChange={handleMotherEmailSelection}
-                  checked={formData.SetEmailIDAsUsername === "Mother"}
+                  checked={selectedUsername === "Mother"}
                 />
                 <label htmlFor="emailuser">Set this as username</label>
-                {usernameError &&
-                  formData.SetEmailIDAsUsername === "Mother" && (
-                    <span className="error">{usernameError}</span>
-                  )}
               </div>
-              {/* <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="yes"
-                  name="SetEmailIDAsUsername"
-                  checked={formData.SetEmailIDAsUsername === "Yes"}
-                  value="Yes"
-                  onChange={handleChange}
-                  // onBlur={handleBlur}
-                />
-                <label htmlFor="yes" className="ml-1 text-xs">
-                  Set this as username.
-                </label>
-              </div> */}
             </div>
             <div className="mt-2">
               <label

@@ -119,14 +119,14 @@
 //     f_office_tel: "",
 //     f_mobile: "",
 //     f_email: "",
-//     father_adhar_card: "",
+//     parent_adhar_no: "",
 //     mother_name: "",
 //     mother_occupation: "",
 //     m_office_add: "",
 //     m_office_tel: "",
 //     m_mobile: "",
 //     m_emailid: "",
-//     mother_adhar_card: "",
+//     m_adhar_no: "",
 //     udise_pen_no: "",
 //     // Preferences
 //     SetToReceiveSMS: "",
@@ -207,14 +207,14 @@
 //         f_office_tel: student?.parents?.f_office_tel || "",
 //         f_mobile: student?.parents?.f_mobile || "",
 //         f_email: student?.parents?.f_email || "",
-//         father_adhar_card: student?.parents?.father_adhar_card || "",
+//         parent_adhar_no: student?.parents?.parent_adhar_no || "",
 //         mother_name: student?.parents?.mother_name || " ",
 //         mother_occupation: student?.parents?.mother_occupation || "",
 //         m_office_add: student?.parents?.m_office_add || " ",
 //         m_office_tel: student?.parents?.m_office_tel || "",
 //         m_mobile: student?.parents?.m_mobile || "",
 //         m_emailid: student?.parents?.m_emailid || "",
-//         mother_adhar_card: student?.parents?.mother_adhar_card || "",
+//         m_adhar_no: student?.parents?.m_adhar_no || "",
 //         udise_pen_no: student.udise_pen_no || " ",
 //         // Preferences
 //         SetToReceiveSMS: student.SetToReceiveSMS || "",
@@ -392,8 +392,8 @@
 //     const phoneError = validatePhone(formData.f_mobile);
 //     if (phoneError) newErrors.f_mobile = phoneError;
 
-//     const aadharError = validateAadhar(formData.father_adhar_card);
-//     if (aadharError) newErrors.father_adhar_card = aadharError;
+//     const aadharError = validateAadhar(formData.parent_adhar_no);
+//     if (aadharError) newErrors.parent_adhar_no = aadharError;
 
 //     const emailErrorFather = validateEmail(formData.f_email);
 //     if (emailErrorFather) newErrors.f_email = emailErrorFather;
@@ -403,12 +403,12 @@
 //     // Validate required fields
 //     if (!formData.father_name.trim())
 //       newErrors.father_name = "Father Name is required";
-//     if (!formData.father_adhar_card.trim())
-//       newErrors.father_adhar_card = "Father Aadhaar Card No. is required";
+//     if (!formData.parent_adhar_no.trim())
+//       newErrors.parent_adhar_no = "Father Aadhaar Card No. is required";
 //     if (!formData.mother_name.trim())
 //       newErrors.mother_name = "Mother Name is required";
-//     if (!formData.mother_adhar_card.trim())
-//       newErrors.mother_adhar_card = "Mother Aadhaar Card No. is required";
+//     if (!formData.m_adhar_no.trim())
+//       newErrors.m_adhar_no = "Mother Aadhaar Card No. is required";
 //     // Add more validations as needed
 
 //     return newErrors;
@@ -432,8 +432,8 @@
 //     let fieldErrors = {};
 //     if (name === "f_mobile") {
 //       fieldErrors.f_mobile = validatePhone(newValue);
-//     } else if (name === "father_adhar_card") {
-//       fieldErrors.father_adhar_card = validateAadhar(newValue);
+//     } else if (name === "parent_adhar_no") {
+//       fieldErrors.parent_adhar_no = validateAadhar(newValue);
 //     } else if (name === "f_email" || name === "m_emailid") {
 //       fieldErrors[name] = validateEmail(newValue);
 //     }
@@ -524,7 +524,7 @@
 //           style={{ backgroundColor: "#C03078" }}
 //         ></div>
 //         <p className=" md:absolute md:right-8 md:top-[5%] text-gray-500">
-//           <span className="text-red-500">*</span> indicates mandatory
+//            indicates mandatory
 //           information
 //         </p>
 //         <form
@@ -547,7 +547,7 @@
 //                 htmlFor="first_name"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 First Name <span className="text-red-500">*</span>
+//                 First Name
 //               </label>
 //               <input
 //                 type="text"
@@ -607,7 +607,7 @@
 //                 htmlFor="dateOfBirth"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Date of Birth <span className="text-red-500">*</span>
+//                 Date of Birth
 //               </label>
 //               <input
 //                 type="date"
@@ -629,7 +629,7 @@
 //                 htmlFor="gender"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Gender <span className="text-red-500">*</span>
+//                 Gender
 //               </label>
 //               <select
 //                 id="gender"
@@ -679,7 +679,7 @@
 //                 htmlFor="religion"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Religion <span className="text-red-500">*</span>
+//                 Religion
 //               </label>
 //               <select
 //                 id="religion"
@@ -723,7 +723,7 @@
 //                 htmlFor="category"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Category <span className="text-red-500">*</span>
+//                 Category
 //               </label>
 //               <select
 //                 id="category"
@@ -772,7 +772,7 @@
 //                 htmlFor="nationality"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Nationality <span className="text-red-500">*</span>
+//                 Nationality
 //               </label>
 //               <input
 //                 type="text"
@@ -795,7 +795,7 @@
 //                 htmlFor="motherTongue"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Mother Tongue <span className="text-red-500">*</span>
+//                 Mother Tongue
 //               </label>
 //               <input
 //                 type="text"
@@ -824,7 +824,7 @@
 //                 htmlFor="studentName"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Student Name <span className="text-red-500">*</span>
+//                 Student Name
 //               </label>
 //               <input
 //                 type="text"
@@ -847,7 +847,7 @@
 //                 htmlFor="studentClass"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Class <span className="text-red-500">*</span>
+//                 Class
 //               </label>
 //               <select
 //                 id="studentClass"
@@ -875,7 +875,7 @@
 //                 htmlFor="division"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Division <span className="text-red-500">*</span>
+//                 Division
 //               </label>
 //               <select
 //                 id="division"
@@ -921,7 +921,7 @@
 //                 htmlFor="grnNumber"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 GRN No. <span className="text-red-500">*</span>
+//                 GRN No.
 //               </label>
 //               <input
 //                 type="text"
@@ -963,7 +963,7 @@
 //                 htmlFor="admittedInClass"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Admitted In Class <span className="text-red-500">*</span>
+//                 Admitted In Class
 //               </label>
 //               <select
 //                 id="admittedInClass"
@@ -1001,7 +1001,7 @@
 //                 htmlFor="dataOfAdmission"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Date of Admission <span className="text-red-500">*</span>
+//                 Date of Admission
 //               </label>
 //               <input
 //                 type="date"
@@ -1041,7 +1041,7 @@
 //                 htmlFor="studentAadharNumber"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Student Aadhar No. <span className="text-red-500">*</span>
+//                 Student Aadhar No.
 //               </label>
 //               <input
 //                 type="text"
@@ -1089,7 +1089,7 @@
 //                 htmlFor="address"
 //                 className="block font-bold text-xs mb-0.5"
 //               >
-//                 Address <span className="text-red-500">*</span>
+//                 Address
 //               </label>
 //               <textarea
 //                 id="address"
@@ -1109,7 +1109,7 @@
 //             </div>
 //             <div className="mt-2">
 //               <label htmlFor="city" className="block font-bold text-xs mb-0.5">
-//                 City <span className="text-red-500">*</span>
+//                 City
 //               </label>
 //               <input
 //                 type="text"
@@ -1127,7 +1127,7 @@
 //             </div>
 //             <div className="mt-2">
 //               <label htmlFor="state" className="block font-bold text-xs mb-0.5">
-//                 State <span className="text-red-500">*</span>
+//                 State
 //               </label>
 //               <input
 //                 type="text"
@@ -1353,8 +1353,8 @@
 //                   <input
 //                     type="radio"
 //                     id="yes"
-//                     name="hasSpectacles"
-//                     checked={formData.hasSpectacles === "Yes"}
+//                     name="has_specs"
+//                     checked={formData.has_specs === "Yes"}
 //                     value="Yes"
 //                     onChange={handleChange}
 //                     // onBlur={handleBlur}
@@ -1367,8 +1367,8 @@
 //                   <input
 //                     type="radio"
 //                     id="no"
-//                     name="hasSpectacles"
-//                     checked={formData.hasSpectacles === "No"}
+//                     name="has_specs"
+//                     checked={formData.has_specs === "No"}
 //                     value="No"
 //                     onChange={handleChange}
 //                     // onBlur={handleBlur}
@@ -1397,7 +1397,7 @@
 //             </h5>
 //             <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-//                 Name <span className="text-red-500">*</span>
+//                 Name
 //               </label>
 //               <input
 //                 type="text"
@@ -1456,20 +1456,20 @@
 //             </div>
 //             <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-//                 Father Aadhaar Card No. <span className="text-red-500">*</span>
+//                 Father Aadhaar Card No.
 //               </label>
 //               <input
 //                 type="text"
 //                 id="email"
-//                 name="father_adhar_card"
+//                 name="parent_adhar_no"
 //                 maxLength={12}
-//                 value={formData.father_adhar_card}
+//                 value={formData.parent_adhar_no}
 //                 onChange={handleChange}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //               />
-//               {errors.father_adhar_card && (
+//               {errors.parent_adhar_no && (
 //                 <span className="text-red-500 text-xs">
-//                   {errors.father_adhar_card}
+//                   {errors.parent_adhar_no}
 //                 </span>
 //               )}
 //             </div>
@@ -1506,7 +1506,7 @@
 //                 htmlFor="phone"
 //                 className="block font-bold  text-xs mb-0.5"
 //               >
-//                 Mobile Number <span className="text-red-500">*</span>
+//                 Mobile Number
 //               </label>
 //               <div className="flex ">
 //                 <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
@@ -1592,7 +1592,7 @@
 //             </div>
 //             <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-//                 Email Id <span className="text-red-500">*</span>
+//                 Email Id
 //               </label>
 //               <input
 //                 type="email"
@@ -1646,7 +1646,7 @@
 //             </h5>
 //             <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-//                 Name <span className="text-red-500">*</span>
+//                 Name
 //               </label>
 //               <input
 //                 type="text"
@@ -1705,20 +1705,20 @@
 //             </div>
 //             <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-//                 Mother Aadhaar Card No. <span className="text-red-500">*</span>
+//                 Mother Aadhaar Card No.
 //               </label>
 //               <input
 //                 type="text"
 //                 id="email"
-//                 name="mother_adhar_card"
+//                 name="m_adhar_no"
 //                 maxLength={12}
-//                 value={formData.mother_adhar_card}
+//                 value={formData.m_adhar_no}
 //                 onChange={handleChange}
 //                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 //               />
-//               {errors.mother_adhar_card && (
+//               {errors.m_adhar_no && (
 //                 <span className="text-red-500 text-xs">
-//                   {errors.mother_adhar_card}
+//                   {errors.m_adhar_no}
 //                 </span>
 //               )}
 //             </div>
@@ -1755,7 +1755,7 @@
 //                 htmlFor="phone"
 //                 className="block font-bold  text-xs mb-0.5"
 //               >
-//                 Mobile Number <span className="text-red-500">*</span>
+//                 Mobile Number
 //               </label>
 //               <div className="flex ">
 //                 <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
@@ -1841,7 +1841,7 @@
 //             </div>
 //             <div className="mt-2">
 //               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-//                 Email Id <span className="text-red-500">*</span>
+//                 Email Id
 //               </label>
 //               <input
 //                 type="email"
@@ -2003,15 +2003,18 @@ function ViewStudent() {
     f_office_tel: "",
     f_mobile: "",
     f_email: "",
-    father_adhar_card: "",
+    f_dob: " ",
+    m_dob: " ",
+    parent_adhar_no: "",
     mother_name: "",
     mother_occupation: "",
     m_office_add: "",
     m_office_tel: "",
     m_mobile: "",
     m_emailid: "",
-    mother_adhar_card: "",
+    m_adhar_no: "",
     udise_pen_no: "",
+    user_id: "",
     // Preferences
     SetToReceiveSMS: "",
     SetEmailIDAsUsername: "",
@@ -2069,15 +2072,18 @@ function ViewStudent() {
         f_office_tel: student?.parents?.f_office_tel || "",
         f_mobile: student?.parents?.f_mobile || "",
         f_email: student?.parents?.f_email || "",
-        father_adhar_card: student?.parents?.father_adhar_card || "",
+        f_dob: student?.parents?.f_dob || " ",
+        m_dob: student?.parents?.m_dob || " ",
+        parent_adhar_no: student?.parents?.parent_adhar_no || "",
         mother_name: student?.parents?.mother_name || " ",
         mother_occupation: student?.parents?.mother_occupation || "",
         m_office_add: student?.parents?.m_office_add || " ",
         m_office_tel: student?.parents?.m_office_tel || "",
         m_mobile: student?.parents?.m_mobile || "",
         m_emailid: student?.parents?.m_emailid || "",
-        mother_adhar_card: student?.parents?.mother_adhar_card || "",
+        m_adhar_no: student?.parents?.m_adhar_no || "",
         udise_pen_no: student.udise_pen_no || " ",
+        user_id: student?.user_master?.user_id || " ",
         SetToReceiveSMS: student.SetToReceiveSMS || "",
         SetEmailIDAsUsername: student.SetEmailIDAsUsername || "",
       });
@@ -2132,7 +2138,7 @@ function ViewStudent() {
               {" "}
               Personal Information
             </h5>
-            <div className="mx-auto">
+            <div className="row-span-2">
               <label
                 htmlFor="teacher_image_name"
                 className="block font-bold text-xs mb-2"
@@ -2160,7 +2166,7 @@ function ViewStudent() {
                 htmlFor="first_name"
                 className="block font-bold text-xs mb-0.5"
               >
-                First Name <span className="text-red-500">*</span>
+                First Name
               </label>
               <input
                 type="text"
@@ -2207,7 +2213,7 @@ function ViewStudent() {
                 htmlFor="dateOfBirth"
                 className="block font-bold text-xs mb-0.5"
               >
-                Date of Birth <span className="text-red-500">*</span>
+                Date of Birth
               </label>
               <input
                 type="date"
@@ -2223,12 +2229,18 @@ function ViewStudent() {
                 htmlFor="gender"
                 className="block font-bold text-xs mb-0.5"
               >
-                Gender <span className="text-red-500">*</span>
+                Gender
               </label>
               <input
                 type="text"
                 disabled
-                value={formData.gender}
+                value={
+                  formData.gender === "F"
+                    ? "Female"
+                    : formData.gender === "M"
+                    ? "Male"
+                    : ""
+                }
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 
                 // onBlur={handleBlur}
@@ -2255,7 +2267,7 @@ function ViewStudent() {
                 htmlFor="religion"
                 className="block font-bold text-xs mb-0.5"
               >
-                Religion <span className="text-red-500">*</span>
+                Religion
               </label>
               <input
                 type="text"
@@ -2284,7 +2296,7 @@ function ViewStudent() {
                 htmlFor="category"
                 className="block font-bold text-xs mb-0.5"
               >
-                Category <span className="text-red-500">*</span>
+                Category
               </label>
               <input
                 type="text"
@@ -2316,7 +2328,7 @@ function ViewStudent() {
                 htmlFor="nationality"
                 className="block font-bold text-xs mb-0.5"
               >
-                Nationality <span className="text-red-500">*</span>
+                Nationality
               </label>
               <input
                 type="text"
@@ -2332,7 +2344,7 @@ function ViewStudent() {
                 htmlFor="motherTongue"
                 className="block font-bold text-xs mb-0.5"
               >
-                Mother Tongue <span className="text-red-500">*</span>
+                Mother Tongue
               </label>
               <input
                 type="text"
@@ -2354,7 +2366,7 @@ function ViewStudent() {
                 htmlFor="studentName"
                 className="block font-bold text-xs mb-0.5"
               >
-                Student Name <span className="text-red-500">*</span>
+                Student Name
               </label>
               <input
                 type="text"
@@ -2370,7 +2382,7 @@ function ViewStudent() {
                 htmlFor="studentClass"
                 className="block font-bold text-xs mb-0.5"
               >
-                Class <span className="text-red-500">*</span>
+                Class
               </label>
               <input
                 type="text"
@@ -2385,7 +2397,7 @@ function ViewStudent() {
                 htmlFor="division"
                 className="block font-bold text-xs mb-0.5"
               >
-                Division <span className="text-red-500">*</span>
+                Division
               </label>
               <input
                 type="text"
@@ -2416,7 +2428,7 @@ function ViewStudent() {
                 htmlFor="grnNumber"
                 className="block font-bold text-xs mb-0.5"
               >
-                GRN No. <span className="text-red-500">*</span>
+                GRN No.
               </label>
               <input
                 type="text"
@@ -2434,7 +2446,17 @@ function ViewStudent() {
               <input
                 type="text"
                 disabled
-                value={formData.house}
+                value={
+                  formData.house === "D"
+                    ? "Diamond"
+                    : formData.house === "E"
+                    ? "Emerald"
+                    : formData.house === "R"
+                    ? "Ruby"
+                    : formData.house === "S"
+                    ? "Sapphire"
+                    : ""
+                }
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
 
                 // onBlur={handleBlur}
@@ -2445,7 +2467,7 @@ function ViewStudent() {
                 htmlFor="admittedInClass"
                 className="block font-bold text-xs mb-0.5"
               >
-                Admitted In Class <span className="text-red-500">*</span>
+                Admitted In Class
               </label>
               <input
                 type="text"
@@ -2461,7 +2483,7 @@ function ViewStudent() {
                 htmlFor="dataOfAdmission"
                 className="block font-bold text-xs mb-0.5"
               >
-                Date of Admission <span className="text-red-500">*</span>
+                Date of Admission
               </label>
               <input
                 type="date"
@@ -2493,7 +2515,7 @@ function ViewStudent() {
                 htmlFor="studentAadharNumber"
                 className="block font-bold text-xs mb-0.5"
               >
-                Student Aadhar No. <span className="text-red-500">*</span>
+                Student Aadhar No.
               </label>
               <input
                 type="text"
@@ -2533,7 +2555,7 @@ function ViewStudent() {
                 htmlFor="address"
                 className="block font-bold text-xs mb-0.5"
               >
-                Address <span className="text-red-500">*</span>
+                Address
               </label>
               <textarea
                 id="address"
@@ -2547,7 +2569,7 @@ function ViewStudent() {
             </div>
             <div className="mt-2">
               <label htmlFor="city" className="block font-bold text-xs mb-0.5">
-                City <span className="text-red-500">*</span>
+                City
               </label>
               <input
                 type="text"
@@ -2561,7 +2583,7 @@ function ViewStudent() {
             </div>
             <div className="mt-2">
               <label htmlFor="state" className="block font-bold text-xs mb-0.5">
-                State <span className="text-red-500">*</span>
+                State
               </label>
               <input
                 type="text"
@@ -2616,7 +2638,7 @@ function ViewStudent() {
             <div className="mt-2">
               <label
                 htmlFor="emergencyAddress"
-                className="block font-bold text-xs mb-0.5"
+                className=" font-bold text-xs mb-0.5"
               >
                 Emergency Address
               </label>
@@ -2650,28 +2672,27 @@ function ViewStudent() {
                 </label>
               </div>
             </div>
-            <div className="w-full flex flex-row items-center">
-              <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
-                +91
-              </span>
-              <input
-                type="text"
-                inputMode="numeric"
-                id="emergencyContact"
-                name="emergency_contact"
-                maxLength={10}
-                value={formData.emergency_contact}
-                className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                  if (value.length <= 10) {
-                    setFormData({
-                      ...formData,
-                      emergency_contact: value,
-                    });
-                  }
-                }}
-              />
+            <div className="mt-2">
+              <label
+                htmlFor="emergencyContact"
+                className="block font-bold text-xs mb-0.5"
+              >
+                Emergency Contact{" "}
+              </label>
+              <div className="w-full flex flex-row items-center">
+                <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
+                  +91
+                </span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  id="emergencyContact"
+                  disabled
+                  maxLength={10}
+                  value={formData.emergency_contact}
+                  className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+                />
+              </div>
             </div>
             {/* Transport Information */}
             {/* <h5 className="col-span-4 text-gray-500 mt-2 relative top-2"> Transport Information</h5> */}
@@ -2777,9 +2798,8 @@ function ViewStudent() {
                   <input
                     type="radio"
                     id="yes"
-                    disabled
-                    checked={formData.hasSpectacles === "Yes"}
-                    value="Yes"
+                    checked={formData.has_specs === "Y"}
+                    value="Y"
 
                     // onBlur={handleBlur}
                   />
@@ -2791,9 +2811,8 @@ function ViewStudent() {
                   <input
                     type="radio"
                     id="no"
-                    disabled
-                    checked={formData.hasSpectacles === "No"}
-                    value="No"
+                    checked={formData.has_specs === "N" || !formData.has_specs}
+                    value="N"
                     // onBlur={handleBlur}
                   />
                   <label htmlFor="no" className="ml-1">
@@ -2820,7 +2839,7 @@ function ViewStudent() {
             </h5>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-                Name <span className="text-red-500">*</span>
+                Name
               </label>
               <input
                 type="text"
@@ -2862,14 +2881,14 @@ function ViewStudent() {
             </div>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-                Father Aadhaar Card No. <span className="text-red-500">*</span>
+                Father Aadhaar Card No.
               </label>
               <input
                 type="text"
                 id="email"
                 disabled
                 maxLength={12}
-                value={formData.father_adhar_card}
+                value={formData.parent_adhar_no}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
@@ -2904,7 +2923,7 @@ function ViewStudent() {
             </div>
             <div>
               <label htmlFor="phone" className="block font-bold text-xs mb-0.5">
-                Mobile Number <span className="text-red-500">*</span>
+                Mobile Number
               </label>
               <div className="flex">
                 <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
@@ -2922,7 +2941,7 @@ function ViewStudent() {
                 />
               </div>
 
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="setusernameFatherMob"
@@ -2943,11 +2962,11 @@ function ViewStudent() {
                 <label htmlFor="receiveSmsmob">
                   Set to receive SMS at this no.
                 </label>
-              </div>
+              </div> */}
             </div>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-                Email Id <span className="text-red-500">*</span>
+                Email Id
               </label>
               <input
                 type="text"
@@ -2956,14 +2975,14 @@ function ViewStudent() {
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
 
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="setUserNameFather"
                   checked={formData.SetEmailIDAsUsername === "Father"}
                 />
                 <label htmlFor="setUserNameFather">Set this as username</label>
-              </div>
+              </div> */}
             </div>
             <div className="mt-2">
               <label
@@ -2981,6 +3000,20 @@ function ViewStudent() {
                 // onBlur={handleBlur}
               />
             </div>
+            <div className="mt-2">
+              <label
+                htmlFor="UserID"
+                className="block font-bold text-xs mb-0.5"
+              >
+                User Id
+              </label>
+              <input
+                type="text"
+                disabled
+                value={formData.user_id}
+                className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
+              />
+            </div>
             {/* Mother information */}
             <h5 className="col-span-4 text-blue-400 mt-2 relative top-4">
               {" "}
@@ -2988,7 +3021,7 @@ function ViewStudent() {
             </h5>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-                Name <span className="text-red-500">*</span>
+                Name
               </label>
               <input
                 type="text"
@@ -3027,14 +3060,14 @@ function ViewStudent() {
             </div>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-                Mother Aadhaar Card No. <span className="text-red-500">*</span>
+                Mother Aadhaar Card No.
               </label>
               <input
                 type="text"
                 id="email"
                 disabled
                 maxLength={12}
-                value={formData.mother_adhar_card}
+                value={formData.m_adhar_no}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
             </div>
@@ -3044,6 +3077,7 @@ function ViewStudent() {
               </label>
               <textarea
                 id="email"
+                disabled
                 rows={2}
                 value={formData.m_office_add}
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
@@ -3081,7 +3115,7 @@ function ViewStudent() {
             </div> */}
             <div>
               <label htmlFor="phone" className="block font-bold text-xs mb-0.5">
-                Mobile Number <span className="text-red-500">*</span>
+                Mobile Number
               </label>
               <div className="flex">
                 <span className="w-[15%] h-[34px] text-[14px] text-[#555] text-center border border-[#ccc] border-r-0 flex items-center justify-center p-1">
@@ -3097,7 +3131,7 @@ function ViewStudent() {
                 />
               </div>
 
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="setusernameMotherMob"
@@ -3119,11 +3153,11 @@ function ViewStudent() {
                 <label htmlFor="receiveSmsmobMother">
                   Set to receive SMS at this no.
                 </label>
-              </div>
+              </div> */}
             </div>
             <div className="mt-2">
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
-                Email Id <span className="text-red-500">*</span>
+                Email Id
               </label>
               <input
                 type="email"
@@ -3134,7 +3168,7 @@ function ViewStudent() {
                 className="input-field block w-full border-1 border-gray-400 rounded-md py-1 px-3 bg-white shadow-inner"
               />
 
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <input
                   type="radio"
                   id="emailuser"
@@ -3142,7 +3176,7 @@ function ViewStudent() {
                   checked={formData.SetEmailIDAsUsername === "Mother"}
                 />
                 <label htmlFor="emailuser">Set this as username</label>
-              </div>
+              </div> */}
             </div>
             <div className="mt-2">
               <label

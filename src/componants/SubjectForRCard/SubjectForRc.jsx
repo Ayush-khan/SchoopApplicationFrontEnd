@@ -312,7 +312,343 @@ function SubjectForRc() {
     <>
       {/* <NavBar /> */}
       <ToastContainer />
-      <h1>coming soon...</h1>
+
+      <div className="container mt-4">
+        <div className="card mx-auto lg:w-3/4 shadow-lg">
+          <div className="p-2 px-3 bg-gray-100 flex justify-between items-center">
+            <h3 className="text-gray-700 mt-1 text-[1.2em] lg:text-xl text-nowrap">
+              Subject for report card
+            </h3>
+            <div className="box-border flex md:gap-x-2 justify-end md:h-10">
+              <div className=" w-1/2 md:w-fit mr-1">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search "
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <button
+                className="btn btn-primary btn-sm md:h-9 text-xs md:text-sm"
+                onClick={handleAdd}
+                // onClick={() => navigate("/CreateStaff")}
+              >
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
+                Add
+              </button>
+            </div>
+          </div>{" "}
+          <div
+            className=" relative w-[97%]   mb-3 h-1  mx-auto bg-red-700"
+            style={{
+              backgroundColor: "#C03078",
+            }}
+          ></div>
+          {/* <div className="card-header flex justify-between items-center">
+            <h3 className="text-gray-700 mt-1 text-md lg:text-xl">
+              Department
+            </h3>
+            <div className=" box-border flex gap-x-2  justify-end md:h-10 ">
+              <div className="">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search "
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <button
+                className="btn btn-primary btn-sm h-9"
+                // style={{ width: "80px" }}
+                onClick={handleAdd}
+              >
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
+                Add
+              </button>
+            </div>
+          </div> */}
+          <div className="card-body w-full">
+            <div className="h-96 lg:h-96 overflow-y-scroll lg:overflow-x-hidden">
+              <div className="bg-white rounded-lg shadow-xs">
+                <table className="min-w-full leading-normal table-auto">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        S.No
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Subject for report card
+                      </th>
+
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Edit
+                      </th>
+                      <th className="px-2 text-center lg:px-3 py-2 border border-gray-950 text-sm font-semibold text-gray-900 tracking-wider">
+                        Delete
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedSections.length ? (
+                      displayedSections.map((section, index) => (
+                        <tr
+                          key={section.department_id}
+                          className={`${
+                            index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                          } hover:bg-gray-50`}
+                        >
+                          <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                            <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                              {index + 1}
+                            </p>
+                          </td>
+                          <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                            <p className="text-gray-900 whitespace-no-wrap relative top-2">
+                              {section.name}
+                            </p>
+                          </td>
+
+                          <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                            <button
+                              className="text-blue-600 hover:text-blue-800 hover:bg-transparent "
+                              onClick={() => handleEdit(section)}
+                            >
+                              <FontAwesomeIcon icon={faEdit} />
+                            </button>
+                          </td>
+
+                          <td className="text-center px-2 lg:px-3 border border-gray-950 text-sm">
+                            <button
+                              className="text-red-600 hover:text-red-800 hover:bg-transparent "
+                              onClick={() =>
+                                handleDelete(section.sub_rc_master_id)
+                              }
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center">
+                          No subject found
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className=" flex justify-center  pt-2 -mb-3">
+              <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                pageCount={pageCount}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={1}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination justify-content-center"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                activeClassName={"active"}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal for adding a new section */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50   flex items-center justify-center bg-black bg-opacity-50">
+          <div
+            className="modal"
+            style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          >
+            <div className="modal-dialog modal-dialog-centered ">
+              <div className="modal-content">
+                <div className="flex justify-between p-3">
+                  <h5 className="modal-title">
+                    Create New Subject for report card
+                  </h5>
+                  <RxCross1
+                    className="float-end relative top-2 right-2 text-xl text-red-600 hover:cursor-pointer hover:bg-red-100"
+                    type="button"
+                    // className="btn-close text-red-600"
+                    onClick={handleCloseModal}
+                  />
+                </div>
+                <div
+                  className=" relative  mb-3 h-1 w-[97%] mx-auto bg-red-700"
+                  style={{
+                    backgroundColor: "#C03078",
+                  }}
+                ></div>
+                <div className="modal-body">
+                  <div className=" relative mb-3 flex justify-center  mx-4">
+                    <label htmlFor="sectionName" className="w-1/2 mt-2">
+                      Subject Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={30}
+                      className="form-control shadow-md mb-2"
+                      id="sectionName"
+                      value={newSectionName}
+                      onChange={handleChangeSectionName}
+                      // onChange={(e) => setNewSectionName(e.target.value)}
+                      // onBlur={handleBlur}
+                    />
+                    <div className="absolute top-9 left-1/3">
+                      {!nameAvailable && (
+                        <small className=" block text-danger text-xs ">
+                          {nameError}
+                        </small>
+                      )}
+                      {fieldErrors.name && (
+                        <small className="text-danger text-xs">
+                          {fieldErrors.name}
+                        </small>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className=" flex justify-end p-3">
+                  {/* <button type="button" className="btn btn-secondary me-2" onClick={handleCloseModal}>Cancel</button> */}
+                  <button
+                    type="button"
+                    className="btn btn-primary  px-3 mb-2"
+                    style={{}}
+                    onClick={handleSubmitAdd}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for editing a section */}
+      {showEditModal && (
+        <div
+          className="modal"
+          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="flex justify-between p-3">
+                <h5 className="modal-title">Edit Subject for report card</h5>
+                <RxCross1
+                  className="float-end relative mt-2 right-2 text-xl text-red-600 hover:cursor-pointer hover:bg-red-100"
+                  type="button"
+                  // className="btn-close text-red-600"
+                  onClick={handleCloseModal}
+                />
+              </div>
+              <div
+                className=" relative  mb-3 h-1 w-[97%] mx-auto bg-red-700"
+                style={{
+                  backgroundColor: "#C03078",
+                }}
+              ></div>
+              <div className="modal-body">
+                <div className=" relative mb-3 flex justify-center  mx-4">
+                  <label htmlFor="editSectionName" className="w-1/2 mt-2">
+                    Subject Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={30}
+                    className="form-control shadow-md mb-2"
+                    id="editSectionName"
+                    value={newSectionName}
+                    onChange={handleChangeSectionName}
+                    // onChange={(e) => setNewSectionName(e.target.value)}
+                    // onBlur={handleBlur}
+                  />
+                  <div className="absolute top-9 left-1/3 ">
+                    {!nameAvailable && (
+                      <small className=" block text-danger text-xs">
+                        {nameError}
+                      </small>
+                    )}
+                    {fieldErrors.name && (
+                      <small className="text-danger text-xs">
+                        {fieldErrors.name}
+                      </small>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className=" flex justify-end p-3">
+                {/* <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button> */}
+                <button
+                  type="button"
+                  className="btn btn-primary px-3 mb-2 "
+                  style={{}}
+                  onClick={handleSubmitEdit}
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for confirming deletion */}
+      {showDeleteModal && (
+        <div
+          className="modal"
+          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="flex justify-between p-3">
+                <h5 className="modal-title">Confirm Deletion</h5>
+                <RxCross1
+                  className="float-end relative mt-2 right-2 text-xl text-red-600 hover:cursor-pointer hover:bg-red-100"
+                  type="button"
+                  // className="btn-close text-red-600"
+                  onClick={handleCloseModal}
+                />
+              </div>
+              <div
+                className=" relative  mb-3 h-1 w-[97%] mx-auto bg-red-700"
+                style={{
+                  backgroundColor: "#C03078",
+                }}
+              ></div>
+              <div className="modal-body">
+                <p>
+                  Are you sure you want to delete Subject:{" "}
+                  {currentSection?.name}?
+                </p>
+              </div>
+              <div className=" flex justify-end p-3">
+                {/* <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button> */}
+                <button
+                  type="button"
+                  className="btn btn-danger px-3 mb-2"
+                  style={{}}
+                  onClick={handleSubmitDelete}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

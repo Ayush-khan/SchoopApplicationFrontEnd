@@ -12,7 +12,7 @@ import Select from "react-select";
 import { MdLockReset, MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+// import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function NewStudentList() {
   const API_URL = import.meta.env.VITE_API_URL; // URL for host

@@ -227,8 +227,13 @@ function ManageSubjectList() {
     // setCurrentClass(classToDelete);
     setCurrentSection({ classToDelete });
     console.log("the currecne t section", currentSection);
-    setCurrestSubjectNameForDelete(currentSection?.classToDelete?.student_name);
-    console.log("cureendtsungjeg", currentSection?.classToDelete?.student_name);
+    setCurrestSubjectNameForDelete(
+      currentSection?.CurrentSection?.student_name
+    );
+    console.log(
+      "cureendtsungjeg",
+      currentSection?.CurrentSection?.student_name
+    );
     console.log("currestSubjectNameForDelete", currestSubjectNameForDelete);
     setShowDeleteModal(true);
   };
@@ -854,7 +859,7 @@ function ManageSubjectList() {
                 ></div>
                 <div className="modal-body">
                   Are you sure you want to delete this student{" "}
-                  {` ${currestSubjectNameForDelete} `} ?
+                  {` ${currentSection?.classToDelete?.student_name} `} ?
                 </div>
                 <div className=" flex justify-end p-3">
                   <button
@@ -962,8 +967,8 @@ function ManageSubjectList() {
                     onClick={handleCloseModal}
                   />
                   {console.log(
-                    "the currecnt section inside delete of the managesubjhect",
-                    currentSection
+                    "the currecnt section inside activate or not of the managesubjhect",
+                    currentStudentDataForActivate
                   )}
                 </div>
                 <div
@@ -974,7 +979,8 @@ function ManageSubjectList() {
                 ></div>
                 <div className="modal-body">
                   Are you sure you want to Activate or Deactivate this student{" "}
-                  {` ${currestSubjectNameForDelete} `} ?
+                  {` ${currentStudentDataForActivate?.studentToActiveOrDeactive?.student_name} `}{" "}
+                  ?
                 </div>
                 <div className=" flex justify-end p-3">
                   <button

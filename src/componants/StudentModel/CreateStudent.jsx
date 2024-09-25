@@ -2185,7 +2185,7 @@ function Form() {
                 style={{ backgroundColor: "#2196F3" }}
                 className=" text-white font-bold py-1 border-1 border-blue-500 px-4 rounded"
               >
-                Save
+                Update
               </button>
             </div>
           </div>

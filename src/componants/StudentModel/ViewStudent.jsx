@@ -1176,6 +1176,7 @@ function ViewStudent() {
               />
             </div>
             {/* <div className="mt-2">
+            
               <label htmlFor="email" className="block font-bold text-xs mb-0.5">
                 Telephone
               </label>

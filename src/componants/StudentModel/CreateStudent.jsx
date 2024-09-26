@@ -2182,7 +2182,7 @@ function Form() {
             <div className="col-span-3 md:mr-9 my-2 text-right">
               <button
                 // type="submit"
-                type="button"
+                // type="button"
                 style={{ backgroundColor: "#2196F3" }}
                 className=" text-white font-bold py-1 border-1 border-blue-500 px-4 rounded"
               >

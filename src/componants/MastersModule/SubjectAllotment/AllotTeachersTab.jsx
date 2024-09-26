@@ -1117,6 +1117,8 @@ const AllotTeachersTab = () => {
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedClassId, setSelectedClassId] = useState(null);
+
   const [selectedDivision, setSelectedDivision] = useState(null);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [preSubjects, setPreSubjects] = useState([]);
@@ -1214,6 +1216,8 @@ const AllotTeachersTab = () => {
   };
 
   const handleClassChange = async (selectedOption) => {
+    console.log("handleClassChnage", selectedOption);
+    setSelectedClassId(selectedOption.value);
     setSelectedClass(selectedOption);
     setSelectedDivision(null);
     setSelectedTeacher(null); // Clear teacher when class changes
@@ -1239,6 +1243,8 @@ const AllotTeachersTab = () => {
   };
 
   const handleDivisionChange = async (selectedOption) => {
+    console.log("handleDivisionChnage", selectedOption);
+
     setSelectedDivision(selectedOption);
     setSubjects([]);
     setPreSubjects([]);
@@ -1246,13 +1252,17 @@ const AllotTeachersTab = () => {
 
     try {
       const token = localStorage.getItem("authToken");
+      // Fetch pre-selected subjects for the selected class and division
+      const params = new URLSearchParams();
+      params.append("section_id[]", selectedOption.value); // Add division/section ID as a parameter
       const response = await axios.get(
-        `${API_URL}/api/get_subjects/${selectedOption.value}`,
+        `${API_URL}/api/get_presubjects/${selectedClassId}?${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       setSubjects(response.data?.subjects);
+      console.log("presubjects comes", response.data?.subjects);
     } catch (error) {
       toast.error("Error fetching subjects");
     }
@@ -1330,146 +1340,7 @@ const AllotTeachersTab = () => {
   return (
     <div>
       <ToastContainer />
-      <div className="container mt-4">
-        <div className="card mx-auto lg:w-full shadow-lg">
-          <div className="p-2 px-3 bg-gray-100 flex justify-between items-center">
-            <h3 className="text-gray-700 mt-1 text-[1.2em] lg:text-xl text-nowrap">
-              Allot Teachers
-            </h3>
-            {/* <RxCross1
-              className="float-end relative top-2 right-2 text-xl text-red-600 hover:cursor-pointer hover:bg-red-100"
-              type="button"
-              // className="btn-close text-red-600"
-              onClick={handleCloseModalForAllotTeacher}
-            /> */}
-          </div>
-          <div
-            className=" relative -top-2 mb-3 h-1 w-[97%] mx-auto bg-red-700"
-            style={{
-              backgroundColor: "#C03078",
-            }}
-          ></div>
-          <div className="card-body w-full md:w-[85%] mx-auto">
-            <div className="form-group flex justify-center gap-x-1 md:gap-x-6">
-              <label className="w-1/4 pt-2 items-center text-center px-2 lg:px-3 py-2 font-semibold text-[1em] text-gray-700">
-                Select Class <span className="text-red-500">*</span>
-              </label>
-              <div className="w-full">
-                <Select
-                  options={classes.map((cls) => ({
-                    value: cls.class_id,
-                    label: cls.name,
-                  }))}
-                  value={selectedClass}
-                  onChange={handleClassChange}
-                  placeholder="Select"
-                  styles={customSelectStyles}
-                  className="w-full md:w-[50%]"
-                  // isClearable
-                />
-                {classError && (
-                  <p className=" absolute text-red-500 text-xs">{classError}</p>
-                )}
-              </div>
-            </div>
-            <div className="form-group relative left-0 md:-left-4 flex justify-start  mt-4">
-              <label className="w-1/4 pt-2 items-center text-center   py-2 font-semibold text-[1em] text-gray-700">
-                Select Division <span className="text-red-500">*</span>
-              </label>
-              <div className="w-full  md:w-[39%]  ">
-                <select
-                  className="form-control "
-                  value={selectedDivision ? selectedDivision.value : ""}
-                  onChange={(e) =>
-                    handleDivisionChange({
-                      value: e.target.value,
-                      label: divisions.find(
-                        (div) => div.section_id == e.target.value
-                      )?.name,
-                    })
-                  }
-                  disabled={!selectedClass}
-                >
-                  <option value="">Select</option>
-                  {divisions.map((div) => (
-                    <option key={div.section_id} value={div.section_id}>
-                      {div.name}
-                    </option>
-                  ))}
-                </select>
-                {divisionError && (
-                  <p className="absolute text-red-500 text-xs">
-                    {divisionError}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="form-group flex justify-center gap-x-1 md:gap-x-6 mt-4">
-              <label className="w-1/4 pt-2 items-center text-center px-2 lg:px-3 py-2 font-semibold text-[1em] text-gray-700">
-                Select Teacher <span className="text-red-500">*</span>
-              </label>
-              <div className="w-full">
-                <Select
-                  options={teachers}
-                  value={selectedTeacher}
-                  onChange={setSelectedTeacher}
-                  placeholder="Select"
-                  styles={customSelectStyles}
-                  isDisabled={!selectedDivision}
-                  isClearable
-                  className="w-full md:w-[50%]"
-                />
-                {teacherError && (
-                  <p className="absolute text-red-500 text-xs">
-                    {teacherError}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="form-group flex justify-center gap-x-1 md:gap-x-6 mt-4">
-              <label className="w-1/4 pt-2 items-center text-center px-2 lg:px-3 py-2 font-semibold text-[1em] text-gray-700 ">
-                Select Subjects <span className="text-red-500">*</span>
-              </label>
-              <div className="w-full">
-                <div className="relative gap-x-10 top-2   grid grid-cols-3  w-full">
-                  {subjects.map((subject) => (
-                    <label
-                      key={subject.sm_id}
-                      // className="flex items-center cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        className="mr-0.5 shadow-lg"
-                        checked={preSubjects.some(
-                          (item) => item.sm_id === subject.sm_id
-                        )}
-                        onChange={() => handleSubjectChange(subject.sm_id)}
-                      />
-                      <span className="font-normal text-gray-600">
-                        {subject.name}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-                {subjectError && (
-                  <p className="relative -top-5 text-red-500 text-xs ">
-                    {subjectError}
-                  </p>
-                )}
-              </div>
-            </div>{" "}
-            <div className="form-group flex justify-end mt-4">
-              <button
-                type="button"
-                onClick={handleSave}
-                className="btn btn-primary"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="container mt-4">please wait I am working on it....</div>
     </div>
   );
 };

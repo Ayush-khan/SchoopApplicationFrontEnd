@@ -300,6 +300,7 @@ const ImageCropper = ({ onImageCropped, photoPreview }) => {
                 Cancel
               </button>{" "}
               <button
+                type="button"
                 onClick={handleSave}
                 className="bg-blue-500 font-md text-white px-4 py-2 rounded hover:bg-blue-600"
               >

@@ -807,7 +807,7 @@ function ClassList() {
   const fetchDepartments = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const academicYr = localStorage.getItem("academicYear");
+      // const academicYr = localStorage.getItem("academicYear");
 
       if (!token) {
         throw new Error("No authentication token found");
@@ -901,9 +901,14 @@ function ClassList() {
       );
       console.log("the response of the namechack api", response.data);
       if (response.data?.exists === true) {
+        console.log("the EXI NAME IS  ");
+
         setNameError("Name is already taken.");
         setNameAvailable(false);
+        return;
       } else {
+        console.log("the EXI NAME IS NO  ");
+
         setNameError("");
         setNameAvailable(true);
       }
@@ -951,6 +956,9 @@ function ClassList() {
       if (!token) {
         throw new Error("No authentication token found");
       }
+      if (!nameAvailable) {
+        return;
+      }
 
       await axios.post(
         `${API_URL}/api/classes`,
@@ -989,8 +997,30 @@ function ClassList() {
       if (!token || !currentClass || !currentClass.class_id) {
         throw new Error("Class ID is missing");
       }
-      if (!nameAvailable) {
+      console.log("the EXI NAME IS  ", currentClass);
+
+      const checkNameResponse = await axios.post(
+        `${API_URL}/api/check_class_name`,
+        { name: newClassName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("the response of the namechack api");
+      if (checkNameResponse.data?.exists === true) {
+        console.log("the EXI NAME IS  ");
+
+        setNameError("Name is already taken.");
+        setNameAvailable(false);
         return;
+      } else {
+        console.log("the EXI NAME IS NO  ");
+
+        setNameError("");
+        setNameAvailable(true);
       }
       await axios.put(
         `${API_URL}/api/classes/${currentClass.class_id}`,

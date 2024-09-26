@@ -116,7 +116,7 @@ function Form() {
     allergies: "",
     nationality: "",
     pincode: "",
-    image_url: "",
+    image_name: "",
     student_id: "",
     reg_id: " ",
     // Parent fields
@@ -208,7 +208,7 @@ function Form() {
         allergies: student.allergies || "",
         nationality: student.nationality || "",
         pincode: student.pincode || "",
-        image_url: student.image_url || "",
+        image_name: student.image_name || "",
         // Parent information
         f_dob: student?.parents?.f_dob || " ",
         m_dob: student?.parents?.m_dob || " ",
@@ -256,10 +256,10 @@ function Form() {
       setSelectedClass(student.class_id || ""); // Set the selected class
       setSelectedDivision(student.section_id || ""); // Set the selected division
 
-      if (student.image_url) {
+      if (student.image_name) {
         setPhotoPreview(
-          // `${API_URL}/path/to/images/${student.teacher_image_url}`
-          `${student.image_url}`
+          // `${API_URL}/path/to/images/${student.teacher_image_name}`
+          `${student.image_name}`
         );
       }
     }
@@ -618,7 +618,7 @@ function Form() {
   const handleImageCropped = (croppedImageData) => {
     setFormData((prevData) => ({
       ...prevData,
-      image_url: croppedImageData,
+      image_name: croppedImageData,
     }));
   };
 

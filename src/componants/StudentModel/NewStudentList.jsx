@@ -320,6 +320,71 @@ function NewStudentList() {
   };
 
   // Function to upload the selected CSV file
+  // const handleUpload = async () => {
+  //   if (!selectedFile) {
+  //     setErrorMessage("Please select a file first.");
+  //     return;
+  //   }
+
+  //   setLoading(true); // Show loader
+  //   const formData = new FormData();
+  //   formData.append("file", selectedFile); // Append the selected file
+
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     if (!token) {
+  //       throw new Error("No authentication token found");
+  //     }
+  //     const response = await axios.put(
+  //       `${API_URL}/api/students/update-students-csv`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     if (response.status === 200) {
+  //       // If file upload is successful, set 'isFileUploaded' to true
+  //       setUploadStatus("File uploaded successfully!"); // Set success message
+  //       setErrorMessage(""); // Clear any error messages
+  //       toast.success("File uploaded successfully!");
+  //       setSelectedFile(null); // Clear the selected file
+  //       setLoading(false);
+
+  //       // Optionally navigate to the main list after success
+  //       //  navigate("/student-list");
+  //       setIsFileUploaded(true);
+  //     }
+  //     // setUploadStatus("File uploaded successfully!"); // Set success message
+  //     // setErrorMessage(""); // Clear any error messages
+  //     // toast.success("File uploaded successfully!");
+  //     // setSelectedFile(null); // Clear the selected file
+  //     // setLoading(false);
+
+  //     // // Optionally navigate to the main list after success
+  //     // navigate("/student-list");
+  //   } catch (error) {
+  //     setLoading(false); // Hide loader
+  //     const showErrorForUploading = error?.response?.data?.error;
+  //     setErrorMessage(
+  //       !showErrorForUploading
+  //         ? " Failed to upload file. Please try again..."
+  //         : `Error-Message: ${error?.response?.data?.error}.`
+  //     );
+
+  //     toast.error(
+  //       !showErrorForUploading
+  //         ? "Error uploading file:"
+  //         : error?.response?.data?.error
+  //     );
+  //     console.error("Error uploading file:", error?.response?.data?.error);
+  //     // const showErrorForUploading = error?.response?.data?.error;
+  //     console.log("error messqage for upload file", showErrorForUploading);
+  //   }
+  // };
   const handleUpload = async () => {
     if (!selectedFile) {
       setErrorMessage("Please select a file first.");
@@ -335,54 +400,47 @@ function NewStudentList() {
       if (!token) {
         throw new Error("No authentication token found");
       }
-      const response = await axios.put(
-        `${API_URL}/api/students/update-students-csv`,
+      console.log("file is csv", formData);
+      // Assuming `sectionId` is available in the component
+      // const sectionId = "12345"; // Replace with actual section ID or state value
+      console.log("this is post of the csv", selectedClass.value);
+      const response = await axios.post(
+        `${API_URL}/api/update-students-csv/${selectedClass.value}`, // Pass sectionId in the URL
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-
-            "Content-Type": "multipart/form-data",
+            // No need to set Content-Type, Axios handles it automatically with FormData
           },
         }
       );
+
       if (response.status === 200) {
-        // If file upload is successful, set 'isFileUploaded' to true
-        setUploadStatus("File uploaded successfully!"); // Set success message
+        // If file upload is successful
+        setUploadStatus("File uploaded successfully!");
         setErrorMessage(""); // Clear any error messages
         toast.success("File uploaded successfully!");
         setSelectedFile(null); // Clear the selected file
         setLoading(false);
-
-        // Optionally navigate to the main list after success
-        //  navigate("/student-list");
-        setIsFileUploaded(true);
+        setIsFileUploaded(true); // Mark as uploaded
       }
-      // setUploadStatus("File uploaded successfully!"); // Set success message
-      // setErrorMessage(""); // Clear any error messages
-      // toast.success("File uploaded successfully!");
-      // setSelectedFile(null); // Clear the selected file
-      // setLoading(false);
-
-      // // Optionally navigate to the main list after success
-      // navigate("/student-list");
     } catch (error) {
       setLoading(false); // Hide loader
+
       const showErrorForUploading = error?.response?.data?.error;
       setErrorMessage(
         !showErrorForUploading
-          ? " Failed to upload file. Please try again..."
-          : `Error-Message: ${error?.response?.data?.error}.`
+          ? "Failed to upload file. Please try again..."
+          : `Error-Message: ${showErrorForUploading}.`
       );
 
       toast.error(
         !showErrorForUploading
-          ? "Error uploading file:"
+          ? "Error uploading file."
           : error?.response?.data?.error
       );
-      console.error("Error uploading file:", error?.response?.data?.error);
-      // const showErrorForUploading = error?.response?.data?.error;
-      console.log("error messqage for upload file", showErrorForUploading);
+
+      console.error("Error uploading file:", showErrorForUploading);
     }
   };
 

@@ -12,11 +12,11 @@ import Select from "react-select";
 import { MdLockReset, MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-// import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function NewStudentList() {
   const API_URL = import.meta.env.VITE_API_URL; // URL for host
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [sectionIdForStudentList, setSectionIdForStudentList] = useState("");
@@ -43,9 +43,13 @@ function NewStudentList() {
   const [passwordError, setPasswordError] = useState(""); // For password error
   const [userIdError, setUserIdError] = useState(""); // For userId error
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [uploadStatus, setUploadStatus] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
+  const [uploadStatus, setUploadStatus] = useState(""); // For success message
+  const [errorMessage, setErrorMessage] = useState(""); // For error message
+  const [loading, setLoading] = useState(false); // For loader
   const [showDisplayUpload, setShowDisplayUpload] = useState(false);
+  const [isFileUploaded, setIsFileUploaded] = useState(false); // Track upload status
 
   // Custom styles for the close button
 
@@ -133,12 +137,20 @@ function NewStudentList() {
     }
   };
 
+  // useEffect(() => {
+  //   fetchInitialData(); // Fetch classes once when the component mounts
+  //   fetchAllStudents();
+  //   // Clear the selected file when the page is refreshed or component is mounted
+  //   setSelectedFile(null);
+  // }, []);
+
+  // Fetch initial data when component mounts or when file is successfully uploaded
   useEffect(() => {
-    fetchInitialData(); // Fetch classes once when the component mounts
+    fetchInitialData();
     fetchAllStudents();
-    // Clear the selected file when the page is refreshed or component is mounted
-    setSelectedFile(null);
-  }, []);
+
+    setSelectedFile(null); // Clear the selected file on mount or upload
+  }, [isFileUploaded]); // Trigger this effect when 'isFileUploaded' change
 
   // Handle pagination
   const handlePageClick = (data) => {
@@ -299,37 +311,78 @@ function NewStudentList() {
   };
 
   // Handle file selection
+  // Handle file selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file); // Set the selected file to state
-    // setSelectedFile(event.target.files[0]); // Set the selected file to state
+    setErrorMessage(""); // Clear any previous error
+    setUploadStatus(""); // Clear any previous success
   };
 
   // Function to upload the selected CSV file
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert("Please select a file first"); // Check if file is selected
+      setErrorMessage("Please select a file first.");
       return;
     }
 
+    setLoading(true); // Show loader
     const formData = new FormData();
     formData.append("file", selectedFile); // Append the selected file
 
     try {
-      const response = await axios.post(
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("No authentication token found");
+      }
+      const response = await axios.put(
         `${API_URL}/api/students/update-students-csv`,
         formData,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
+
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      setUploadStatus("File uploaded successfully!");
-      setErrorMessage(""); // Clear any error messages
+      if (response.status === 200) {
+        // If file upload is successful, set 'isFileUploaded' to true
+        setUploadStatus("File uploaded successfully!"); // Set success message
+        setErrorMessage(""); // Clear any error messages
+        toast.success("File uploaded successfully!");
+        setSelectedFile(null); // Clear the selected file
+        setLoading(false);
+
+        // Optionally navigate to the main list after success
+        //  navigate("/student-list");
+        setIsFileUploaded(true);
+      }
+      // setUploadStatus("File uploaded successfully!"); // Set success message
+      // setErrorMessage(""); // Clear any error messages
+      // toast.success("File uploaded successfully!");
+      // setSelectedFile(null); // Clear the selected file
+      // setLoading(false);
+
+      // // Optionally navigate to the main list after success
+      // navigate("/student-list");
     } catch (error) {
-      setErrorMessage("Failed to upload file.");
-      console.error("Error uploading file:", error);
+      setLoading(false); // Hide loader
+      const showErrorForUploading = error?.response?.data?.error;
+      setErrorMessage(
+        !showErrorForUploading
+          ? " Failed to upload file. Please try again..."
+          : `Error-Message: ${error?.response?.data?.error}.`
+      );
+
+      toast.error(
+        !showErrorForUploading
+          ? "Error uploading file:"
+          : error?.response?.data?.error
+      );
+      console.error("Error uploading file:", error?.response?.data?.error);
+      // const showErrorForUploading = error?.response?.data?.error;
+      console.log("error messqage for upload file", showErrorForUploading);
     }
   };
 
@@ -367,6 +420,7 @@ function NewStudentList() {
           }}
         ></div>
         {/* <hr className="relative -top-3" /> */}
+        {/* dfsk */}
 
         <div className="bg-white w-full md:w-[95%] mx-auto rounded-md ">
           <div className="w-full  mx-auto">
@@ -374,40 +428,142 @@ function NewStudentList() {
 
             <div className="mb-4  ">
               <div className="  w-[100%]  mx-auto ">
-                <div className=" w-full md:w-[38%] relative left-0 md:left-[2%] flex justify-center flex-col md:flex-row gap-x-1 md:gap-x-4 ">
-                  <div className="w-full  gap-x-3 md:justify-start justify-between  my-1 md:my-4 flex  md:flex-row  ">
-                    <label
-                      htmlFor="classSection"
-                      className=" mr-2 pt-2 items-center text-center"
-                    >
-                      Class <span className="text-red-500">*</span>
-                    </label>
-                    <div className="w-[60%] md:w-[70%] ">
-                      <Select
-                        value={selectedClass}
-                        onChange={handleClassSelect}
-                        options={classOptions}
-                        placeholder="Select "
-                        isSearchable
-                        isClearable
-                        className="text-sm"
-                      />
-                      {nameError && (
-                        <div className=" relative top-0.5 ml-1 text-danger text-xs">
-                          {nameError}
+                {showDisplayUpload ? (
+                  <div className="max-w-full bg-white shadow-md rounded-lg border border-gray-300 mx-auto mt-10 p-6">
+                    <h2 className="text-center text-2xl font-semibold mb-8 text-blue-600">
+                      Upload Student Data from Excel Sheet
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                      {/* Download Student List Template */}
+                      <div className="flex flex-col items-center p-4 bg-gray-100 rounded-md">
+                        <h5 className="font-semibold mb-3 text-gray-800">
+                          Download Template
+                        </h5>
+                        <p className="text-sm text-gray-600 mb-4">
+                          # Please download the template by clicking below.
+                          <br />
+                          # Enter student details in the downloaded file.
+                          <br /># Do not add new students.
+                        </p>
+                        <button
+                          onClick={handleDownloadTemplate}
+                          className="bg-blue-600 text-white text-xs rounded-full px-6 py-3 hover:bg-blue-700 transition duration-200"
+                        >
+                          <i className="fas fa-download text-lg"></i> Download
+                          Template
+                        </button>
+                      </div>
+
+                      {/* File Upload dfgs  gdg*/}
+                      <div className="flex flex-col items-center p-4 bg-gray-100 rounded-md">
+                        <h5 className="font-semibold mb-3 text-gray-800">
+                          Class: {classIdForManage}
+                        </h5>
+                        <p className="font-medium text-gray-800 mb-2">
+                          Select a file to upload
+                        </p>
+                        <p className="text-sm text-gray-600 mb-4">
+                          # Do not change the file name or contents of the first
+                          4 columns.
+                          <br /># Do not change the name of the file. Do not
+                          change the contents of first 4 columns in the
+                          downloaded excelsheet.
+                        </p>
+
+                        <label className="bg-blue-600 md:w-[45%] overflow-hidden text-white rounded-full text-xs  px-6 py-3 hover:bg-blue-700 cursor-pointer transition duration-200 whitespace-nowrap">
+                          <i className="fas fa-upload text-lg "></i>{" "}
+                          {selectedFile
+                            ? selectedFile.name.length > 20
+                              ? `${selectedFile.name.substring(0, 10)}...`
+                              : selectedFile.name
+                            : "Choose File"}
+                          <input
+                            type="file"
+                            accept=".csv"
+                            onChange={handleFileChange}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+
+                      {/* Register New Students */}
+                      <div className="flex flex-col items-center p-4 bg-gray-100 rounded-md">
+                        <h5 className="font-semibold mb-3 text-gray-800">
+                          Register New Students
+                        </h5>
+                        <p className="text-sm text-gray-600 mb-4">
+                          # Click upload to register students.
+                          <br /># Students will be registered in the
+                          application. Their userid and password will be sent as
+                          email at the email id's provided.
+                        </p>
+                        <div className="text-xs my-0 ">
+                          {errorMessage && (
+                            <p style={{ color: "red" }}>{errorMessage}</p>
+                          )}
                         </div>
-                      )}
+
+                        <button
+                          onClick={handleUpload}
+                          className="bg-blue-600 text-white text-xs rounded-full px-6 py-3 hover:bg-blue-700 transition duration-200"
+                          disabled={loading} // Disable button during loading
+                        >
+                          {" "}
+                          <i className="fas fa-cloud-upload-alt text-lg"></i>{" "}
+                          {loading ? "Uploading..." : "Upload"}
+                        </button>
+
+                        {uploadStatus && (
+                          <p style={{ color: "green" }}>{uploadStatus}</p>
+                        )}
+
+                        {/* <button
+                          onClick={handleUpload}
+                          className="bg-blue-600 text-white text-xs rounded-full px-6 py-3 hover:bg-blue-700 transition duration-200"
+                        >
+                          <i className="fas fa-cloud-upload-alt text-lg"></i>{" "}
+                          Upload
+                        </button> */}
+                      </div>
                     </div>
                   </div>
+                ) : (
+                  <div className=" w-full md:w-[38%] relative left-0 md:left-[2%] flex justify-center flex-col md:flex-row gap-x-1 md:gap-x-4 ">
+                    <div className="w-full  gap-x-3 md:justify-start justify-between  my-1 md:my-4 flex  md:flex-row  ">
+                      <label
+                        htmlFor="classSection"
+                        className=" mr-2 pt-2 items-center text-center"
+                      >
+                        Class <span className="text-red-500">*</span>
+                      </label>
+                      <div className="w-[60%] md:w-[70%] ">
+                        <Select
+                          value={selectedClass}
+                          onChange={handleClassSelect}
+                          options={classOptions}
+                          placeholder="Select "
+                          isSearchable
+                          isClearable
+                          className="text-sm"
+                        />
+                        {nameError && (
+                          <div className=" relative top-0.5 ml-1 text-danger text-xs">
+                            {nameError}
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-                  <button
-                    onClick={handleSearch}
-                    type="button"
-                    className=" my-1 md:my-4 btn h-10  w-18 md:w-auto btn-primary "
-                  >
-                    Search
-                  </button>
-                </div>
+                    <button
+                      onClick={handleSearch}
+                      type="button"
+                      className=" my-1 md:my-4 btn h-10  w-18 md:w-auto btn-primary "
+                    >
+                      Search
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             {subjects.length > 0 && (
